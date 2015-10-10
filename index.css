@@ -1,0 +1,41 @@
+html, body, #fullheight {
+  min-height: 100% !important;
+  height: 100%;
+}
+#editor {
+  margin: 0;
+  float: left;
+  position: relative !important;
+  width: 40%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.ace_editor {
+  border: 1px solid lightgray;
+  margin: auto;
+  height: 400px;
+}
+
+#screen {
+  float: left;
+  width: 60%;
+  height: 60%;
+}
+
+#screen canvas {
+  /* margin: auto;*/
+  /* disable scaling interpolation */
+  image-rendering: optimizeSpeed;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: optimize-contrast;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+
+#main-container {
+  width: 100%;
+  height: 100%;
+}
