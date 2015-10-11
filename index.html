@@ -52,9 +52,6 @@
       };
       var editor;
       $(window).load(function() {
-
-          //var root = parser.parse("mover 20, 30, 4 mover 30, 20, 4");
-          //me.parser = new TreeWalker(root);
           me.parser = null;
           game.onload();
 
@@ -182,8 +179,10 @@
 
 <div id="main-container">
   <pre id="editor">
-  mover 20, 20, 2
-  mover 10, 30, 2
+  if 1 == 1:
+      mover 20, 20, 2
+  endif
+  mover 20, 10, 1
   </pre>
 
 

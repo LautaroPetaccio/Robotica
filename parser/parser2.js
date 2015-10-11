@@ -87,13 +87,13 @@ case 1:
  this.$ = new Node(new Program(), [$$[$0-1]]); return this.$; 
 break;
 case 2:
- this.$ = new Node(new If($$[$0-1]), $$[$0-3]); 
+ this.$ = new Node(new If($$[$0-1]), [$$[$0-3]]); console.log($$[$0-1]); console.log($$[$0-3]); 
 break;
 case 3:
  this.$ = new Node(new IfElse($$[$0-3], $$[$0-1]), [$$[$0-5]]); 
 break;
 case 4:
- this.$ = new Node(new While($$[$0-1]), $$[$0-3]); 
+ this.$ = new Node(new While($$[$0-1]), [$$[$0-3]]); 
 break;
 case 5:
  this.$ = new Node(new Mover(), [$$[$0-4], $$[$0-2], $$[$0]]); 
@@ -321,7 +321,7 @@ function Program() {
     return this.requiresNewContext;
   }
 
-  this.eval = function(argumentsArr, contextManager, executionQueue) {
+  this.eval = function(argumentsArr, contextManager, executionStack) {
     return "PROGRAMEND"
   }
 }
@@ -333,7 +333,7 @@ function StatementsList() {
       return this.requiresNewContext;
     }
 
-    this.eval = function(argumentsArr, contextManager, executionQueue) {
+    this.eval = function(argumentsArr, contextManager, executionStack) {
         return "STATEMENTSEND";
     }
 }
@@ -346,10 +346,13 @@ function If(execution) {
   }
 
   this.execution = execution;
-  this.eval = function(argumentsArr, contextManager, executionQueue) {
+  this.eval = function(argumentsArr, contextManager, executionStack) {
     console.log("Excecuting IF");
+    console.log(argumentsArr);
+    console.log(execution);
     if(argumentsArr[0]) {
-      executionQueue.push({ node : execution, childrenLeft : execution.getChildren().length })
+      console.log("Pushing if execution");
+      executionStack.push({ node : execution, childrenLeft : execution.getChildren().length })
     }
     return "IFEND"
   }
@@ -364,13 +367,13 @@ function IfElse(firstExecution, secondExecution) {
 
   this.firstExecution = firstExecution;
   this.secondExecution = secondExecution;
-  this.eval = function(argumentsArr, contextManager, executionQueue) {
+  this.eval = function(argumentsArr, contextManager, executionStack) {
     console.log("Excecuting IfElse");
     if(argumentsArr[0]) {
-      this.executionQueue.push({ node : firstExecution, childrenLeft : firstExecution.getChildren().length })
+      this.executionStack.push({ node : firstExecution, childrenLeft : firstExecution.getChildren().length })
     }
     else {
-      this.executionQueue.push({ node : secondExecution, childrenLeft : secondExecution.getChildren().length })
+      this.executionStack.push({ node : secondExecution, childrenLeft : secondExecution.getChildren().length })
     }
     return "IFELSEEND"
   }
@@ -385,9 +388,9 @@ function While(condition, statements) {
 
   this.condition = condition;
   this.statements = statements;
-  this.eval = function(argumentsArr, contextManager, executionQueue) {
+  this.eval = function(argumentsArr, contextManager, executionStack) {
     if(argumentsArr[0]) {
-        this.executionQueue.push({ node : statements, childrenLeft : statements.getChildren().length })
+        this.executionStack.push({ node : statements, childrenLeft : statements.getChildren().length })
         return "WHILEND"
     }
     console.log("While ended");
@@ -401,7 +404,7 @@ function Mover() {
     return this.requiresNewContext;
   }
 
-  this.eval = function(argumentsArr, contextManager, executionQueue) {
+  this.eval = function(argumentsArr, contextManager, executionStack) {
     contextManager.pushInstruction({
       action : 'move',
       leftMotor : argumentsArr[0],
@@ -420,7 +423,7 @@ function Sensor(number) {
   }
 
   this.number = number;
-  this.eval = function(argumentsArr, contextManager, executionQueue) {
+  this.eval = function(argumentsArr, contextManager, executionStack) {
     //return sensor[number];
   }
 }
@@ -433,7 +436,7 @@ function Number(number) {
   }
 
   this.number = parseInt(number);
-  this.eval = function(argumentsArr, contextManager, executionQueue) {
+  this.eval = function(argumentsArr, contextManager, executionStack) {
     return this.number;
   }
 }
@@ -447,7 +450,7 @@ function VarDefintion(varName) {
 
     this.varName = varName;
     this.varIsLocal = varName[0] == '$' && varName[1] == "_";
-    this.eval = function(argumentsArr, contextManager, executionQueue) {
+    this.eval = function(argumentsArr, contextManager, executionStack) {
         console.log("Definicion de variable ------------------------------");
         console.log("Var name: " + this.varName);
         console.log("Var local: " + this.varIsLocal.toString());
@@ -483,7 +486,7 @@ function VarUsage(varName) {
 
   this.varName = varName;
   this.varIsLocal = varName[0] == '$' && varName[1] == "_";
-  this.eval = function(argumentsArr, contextManager, executionQueue) {
+  this.eval = function(argumentsArr, contextManager, executionStack) {
     try {
         console.log("Buscando variable: " + this.varName);
         console.log("La variable es local?" + this.varIsLocal.toString());
@@ -502,7 +505,7 @@ function Sum() {
     return this.requiresNewContext;
   }
 
-  this.eval = function(argumentsArr, contextManager, executionQueue) {
+  this.eval = function(argumentsArr, contextManager, executionStack) {
     return this.leftOp.eval(context) + this.rightOp.eval(context);
   }
 }
@@ -514,7 +517,7 @@ function Sub() {
     return this.requiresNewContext;
   }
 
-  this.eval = function(argumentsArr, contextManager, executionQueue) {
+  this.eval = function(argumentsArr, contextManager, executionStack) {
     return this.leftOp.eval(context) - this.rightOp.eval(context);
   }
 }
@@ -526,7 +529,7 @@ function Mult() {
     return this.requiresNewContext;
   }
 
-  this.eval = function(argumentsArr, contextManager, executionQueue) {
+  this.eval = function(argumentsArr, contextManager, executionStack) {
     return argumentsArr[0] * argumentsArr[1];
   }
 }
@@ -538,7 +541,7 @@ function Equal() {
       return this.requiresNewContext;
     }
 
-    this.eval = function(argumentsArr, contextManager, executionQueue) {
+    this.eval = function(argumentsArr, contextManager, executionStack) {
       return argumentsArr[0] == argumentsArr[1];
     }
 }
@@ -550,7 +553,7 @@ function NotEqual() {
       return this.requiresNewContext;
     }
 
-    this.eval = function(argumentsArr, contextManager, executionQueue) {
+    this.eval = function(argumentsArr, contextManager, executionStack) {
       return argumentsArr[0] != argumentsArr[1];
     }
 }
@@ -562,7 +565,7 @@ function Lower() {
       return this.requiresNewContext;
     }
 
-    this.eval = function(argumentsArr, contextManager, executionQueue) {
+    this.eval = function(argumentsArr, contextManager, executionStack) {
       return argumentsArr[0] < argumentsArr[1];
     }
 }
@@ -574,7 +577,7 @@ function LowerEqual() {
       return this.requiresNewContext;
     }
 
-    this.eval = function(argumentsArr, contextManager, executionQueue) {
+    this.eval = function(argumentsArr, contextManager, executionStack) {
       return argumentsArr[0] <= argumentsArr[1];
     }
 }
@@ -586,7 +589,7 @@ function Greater() {
       return this.requiresNewContext;
     }
 
-    this.eval = function(argumentsArr, contextManager, executionQueue) {
+    this.eval = function(argumentsArr, contextManager, executionStack) {
       return argumentsArr[0] > argumentsArr[1];
     }
 }
@@ -598,7 +601,7 @@ function GreaterEqual() {
       return this.requiresNewContext;
     }
 
-    this.eval = function(argumentsArr, contextManager, executionQueue) {
+    this.eval = function(argumentsArr, contextManager, executionStack) {
       return argumentsArr[0] >= argumentsArr[1];
     }
 }
@@ -610,7 +613,7 @@ function Div() {
     return this.requiresNewContext;
   }
 
-  this.eval = function(argumentsArr, contextManager, executionQueue) {
+  this.eval = function(argumentsArr, contextManager, executionStack) {
     return argumentsArr[0] / argumentsArr[1];
   }
 }
@@ -635,8 +638,8 @@ function Node(operation, childrenArray) {
     return this.childrenArray;
   }
 
-  this.eval = function(argumentsArr, contextManager, executionQueue) {
-    return this.operation.eval(argumentsArr, contextManager, executionQueue);
+  this.eval = function(argumentsArr, contextManager, executionStack) {
+    return this.operation.eval(argumentsArr, contextManager, executionStack);
   }
 
 }

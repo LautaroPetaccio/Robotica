@@ -2,7 +2,7 @@ function TreeWalker(root, onCompleted) {
   this.stack = [{ node : root, childrenLeft : root.getChildren().length }];
   this.results = [];
   this.completed = false;
-  this.DEBUG;
+  this.DEBUG = true;
   this.onCompleted = onCompleted;
 
   this.excecution = new Excecution();
@@ -39,7 +39,7 @@ function TreeWalker(root, onCompleted) {
       // console.log("Child childrens")
       // console.log(child.getChildren());
       /* The child is a terminal node */
-      if(child.getChildren() == 0) {
+      if(child.getChildren().length == 0) {
         /* Append the value to the results stack */
         this.results[this.results.length-1].push(child.eval([], this.contextManager, this.stack));
       }
@@ -61,9 +61,6 @@ function TreeWalker(root, onCompleted) {
       if(node.operation.createsContext()) this.contextManager.dropContext();
       this.results.push([node_value]);
 
-      // if(node_value === 'PROGRAMEND') {
-
-      // }
     }
     if(this.DEBUG) {
       console.log("-----------------------------------");

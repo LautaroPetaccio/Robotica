@@ -66,11 +66,11 @@ program
 
 statement
     : IF boolExp ':' statementsList ENDIF
-        { $$ = new Node(new If($4), $2); }
+        { $$ = new Node(new If($4), [$2]); console.log($4); console.log($2); }
     | IF boolExp ':' statementsList ELSE statementsList ENDIF
         { $$ = new Node(new IfElse($4, $6), [$2]); }
     | WHILE boolExp ':' statementsList LOOP
-        { $$ = new Node(new While($4), $2); }
+        { $$ = new Node(new While($4), [$2]); }
     | MOVER mathExp ',' mathExp ',' mathExp
         { $$ = new Node(new Mover(), [$2, $4, $6]); }
     | SENSOR mathExp
@@ -179,7 +179,10 @@ function If(execution) {
   this.execution = execution;
   this.eval = function(argumentsArr, contextManager, executionStack) {
     console.log("Excecuting IF");
+    console.log(argumentsArr);
+    console.log(execution);
     if(argumentsArr[0]) {
+      console.log("Pushing if execution");
       executionStack.push({ node : execution, childrenLeft : execution.getChildren().length })
     }
     return "IFEND"
