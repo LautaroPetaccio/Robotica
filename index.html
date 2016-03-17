@@ -11,8 +11,6 @@
 	<script type="text/javascript" src="libraries/bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
 	<link rel="stylesheet" href="libraries/bootstrap/css/bootstrap.min.css">
 
-  <!-- Ace text editor -->
-  <script src="libraries/ace-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 
   <!-- MelonJS requirements -->
   <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -24,6 +22,14 @@
   <link rel="apple-touch-icon" sizes="120x120" href="game/icons/touch-icon-iphone-retina-120x120.png">
   <link rel="apple-touch-icon" sizes="152x152" href="game/icons/touch-icon-ipad-retina-152x152.png">
   <link rel="manifest" href="manifest.json">
+
+  <!-- Blockly -->
+  <script src="libraries/blockly/blockly_compressed.js"></script>
+  <script src="libraries/blockly/blocks_compressed.js"></script>
+  <script src="libraries/blockly/javascript_compressed.js"></script>
+  <script src="libraries/blockly/generators/javascript/robotica.js"></script>
+  <script src="libraries/blockly/blocks/robotica.js"></script>
+  <script src="libraries/blockly/msg/js/en.js"></script>
 
   <!-- melonJS Library -->
   <script type="text/javascript" src="game/lib/melonJS-2.1.1.js"></script>
@@ -41,16 +47,8 @@
   <script type="text/javascript" src="game/js/screens/title.js"></script>
   <script type="text/javascript" src="game/js/screens/play.js"></script>
 
-  <!-- Parser -->
-  <script type="text/javascript" src="parser/parser2.js"></script>
-  <script type="text/javascript" src="parser/TreeWalker.js"></script>
-
   <!-- Bootstrap & Mobile optimization tricks -->
   <script type="text/javascript">
-      function resizeAce() {
-        $('#editor').height($(window).height());
-      };
-      var editor;
       $(window).load(function() {
           me.parser = null;
           game.onload();
@@ -77,64 +75,43 @@
       });
 
       $(document).ready(function() {
-        editor = ace.edit("editor");
 
-        //listen for changes
-        $(window).resize(resizeAce);
-        //set initially
-        resizeAce();
+      //   $('#btn_run').click(function() {
+      //     if(me.parser !== null && me.parser.excecution.isPaused()) {
+      //       // Resume
+      //       me.parser.excecution.resume();
+      //     }
+      //     else {
+      //       me.state.change(me.state.PLAY);
+      //       // var root = parser.parse(editor.getValue());
+      //       var onCompleted = function() {
+      //         $('#btn_run').show();
+      //         $('#btn_pause').hide();
+      //         $('#btn_stop').hide();
+      //       }
+      //       // me.parser = new TreeWalker(root, onCompleted);
+      //       $('#btn_pause').show();
+      //       $('#btn_stop').show();
+      //     }
+      //     $('#btn_run').hide();
+      //   });
 
-        $('#btn_run').click(function() {
-          if(me.parser !== null && me.parser.excecution.isPaused()) {
-            // Resume
-            me.parser.excecution.resume();
-          }
-          else {
-            me.state.change(me.state.PLAY);
-            var root = parser.parse(editor.getValue());
-            var onCompleted = function() {
-              $('#btn_run').show();
-              $('#btn_pause').hide();
-              $('#btn_stop').hide();
-            }
-            me.parser = new TreeWalker(root, onCompleted);
-            $('#btn_pause').show();
-            $('#btn_stop').show();
-          }
-          $('#btn_run').hide();
-        });
+      //   $('#btn_pause').click(function() {
+      //     $('#btn_run').show();
+      //     // me.parser.excecution.pause();
+      //   });
 
-        $('#btn_pause').click(function() {
-          $('#btn_run').show();
-          me.parser.excecution.pause();
-        });
+      //   $('#btn_stop').click(function() {
+      //     $('#btn_run').show();
+      //     $('#btn_pause').hide();
+      //     $('#btn_stop').hide();
+      //     // me.parser.excecution.resume();
+      //     // me.state.change(me.state.PLAY);
+      //   });
 
-        $('#btn_stop').click(function() {
-          $('#btn_run').show();
-          $('#btn_pause').hide();
-          $('#btn_stop').hide();
-          me.parser.excecution.resume();
-          me.state.change(me.state.PLAY);
-        });
-
-        $('#btn_search').click(function() {
-          var found = editor.find($('#text_search').val(),{
-            backwards: true,
-            wrap: true,
-            range: null,
-            wholeWord: true,
-          });
-          console.log(found);
-        });
       });
 
   </script>
-
-<style type="text/css">
-
-
-</style>
-
 </head>
 <body>
 
@@ -156,6 +133,7 @@
       <ul class="nav navbar-nav">
         <li><a href="#"><span class="glyphicon glyphicon-floppy-open" aria-hidden="true"></span> Load code</a></li>
         <li><a href="#"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Save code</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-export" aria-hidden="true"></span> Export to arduino</a></li>
       </ul>
       <ul class="navbar-form navbar-left">
         <button type="button" id="btn_run" class="btn btn-primary"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play</button>
@@ -177,14 +155,162 @@
 </nav>
 
 <div id="main-container">
-  <pre id="editor">
-  if 1 == 1:
-      mover 20, 20, 2
-  endif
-  mover 20, 10, 1
-  </pre>
-
-
+  <div id="blocklyDiv"></div>
+  <xml id="toolbox" style="display: none">
+    <category name="Robotica">
+      <block type="robotica_motor"></block>
+      <block type="robotica_sensor"></block>
+    </category>
+    <category name="Lógica" colour="210">
+      <block type="controls_if"></block>
+      <block type="logic_compare"></block>
+      <block type="logic_operation"></block>
+      <block type="logic_negate"></block>
+      <block type="logic_boolean"></block>
+      <block type="logic_null"></block>
+      <block type="logic_ternary"></block>
+    </category>
+    <category name="Secuencias" colour="120">
+      <block type="controls_repeat_ext">
+        <value name="TIMES">
+          <shadow type="math_number">
+            <field name="NUM">10</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="controls_whileUntil"></block>
+      <block type="controls_for">
+        <value name="FROM">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <value name="TO">
+          <shadow type="math_number">
+            <field name="NUM">10</field>
+          </shadow>
+        </value>
+        <value name="BY">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="controls_flow_statements"></block>
+    </category>
+    <category name="Matemáticas" colour="230">
+      <block type="math_number"></block>
+      <block type="math_arithmetic">
+        <value name="A">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <value name="B">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_single">
+        <value name="NUM">
+          <shadow type="math_number">
+            <field name="NUM">9</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_trig">
+        <value name="NUM">
+          <shadow type="math_number">
+            <field name="NUM">45</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_constant"></block>
+      <block type="math_number_property">
+        <value name="NUMBER_TO_CHECK">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_change">
+        <value name="DELTA">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_round">
+        <value name="NUM">
+          <shadow type="math_number">
+            <field name="NUM">3.1</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_on_list"></block>
+      <block type="math_modulo">
+        <value name="DIVIDEND">
+          <shadow type="math_number">
+            <field name="NUM">64</field>
+          </shadow>
+        </value>
+        <value name="DIVISOR">
+          <shadow type="math_number">
+            <field name="NUM">10</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_constrain">
+        <value name="VALUE">
+          <shadow type="math_number">
+            <field name="NUM">50</field>
+          </shadow>
+        </value>
+        <value name="LOW">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <value name="HIGH">
+          <shadow type="math_number">
+            <field name="NUM">100</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_random_int">
+        <value name="FROM">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <value name="TO">
+          <shadow type="math_number">
+            <field name="NUM">100</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_random_float"></block>
+    </category>
+    <sep></sep>
+    <category name="Variables" colour="330" custom="VARIABLE"></category>
+    <category name="Funciones" colour="290" custom="PROCEDURE"></category>
+  </xml>
+  <script type="text/javascript">
+    var workspace = Blockly.inject('blocklyDiv',
+        {media: 'libraries/blockly/media/',
+         toolbox: document.getElementById('toolbox'),
+         zoom:
+           {controls: true}
+        }
+    );
+    function showCode() {
+      // Generate JavaScript code and display it.
+      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+      var code = Blockly.JavaScript.workspaceToCode(workspace);
+      alert(code);
+    }
+  </script>
   <!-- Canvas placeholder -->
   <div id="screen"></div>
 </div>

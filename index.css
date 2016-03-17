@@ -2,21 +2,17 @@ html, body, #fullheight {
   min-height: 100% !important;
   height: 100%;
 }
-#editor {
+#blocklyDiv {
   margin: 0;
   float: left;
   position: relative !important;
   width: 40%;
+  height: 800px;
   bottom: 0;
   left: 0;
   right: 0;
 }
 
-.ace_editor {
-  border: 1px solid lightgray;
-  margin: auto;
-  height: 400px;
-}
 
 #screen {
   float: left;
