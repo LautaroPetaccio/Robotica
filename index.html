@@ -116,6 +116,16 @@
           me.parser.excecution.resume();
           me.state.change(me.state.PLAY);
         });
+
+        $('#btn_search').click(function() {
+          var found = editor.find($('#text_search').val(),{
+            backwards: true,
+            wrap: true,
+            range: null,
+            wholeWord: true,
+          });
+          console.log(found);
+        });
       });
 
   </script>
@@ -144,25 +154,14 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Archivo<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Guardar</a></li>
-            <li><a href="#">Guardar como</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Copiar todo</a></li>
-          </ul>
-        </li>
+        <li><a href="#"><span class="glyphicon glyphicon-floppy-open" aria-hidden="true"></span> Load code</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Save code</a></li>
       </ul>
-      <form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Buscar</button>
-        <button type="button" id="btn_run" class="btn btn-primary"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></button>
-        <button type="button" id="btn_pause" class="btn btn-warning" style="display: none;"><span class="glyphicon glyphicon-pause" aria-hidden="true"></span></button>
-        <button type="button" id="btn_stop" class="btn btn-danger" style="display: none;"><span class="glyphicon glyphicon-stop" aria-hidden="true"></span></button>
-      </form>
+      <ul class="navbar-form navbar-left">
+        <button type="button" id="btn_run" class="btn btn-primary"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play</button>
+        <button type="button" id="btn_pause" class="btn btn-warning" style="display: none;"><span class="glyphicon glyphicon-pause" aria-hidden="true"></span> Pause</button>
+        <button type="button" id="btn_stop" class="btn btn-danger" style="display: none;"><span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Stop</button>
+      </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ayuda<span class="caret"></span></a>
