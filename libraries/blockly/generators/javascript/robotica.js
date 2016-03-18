@@ -12,8 +12,7 @@ Blockly.JavaScript['robotica_motor'] = function(block) {
 };
 
 Blockly.JavaScript['robotica_sensor'] = function(block) {
-  // Search the text for a substring.
-  var value_sensornumber = Blockly.JavaScript.valueToCode(block, 'sensorNumber', Blockly.JavaScript.ORDER_ATOMIC);
-  var code = 'sensor(' + value_sensornumber + ')';
-  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+  var dropdown_sensor = block.getFieldValue('Sensor');
+  var code = 'sensor(' + dropdown_sensor + ')';
+  return [code, Blockly.JavaScript.ORDER_NONE];
 };

@@ -27,12 +27,11 @@ Blockly.Blocks['robotica_motor'] = {
 
 Blockly.Blocks['robotica_sensor'] = {
   init: function() {
-    this.appendValueInput("sensorNumber")
-        .setCheck("Number")
-        .appendField("Sensor");
-    this.setInputsInline(true);
-    this.setOutput(true, "Number");
-    this.setColour(210);
+    this.appendDummyInput()
+        .appendField("Sensor")
+        .appendField(new Blockly.FieldDropdown([["Izquierda", "left"], ["Derecha", "right"], ["Arriba", "up"], ["Abajo", "down"]]), "Sensor");
+    this.setOutput(true, "String");
+    this.setColour(65);
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
   }
