@@ -68,7 +68,7 @@ game.PlayerEntity = me.Entity.extend({
   ------ */
   update: function(dt) {
     this._super(me.Entity, 'update', [dt]);
-    if(me.interpreter !== null && !me.excecution.hasFinished()) {
+    if(me.interpreter !== null && !me.execution.hasFinished()) {
       /* If the instructions waiting to be excecuted are lower than 1000 */
       if(me.interpreter.robotInstructions.length < 1000) {
         /* Do 10 steps with the interpreter */
@@ -77,15 +77,15 @@ game.PlayerEntity = me.Entity.extend({
             excecute the interpreter's onCompleted function.
            */
           if(me.interpreter.step() === false && me.interpreter.robotInstructions.length === 0) {
-            me.excecution.finish();
-            me.excecution.onCompleted();
+            me.execution.finish();
+            me.execution.onCompleted();
             break;
           }
         }
       }
       if(me.interpreter.robotInstructions.length > 0) {
         /* If it's not paused and we have instructions to execute, excecute them */
-        if(me.interpreter.robotInstructions.length > 0 && !me.excecution.isPaused()) {
+        if(me.interpreter.robotInstructions.length > 0 && !me.execution.isPaused()) {
           switch(me.interpreter.robotInstructions[0].action) {
             case 'motor':
               // console.log("Is in move");

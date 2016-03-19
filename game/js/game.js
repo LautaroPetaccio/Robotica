@@ -19,7 +19,7 @@ var game = {
       1 => paused
       2 => finished
     */
-    me.excecution = {
+    me.execution = {
       state : 2,
       pause : function() { this.state = 1; },
       run : function() { this.state = 0; },

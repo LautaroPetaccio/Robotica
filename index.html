@@ -109,10 +109,10 @@
       $(document).ready(function() {
 
         $('#btn_run').click(function() {
-          if(me.interpreter !== null && me.excecution.isPaused()) { 
+          if(me.interpreter !== null && me.execution.isPaused()) { 
             // Resume
-            me.excecution.run();
-            console.log("State: " + me.excecution.state);
+            me.execution.run();
+            console.log("State: " + me.execution.state);
           }
           else {
             me.state.change(me.state.PLAY);
@@ -123,30 +123,30 @@
               $('#btn_pause').hide();
               $('#btn_stop').hide();
             }
-            me.excecution.onCompleted = onCompleted;
+            me.execution.onCompleted = onCompleted;
             me.interpreter = myInterpreter = new Interpreter(code, initApi);
             $('#btn_pause').show();
             $('#btn_stop').show();
-            me.excecution.run();
-            console.log("State: " + me.excecution.state);
+            me.execution.run();
+            console.log("State: " + me.execution.state);
           }
           $('#btn_run').hide();
         });
 
         $('#btn_pause').click(function() {
           $('#btn_run').show();
-          me.excecution.pause();
-          console.log("State: " + me.excecution.state);
+          me.execution.pause();
+          console.log("State: " + me.execution.state);
         });
 
         $('#btn_stop').click(function() {
           $('#btn_run').show();
           $('#btn_pause').hide();
           $('#btn_stop').hide();
-          me.excecution.finish();
-          console.log("State after stop: 1 " + me.excecution.state);
+          me.execution.finish();
+          console.log("State after stop: 1 " + me.execution.state);
           me.state.change(me.state.PLAY);
-          console.log("State after stop: 2 " + me.excecution.state);
+          console.log("State after stop: 2 " + me.execution.state);
         });
 
       });
