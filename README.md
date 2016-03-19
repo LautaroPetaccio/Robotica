@@ -12,6 +12,7 @@ Running a webserver with the code should be sufficient.
 - [ ] Create the robot tracing (the robot leaves a trail when moving).
 - [ ] Add the ability to use different robot traces (color).
 - [ ] Create the sensors in context and update them.
+- [ ] Create objects and its collision boundaries.
 - [ ] Align in a better way the content in the website.
 - [ ] Create scripts to automatically resize the Blockly toolbox and the game screen to fit all screen sizes.
 - [ ] Create the standalone version.
