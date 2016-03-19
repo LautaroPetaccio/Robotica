@@ -43,7 +43,8 @@ game.PlayerEntity = me.Entity.extend({
       y : y,
       /* Distance between the center of the two wheels, 30 pixels */
       l : 30,
-    }
+    };
+
   },
 
   /* http://planning.cs.uiuc.edu/node659.html */
@@ -56,6 +57,9 @@ game.PlayerEntity = me.Entity.extend({
     this.stats.angle += (wheelRadious/this.stats.l) * (rightMotor - leftMotor);
   },
 
+  updateSensors: function(sensorName) {
+
+  },
 
   /* -----
  
@@ -64,44 +68,47 @@ game.PlayerEntity = me.Entity.extend({
   ------ */
   update: function(dt) {
     this._super(me.Entity, 'update', [dt]);
-    if(me.parser !== null) {
-      /* Walk 3 times the tree */
-      me.parser.childWalk();
-      me.parser.childWalk();
-      me.parser.childWalk();
-
-      /* If there are instructions already walked by the parser, put them in the instructions array */
-      if(me.parser.contextManager.instructions.length > 0) {
-        this.instructions.push(me.parser.contextManager.instructions.shift());
-      }
-      /* If it's not paused and we have instructions to execute, excecute them */
-      if(this.instructions.length > 0 && !me.parser.excecution.isPaused()) {
-        switch(this.instructions[0].action) {
-          case 'move':
-            var duration = this.instructions[0].duration;
-            var leftMotor = this.instructions[0].leftMotor;
-            var rightMotor = this.instructions[0].rightMotor;
-
-            this.moveRobot(leftMotor, rightMotor, dt / 1000);
+    if(me.interpreter !== null && !me.excecution.hasFinished()) {
+      /* If the instructions waiting to be excecuted are lower than 1000 */
+      if(me.interpreter.robotInstructions.length < 1000) {
+        /* Do 10 steps with the interpreter */
+        for (var i = 0; i < 10; i++) {
+          /* If we don't have instructions to excecute and the interpreter is marked as completed
+            excecute the interpreter's onCompleted function.
+           */
+          if(me.interpreter.step() === false && me.interpreter.robotInstructions.length === 0) {
+            me.excecution.finish();
+            me.excecution.onCompleted();
             break;
+          }
         }
+      }
+      if(me.interpreter.robotInstructions.length > 0) {
+        /* If it's not paused and we have instructions to execute, excecute them */
+        if(me.interpreter.robotInstructions.length > 0 && !me.excecution.isPaused()) {
+          switch(me.interpreter.robotInstructions[0].action) {
+            case 'motor':
+              // console.log("Is in move");
+              var duration = me.interpreter.robotInstructions[0].duration;
+              var leftWheel = me.interpreter.robotInstructions[0].leftWheel;
+              var rightWheel = me.interpreter.robotInstructions[0].rightWheel;
 
-        this.pos.x = this.stats.x;
-        this.pos.y = this.stats.y;
-        this.renderable.angle = this.stats.angle;
-        this.instructions[0].duration -= dt / 1000;
-        if(this.instructions[0].duration <= 0) {
-          this.instructions.shift();
+              this.moveRobot(leftWheel, rightWheel, dt / 1000);
+              break;
+          }
+
+          this.pos.x = this.stats.x;
+          this.pos.y = this.stats.y;
+          this.renderable.angle = this.stats.angle;
+          me.interpreter.robotInstructions[0].duration -= dt / 1000;
+          // console.log("Updates duration: " + me.interpreter.robotInstructions[0].duration);
+          if(me.interpreter.robotInstructions[0].duration <= 0) {
+            me.interpreter.robotInstructions.shift();
+          }
         }
       }
 
-        /* If we don't have instructions to excecute and the parser is marked as completed
-          excecute the parser's onCompleted function.
-         */
-      if(this.instructions.length === 0 && me.parser.completed) {
-        me.parser.onCompleted();
-        me.parser.completed = false;
-      }
+
     }
 
     /* Limits checking */
