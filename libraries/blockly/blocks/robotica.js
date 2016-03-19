@@ -13,9 +13,9 @@ Blockly.Blocks['robotica_motor'] = {
     this.appendValueInput("rightWheel")
         .setCheck("Number")
         .appendField("Rueda derecha");
-    this.appendValueInput("motorPower")
+    this.appendValueInput("duration")
         .setCheck("Number")
-        .appendField("Fuerza");
+        .appendField("Duracion");
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
@@ -30,7 +30,7 @@ Blockly.Blocks['robotica_sensor'] = {
     this.appendDummyInput()
         .appendField("Sensor")
         .appendField(new Blockly.FieldDropdown([["Izquierda", "left"], ["Derecha", "right"], ["Arriba", "up"], ["Abajo", "down"]]), "Sensor");
-    this.setOutput(true, "String");
+    this.setOutput(true, "Number");
     this.setColour(65);
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
