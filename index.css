@@ -7,7 +7,7 @@ html, body, #fullheight {
   float: left;
   position: relative !important;
   width: 40%;
-  height: 800px;
+  height: 720px;
   bottom: 0;
   left: 0;
   right: 0;
@@ -17,7 +17,7 @@ html, body, #fullheight {
 #screen {
   float: left;
   width: 60%;
-  height: 60%;
+  height: 700px;
 }
 
 #screen canvas {

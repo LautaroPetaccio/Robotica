@@ -31,6 +31,9 @@
   <script src="libraries/blockly/blocks/robotica.js"></script>
   <script src="libraries/blockly/msg/js/en.js"></script>
 
+  <!-- JS interpreter -->
+  <script src="libraries/js-interpreter/acorn_interpreter.js"></script>
+
   <!-- melonJS Library -->
   <script type="text/javascript" src="game/lib/melonJS-2.1.1.js"></script>
 
@@ -49,8 +52,37 @@
 
   <!-- Bootstrap & Mobile optimization tricks -->
   <script type="text/javascript">
+      function initApi(interpreter, scope) {
+        interpreter.robotInstructions = new Array();
+        interpreter.robotSensors = {left : 0,
+                                    right: 0,
+                                    up   : 0,
+                                    down : 0};
+
+        // Add an API function for the motor function
+        var wrapper = function(leftWheelValue, rightWheelValue, durationValue) {
+          return interpreter.createPrimitive(
+            interpreter.robotInstructions.push(
+              {action : 'motor', 
+              leftWheel : leftWheelValue.data,
+              rightWheel : rightWheelValue.data,
+              duration : durationValue.data
+              })
+          );
+        };
+        interpreter.setProperty(scope, 'motor',
+            interpreter.createNativeFunction(wrapper));
+
+        // Add an API function for the sensor function
+        wrapper = function(sensorName) {
+          return interpreter.createPrimitive(interpreter.robotSensors[sensorName]);
+        };
+        interpreter.setProperty(scope, 'sensor',
+            interpreter.createNativeFunction(wrapper));
+      }
+
       $(window).load(function() {
-          me.parser = null;
+          me.interpreter = null;
           game.onload();
 
           // Mobile browser hacks
@@ -76,38 +108,46 @@
 
       $(document).ready(function() {
 
-      //   $('#btn_run').click(function() {
-      //     if(me.parser !== null && me.parser.excecution.isPaused()) {
-      //       // Resume
-      //       me.parser.excecution.resume();
-      //     }
-      //     else {
-      //       me.state.change(me.state.PLAY);
-      //       // var root = parser.parse(editor.getValue());
-      //       var onCompleted = function() {
-      //         $('#btn_run').show();
-      //         $('#btn_pause').hide();
-      //         $('#btn_stop').hide();
-      //       }
-      //       // me.parser = new TreeWalker(root, onCompleted);
-      //       $('#btn_pause').show();
-      //       $('#btn_stop').show();
-      //     }
-      //     $('#btn_run').hide();
-      //   });
+        $('#btn_run').click(function() {
+          if(me.interpreter !== null && me.excecution.isPaused()) { 
+            // Resume
+            me.excecution.run();
+            console.log("State: " + me.excecution.state);
+          }
+          else {
+            me.state.change(me.state.PLAY);
+            var code = Blockly.JavaScript.workspaceToCode(workspace);
+            console.log(code);
+            var onCompleted = function() {
+              $('#btn_run').show();
+              $('#btn_pause').hide();
+              $('#btn_stop').hide();
+            }
+            me.excecution.onCompleted = onCompleted;
+            me.interpreter = myInterpreter = new Interpreter(code, initApi);
+            $('#btn_pause').show();
+            $('#btn_stop').show();
+            me.excecution.run();
+            console.log("State: " + me.excecution.state);
+          }
+          $('#btn_run').hide();
+        });
 
-      //   $('#btn_pause').click(function() {
-      //     $('#btn_run').show();
-      //     // me.parser.excecution.pause();
-      //   });
+        $('#btn_pause').click(function() {
+          $('#btn_run').show();
+          me.excecution.pause();
+          console.log("State: " + me.excecution.state);
+        });
 
-      //   $('#btn_stop').click(function() {
-      //     $('#btn_run').show();
-      //     $('#btn_pause').hide();
-      //     $('#btn_stop').hide();
-      //     // me.parser.excecution.resume();
-      //     // me.state.change(me.state.PLAY);
-      //   });
+        $('#btn_stop').click(function() {
+          $('#btn_run').show();
+          $('#btn_pause').hide();
+          $('#btn_stop').hide();
+          me.excecution.finish();
+          console.log("State after stop: 1 " + me.excecution.state);
+          me.state.change(me.state.PLAY);
+          console.log("State after stop: 2 " + me.excecution.state);
+        });
 
       });
 
@@ -304,6 +344,7 @@
            {controls: true}
         }
     );
+    Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
     function showCode() {
       // Generate JavaScript code and display it.
       Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
