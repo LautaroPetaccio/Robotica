@@ -29,7 +29,7 @@ Blockly.Blocks['robotica_sensor'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("Sensor")
-        .appendField(new Blockly.FieldDropdown([["Izquierda", "left"], ["Derecha", "right"], ["Arriba", "up"], ["Abajo", "down"]]), "Sensor");
+        .appendField(new Blockly.FieldDropdown([["Izquierda", "left"], ["Derecha", "right"], ["Adelante", "front"], ["Atrás", "back"]]), "Sensor");
     this.setOutput(true, "Number");
     this.setColour(65);
     this.setTooltip('');
