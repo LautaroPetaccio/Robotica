@@ -51,9 +51,9 @@ game.PlayerEntity = me.Entity.extend({
   moveRobot : function(leftMotor, rightMotor, time) {
     wheelRadious = 5;
     leftMotor *= time;
-    rightMotor *= time;  
-    this.stats.x = this.pos.x + (wheelRadious/2)*(leftMotor + rightMotor)*Math.cos(this.stats.angle);
-    this.stats.y = this.pos.y + (wheelRadious/2)*(leftMotor + rightMotor)*Math.sin(this.stats.angle);
+    rightMotor *= time;
+    this.stats.x += (wheelRadious/2)*(leftMotor + rightMotor)*Math.cos(this.stats.angle);
+    this.stats.y += (wheelRadious/2)*(leftMotor + rightMotor)*Math.sin(this.stats.angle);
     this.stats.angle += (wheelRadious/this.stats.l) * (rightMotor - leftMotor);
   },
 
@@ -137,9 +137,7 @@ game.PlayerEntity = me.Entity.extend({
    * colision handler
    * (called when colliding with other objects)
    */
-  onCollision : function (response) {
-    this.pos.sub(response.overlapV);
-
+  onCollision : function (response, other) {
     // Make all other objects solid
     return true;
   }
