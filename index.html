@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Robotica en la escuela</title>
+  <meta charset="UTF-8">
+  <title>Robotica en la escuela</title>
   <script type="text/javascript" src="libraries/jquery/jquery.js" charset="utf-8"></script>
 
   <link rel="stylesheet" href="index.css">
 
   <!-- Bootstrap -->
-	<script type="text/javascript" src="libraries/bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
-	<link rel="stylesheet" href="libraries/bootstrap/css/bootstrap.min.css">
+  <script type="text/javascript" src="libraries/bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="libraries/bootstrap/css/bootstrap.min.css">
 
 
   <!-- MelonJS requirements -->
@@ -56,8 +56,8 @@
         interpreter.robotInstructions = new Array();
         interpreter.robotSensors = {left : 0,
                                     right: 0,
-                                    up   : 0,
-                                    down : 0};
+                                    front: 0,
+                                    back : 0};
 
         // Add an API function for the motor function
         var wrapper = function(leftWheelValue, rightWheelValue, durationValue) {
