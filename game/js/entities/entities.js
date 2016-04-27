@@ -44,7 +44,7 @@ game.PlayerEntity = me.Entity.extend({
     rightMotor *= time;  
     this.pos.x = this.pos.x + (wheelRadious/2)*(leftMotor + rightMotor)*Math.cos(this.renderable.angle);
     this.pos.y = this.pos.y + (wheelRadious/2)*(leftMotor + rightMotor)*Math.sin(this.renderable.angle);
-    this.renderable.angle += (wheelRadious/this.l) * (rightMotor - leftMotor);
+    this.renderable.angle += (wheelRadious/this.l) * (leftMotor - rightMotor);
   },
 
   updateSensors: function(sensorName) {
