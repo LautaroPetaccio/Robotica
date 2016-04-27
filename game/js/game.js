@@ -34,6 +34,12 @@ var game = {
       return;
     }
 
+    if (me.game.HASH["debug"]) {
+        window.onReady(function () {
+            me.plugin.register.defer(this, me.debug.Panel, "debug", me.input.KEY.V);
+        });
+    }
+
     // Initialize the audio.
     me.audio.init("mp3,ogg");
 
