@@ -33,18 +33,8 @@ game.PlayerEntity = me.Entity.extend({
     /* Instruction movements to be excecuted */
     this.instructions = [];
 
-    /* Stats used to update the robots position  */
-    this.stats = {
-      /* angle in radians */
-      angle : this.renderable.angle,
-      /* X position in the frame */
-      x : x,
-      /* Y position in the frame */
-      y : y,
-      /* Distance between the center of the two wheels, 30 pixels */
-      l : 30,
-    };
-
+    /* Distance between the center of the two wheels, 30 pixels */
+    this.l = 30;
   },
 
   /* http://planning.cs.uiuc.edu/node659.html */
@@ -52,9 +42,9 @@ game.PlayerEntity = me.Entity.extend({
     wheelRadious = 5;
     leftMotor *= time;
     rightMotor *= time;  
-    this.stats.x = this.pos.x + (wheelRadious/2)*(leftMotor + rightMotor)*Math.cos(this.stats.angle);
-    this.stats.y = this.pos.y + (wheelRadious/2)*(leftMotor + rightMotor)*Math.sin(this.stats.angle);
-    this.stats.angle += (wheelRadious/this.stats.l) * (rightMotor - leftMotor);
+    this.pos.x = this.pos.x + (wheelRadious/2)*(leftMotor + rightMotor)*Math.cos(this.renderable.angle);
+    this.pos.y = this.pos.y + (wheelRadious/2)*(leftMotor + rightMotor)*Math.sin(this.renderable.angle);
+    this.renderable.angle += (wheelRadious/this.l) * (rightMotor - leftMotor);
   },
 
   updateSensors: function(sensorName) {
@@ -97,9 +87,6 @@ game.PlayerEntity = me.Entity.extend({
               break;
           }
 
-          this.pos.x = this.stats.x;
-          this.pos.y = this.stats.y;
-          this.renderable.angle = this.stats.angle;
           me.interpreter.robotInstructions[0].duration -= dt / 1000;
           // console.log("Updates duration: " + me.interpreter.robotInstructions[0].duration);
           if(me.interpreter.robotInstructions[0].duration <= 0) {
