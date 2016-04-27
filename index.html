@@ -56,8 +56,8 @@
         interpreter.robotInstructions = new Array();
         interpreter.robotSensors = {left : 0,
                                     right: 0,
-                                    up   : 0,
-                                    down : 0};
+                                    front: 0,
+                                    back : 0};
 
         // Add an API function for the motor function
         var wrapper = function(leftWheelValue, rightWheelValue, durationValue) {
