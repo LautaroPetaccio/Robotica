@@ -5,11 +5,12 @@
   	<title>Robotica en la escuela</title>
     <script type="text/javascript" src="libraries/jquery/jquery.js" charset="utf-8"></script>
 
-    <link rel="stylesheet" href="index.css">
-
     <!-- Bootstrap -->
   	<script type="text/javascript" src="libraries/bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
   	<link rel="stylesheet" href="libraries/bootstrap/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="index.css">
 
 
     <!-- MelonJS requirements -->
@@ -162,10 +163,19 @@
           /** Resizes the container for the Blockly workspace. */
           var wrapper = $('#blocks-panel');
           var content_blocks = $('#content-blocks svg');
+          var drawing_area = $('.drawing-area');
+          var drawing_screen = $('.drawing-area #screen');
+          var drawing_canvas = $('.drawing-area #canvas');
+          drawing_screen.hide();
           function resizeBlocklyWorkspace() {
             content_blocks.css({ 'height': wrapper.height() + 'px' });
+            var value = Math.floor((drawing_area.height() - drawing_screen.height())/2);
+            drawing_screen.css({ 'padding-top': value + 'px' });
           };
-          resizeBlocklyWorkspace();
+          setTimeout( function() {
+            drawing_screen.fadeIn();
+            resizeBlocklyWorkspace();
+          }, 100);
         });
 
 
@@ -215,11 +225,19 @@
     <div id="main-container" class="container-fluid">
       <div class="row">
         <!-- Canvas placeholder -->
-        <div id="screen" class="col-xs-6"></div>
+        <div class="col-xs-12 col-sm-4 col-md-6">
+          <div class="drawing-area">
+            
+              <div id="screen"></div>
+                
+          </div>
+        </div>
 
-        <div id="blocks-panel" class="col-xs-6 blocks-panel-large">
-          <div id="content-blocks" class="content">
-            <div id="blocklyDiv"></div>
+        <div class="col-xs-12 col-sm-8 col-md-6">
+          <div id="blocks-panel" class="blocks-panel-large blocky-workarea">
+            <div id="content-blocks" class="content">
+              <div id="blocklyDiv"></div>
+            </div>
           </div>
         </div>
 

@@ -1,11 +1,17 @@
+/**
+ * General layout
+ */
+
 html, body, #fullheight {
   min-height: 100% !important;
   height: 100%;
+  background-color: #eee;
 }
 
 #blocklyDiv {
   padding: 0px;
-  position: relative !important;
+  display: block;
+  height: 100%;  
 }
 
 #content-blocks svg {
@@ -27,9 +33,8 @@ html, body, #fullheight {
   image-rendering: -webkit-optimize-contrast;
   image-rendering: optimize-contrast;
   -ms-interpolation-mode: nearest-neighbor;
-  width: 100%;
+  width: 80%;
 }
-
 
 /************************************/
 /*  Blocks, Arduino, and XML areas  */
@@ -44,29 +49,42 @@ html, body, #fullheight {
 #blocks-panel {
   padding: 0px;
   position: relative !important;
-  padding-right: 15px;
-  margin-bottom: 5px;
 }
 
 #content-blocks {
   margin: 0;
   padding: 0;
-  min-height: 480px;
-  height: -moz-calc(100vh - 190px);     /* Firefox  */
-  height: -webkit-calc(100vh - 190px);  /* WebKit   */
-  height: -o-calc(100vh - 190px);       /* Opera    */
-  height: calc(100vh - 190px);          /* Standard */
+  height: -moz-calc(100vh - 200px);     /* Firefox  */
+  height: -webkit-calc(100vh - 200px);  /* WebKit   */
+  height: -o-calc(100vh - 200px);       /* Opera    */
+  height: calc(100vh - 200px);          /* Standard */
 }
 
-.blocks-panel-large {
-  height: -moz-calc(100vh - 190px);     /* Firefox  */
-  height: -webkit-calc(100vh - 190px);  /* WebKit   */
-  height: -o-calc(100vh - 190px);       /* Opera    */
-  height: calc(100vh - 190px);          /* Standard */
+
+/**
+ * Styling
+ */
+
+#main-container .blocky-workarea,
+#main-container .drawing-area {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.24), 0 2px 10px 0 rgba(0, 0, 0, 0.18);
+  margin-top: 40px;
+  height: -moz-calc(100vh - 200px);     /* Firefox  */
+  height: -webkit-calc(100vh - 200px);  /* WebKit   */
+  height: -o-calc(100vh - 200px);       /* Opera    */
+  height: calc(100vh - 200px);          /* Standard */
 }
-.blocks-panel-small {
-  height: -moz-calc(100vh - 350px);     /* Firefox  */
-  height: -webkit-calc(100vh - 350px);  /* WebKit   */
-  height: -o-calc(100vh - 350px);       /* Opera    */
-  height: calc(100vh - 350px);          /* Standard */
+
+#main-container .blocky-workarea {
+  margin-right: 15px;
 }
+#main-container .drawing-area {
+  margin-left: 15px;
+  background-color: #fff;
+  text-align: center;
+}
+#main-container .drawing-area #screen {
+  width: 100%;
+  margin: 0 auto 0;
+  vertical-align: middle;
+} 
