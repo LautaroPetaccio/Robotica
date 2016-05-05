@@ -2,22 +2,20 @@ html, body, #fullheight {
   min-height: 100% !important;
   height: 100%;
 }
+
 #blocklyDiv {
-  margin: 0;
-  float: left;
+  padding: 0px;
   position: relative !important;
-  width: 40%;
-  height: 720px;
-  bottom: 0;
-  left: 0;
-  right: 0;
 }
 
+#content-blocks svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible!important;
+}
 
-#screen {
-  float: left;
-  width: 60%;
-  height: 700px;
+#content-blocks svg .blocklyMainBackground {
+  stroke: #fff;
 }
 
 #screen canvas {
@@ -29,9 +27,46 @@ html, body, #fullheight {
   image-rendering: -webkit-optimize-contrast;
   image-rendering: optimize-contrast;
   -ms-interpolation-mode: nearest-neighbor;
+  width: 100%;
 }
 
-#main-container {
+
+/************************************/
+/*  Blocks, Arduino, and XML areas  */
+/************************************/
+.content {
+  margin: 0;
+  padding: 0;
   width: 100%;
-  height: 100%;
+  background-color: #ffffff;
+}
+
+#blocks-panel {
+  padding: 0px;
+  position: relative !important;
+  padding-right: 15px;
+  margin-bottom: 5px;
+}
+
+#content-blocks {
+  margin: 0;
+  padding: 0;
+  min-height: 480px;
+  height: -moz-calc(100vh - 190px);     /* Firefox  */
+  height: -webkit-calc(100vh - 190px);  /* WebKit   */
+  height: -o-calc(100vh - 190px);       /* Opera    */
+  height: calc(100vh - 190px);          /* Standard */
+}
+
+.blocks-panel-large {
+  height: -moz-calc(100vh - 190px);     /* Firefox  */
+  height: -webkit-calc(100vh - 190px);  /* WebKit   */
+  height: -o-calc(100vh - 190px);       /* Opera    */
+  height: calc(100vh - 190px);          /* Standard */
+}
+.blocks-panel-small {
+  height: -moz-calc(100vh - 350px);     /* Firefox  */
+  height: -webkit-calc(100vh - 350px);  /* WebKit   */
+  height: -o-calc(100vh - 350px);       /* Opera    */
+  height: calc(100vh - 350px);          /* Standard */
 }
