@@ -171,11 +171,57 @@
             content_blocks.css({ 'height': wrapper.height() + 'px' });
             var value = Math.floor((drawing_area.height() - drawing_screen.height())/2);
             drawing_screen.css({ 'padding-top': value + 'px' });
+            closeDrawingArea();
           };
           setTimeout( function() {
             drawing_screen.fadeIn();
             resizeBlocklyWorkspace();
           }, 100);
+
+
+          var closed = true;
+          function toggleDrawingArea() {
+            if (closed) {
+              openDrawingArea();
+            } else {
+              closeDrawingArea();
+            }
+          }
+          function openDrawingArea() {
+            if (closed) {
+              drawing_area.stop().animate({
+                            width: '650px',
+                            height: '583px',
+                            padding: '10px'
+                    }, 500, function() {});
+              closed = false;
+            }
+          }
+          function closeDrawingArea() {
+            if (!closed) {
+              drawing_area.stop().animate({
+                        width: '200px',
+                        height: '180px',
+                        padding: '0px'
+                }, 500, function() {
+                  drawing_area.removeAttr('style');
+                });
+              closed = true;
+            }
+          }
+
+          $('html').click(function() {
+            closeDrawingArea();
+          });
+          $('#main-container .drawing-area').click(function(event) {
+            if ($(window).width() < 992) {
+              toggleDrawingArea();
+            }
+            event.stopPropagation();
+          });
+
+
+
         });
 
 
@@ -225,7 +271,7 @@
     <div id="main-container" class="container-fluid">
       <div class="row">
         <!-- Canvas placeholder -->
-        <div class="col-xs-12 col-sm-4 col-md-6">
+        <div class="col-xs-12 col-md-5 col-lg-5">
           <div class="drawing-area">
             
               <div id="screen"></div>
@@ -233,7 +279,7 @@
           </div>
         </div>
 
-        <div class="col-xs-12 col-sm-8 col-md-6">
+        <div class="col-xs-12 col-md-7 col-lg-7">
           <div id="blocks-panel" class="blocks-panel-large blocky-workarea">
             <div id="content-blocks" class="content">
               <div id="blocklyDiv"></div>
@@ -402,7 +448,7 @@
           zoom: {
             controls: true,
             wheel: false,
-            startScale: 1.0,
+            startScale: 0.8,
             maxScale: 2,
             minScale: 0.2,
             scaleSpeed: 1.2

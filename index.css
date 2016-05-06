@@ -65,6 +65,9 @@ html, body, #fullheight {
  * Styling
  */
 
+.row {
+  position: relative;
+}
 #main-container .blocky-workarea,
 #main-container .drawing-area {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.24), 0 2px 10px 0 rgba(0, 0, 0, 0.18);
@@ -76,7 +79,9 @@ html, body, #fullheight {
 }
 
 #main-container .blocky-workarea {
+  position: relative;
   margin-right: 15px;
+  z-index: 0;
 }
 #main-container .drawing-area {
   margin-left: 15px;
@@ -88,3 +93,22 @@ html, body, #fullheight {
   margin: 0 auto 0;
   vertical-align: middle;
 } 
+
+@media (max-width: 992px) {
+    #main-container .drawing-area {
+      width: 200px;
+      height: 180px;
+      position: absolute;
+      z-index: 1000;
+      margin: 0;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+    }
+    #main-container .drawing-area #screen {
+      padding: 10px!important;
+    }
+    #main-container .drawing-area #screen canvas {
+      width: 100%;
+    }
+}
