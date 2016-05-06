@@ -101,7 +101,7 @@
           }
       });
       $(document).ready(function() {
-        $('#btn_run').click(function() {
+        $('#btn_run').click(function(event) {
           if(me.interpreter !== null && me.execution.isPaused()) { 
             // Resume
             $('#btn_pause').show();
@@ -125,14 +125,16 @@
             console.log("State: " + me.execution.state);
           }
           $('#btn_run').hide();
+          event.stopPropagation();
         });
-        $('#btn_pause').click(function() {
+        $('#btn_pause').click(function(event) {
           $('#btn_run').show();
           $('#btn_pause').hide();
           me.execution.pause();
           console.log("State: " + me.execution.state);
+          event.stopPropagation();
         });
-        $('#btn_stop').click(function() {
+        $('#btn_stop').click(function(event) {
           $('#btn_run').show();
           $('#btn_pause').hide();
           $('#btn_stop').hide();
@@ -140,6 +142,7 @@
           console.log("State after stop: 1 " + me.execution.state);
           me.state.change(me.state.PLAY);
           console.log("State after stop: 2 " + me.execution.state);
+          event.stopPropagation();
         });
       });
   </script>
