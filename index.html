@@ -114,8 +114,11 @@
             me.execution.run();
           }
           else {
-            me.state.change(me.state.PLAY);
             var code = Blockly.JavaScript.workspaceToCode(workspace);
+            if(!code.length) {
+              return;
+            }
+            me.state.change(me.state.PLAY);
             var onCompleted = function() {
               $('#btn_run').show();
               $('#btn_pause').hide();
