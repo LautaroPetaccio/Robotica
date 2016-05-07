@@ -112,12 +112,10 @@
           if(me.interpreter !== null && me.execution.isPaused()) { 
             // Resume
             me.execution.run();
-            console.log("State: " + me.execution.state);
           }
           else {
             me.state.change(me.state.PLAY);
             var code = Blockly.JavaScript.workspaceToCode(workspace);
-            console.log(code);
             var onCompleted = function() {
               $('#btn_run').show();
               $('#btn_pause').hide();
@@ -128,7 +126,6 @@
             $('#btn_pause').show();
             $('#btn_stop').show();
             me.execution.run();
-            console.log("State: " + me.execution.state);
           }
           $('#btn_run').hide();
         });
@@ -136,7 +133,6 @@
         $('#btn_pause').click(function() {
           $('#btn_run').show();
           me.execution.pause();
-          console.log("State: " + me.execution.state);
         });
 
         $('#btn_stop').click(function() {
@@ -144,9 +140,7 @@
           $('#btn_pause').hide();
           $('#btn_stop').hide();
           me.execution.finish();
-          console.log("State after stop: 1 " + me.execution.state);
           me.state.change(me.state.PLAY);
-          console.log("State after stop: 2 " + me.execution.state);
         });
 
       });
