@@ -56,7 +56,7 @@ gulp.task('scripts-blockly', [], function() {
             'third-party/google-blockly/blockly_compressed.js',
             'third-party/google-blockly/blocks_compressed.js',
             'third-party/google-blockly/javascript_compressed.js',
-            'third-party/google-blockly/msg/js/en.js'
+            'third-party/google-blockly/msg/js/es.js'
           ])
           .pipe(plugins.flatten())
           .pipe(plugins.concat('blockly.min.js'))
