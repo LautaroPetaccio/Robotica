@@ -1,0 +1,21 @@
+{
+    "extends": "eslint:recommended",
+    "rules":{
+        "camelcase": 1,
+        "comma-dangle": 2,
+        "no-console": "off",
+        "no-unused-vars": "warn",
+        "quotes": 0
+    },
+    "globals":{
+        "$": true,
+        "_": true,
+        "Blob": true,
+        "Blockly": true,
+        "Index": true,
+        "console": true,
+        "document": true,
+        "navigator": true,
+        "window": true
+    }
+}

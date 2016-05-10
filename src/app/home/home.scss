@@ -1,0 +1,26 @@
+#home-wrapper {
+  margin: 0px 0px 0px 0px;
+  padding: 0px 15px;
+  height: 100%;
+  #home-header {
+    #home-navbar {
+      padding: 0px;
+    }
+  }
+  #home-content {
+    padding: 0px 15px 0px 15px;
+    height: 80%;
+    #home-blockly {
+      height: 100%;
+      #blockly-area {
+        height: 100%;
+      }
+    }
+    #home-simulator {
+      height: 100%;
+      #simulator-canvas-wrapper {
+        height: 100%;
+      }
+    }
+  }
+}

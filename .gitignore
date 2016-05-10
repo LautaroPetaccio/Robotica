@@ -1,1 +1,8 @@
-.DS_Store
+# Bower
+bower_components/
+
+# npm
+node_modules/
+
+# Build
+dist/
