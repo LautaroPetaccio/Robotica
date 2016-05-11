@@ -6,11 +6,17 @@
  */
 
 #simulator-container {
-  min-height: $min-simulator-height;
+  height: $simulator-height;
+  margin: 0px 0px 20px 0px;
+  padding: 10px 10px;
+  background-color: white;
+  @include panel-shadow;
   
   #melonjs-screen {
+    height: 100%;
+    text-align: center;
+
     canvas {
-      /* margin: auto;*/
       /* disable scaling interpolation */
       image-rendering: optimizeSpeed;
       image-rendering: -moz-crisp-edges;
@@ -18,7 +24,6 @@
       image-rendering: -webkit-optimize-contrast;
       image-rendering: optimize-contrast;
       -ms-interpolation-mode: nearest-neighbor;
-      width: 80%;
     }
   }
 }

@@ -6,7 +6,20 @@ this.SimulatorM = (function() {
 
   module.initialize = function() {
     me.interpreter = null;
-    game.onload();
+    game.onload("melonjs-screen");
+
+    window.addEventListener('resize', onResize, false);
+    
+    onResize();
+
+    function onResize() {
+      var canvasWrapperElement = $("#melonjs-screen");
+      var canvasElement = $("#melonjs-screen > canvas");
+      var canvasWidth = Math.min(canvasWrapperElement.width(), canvasWrapperElement.height());
+      var canvasHeight = canvasWidth;
+      canvasElement.width(canvasWidth);
+      canvasElement.height(canvasHeight);
+    };
 
     // Mobile browser hacks
     if (me.device.isMobile && !navigator.isCocoonJS) {

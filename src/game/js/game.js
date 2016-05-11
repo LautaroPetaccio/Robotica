@@ -13,7 +13,7 @@ var game = {
 
   // Run on page load.
 
-  "onload" : function () {
+  "onload" : function (canvasWrapper) {
     /* 
       0 => running
       1 => paused
@@ -29,14 +29,7 @@ var game = {
     };
 
     // Initialize the video.
-    var canvasWrapperElement = $("#simulator-container");
-    var videoWidth = canvasWrapperElement.width();
-    var videoHeight = canvasWrapperElement.height();
-    var videoInitOptions = {
-      wrapper : "simulator-container",
-      antiAlias: true
-    };
-    if (!me.video.init(videoWidth, videoHeight, videoInitOptions)) {
+    if (!me.video.init(640, 640, {wrapper : canvasWrapper, antiAlias: true})) {
       alert("Your browser does not support HTML5 canvas.");
       return;
     }
