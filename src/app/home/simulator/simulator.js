@@ -15,7 +15,7 @@ this.SimulatorM = (function() {
     function onResize() {
       var canvasWrapperElement = $("#melonjs-screen");
       var canvasElement = $("#melonjs-screen > canvas");
-      var canvasWidth = Math.min(canvasWrapperElement.width(), canvasWrapperElement.height());
+      var canvasWidth = Math.floor(Math.min(canvasWrapperElement.width(), canvasWrapperElement.height())) - 5;
       var canvasHeight = canvasWidth;
       canvasElement.width(canvasWidth);
       canvasElement.height(canvasHeight);
