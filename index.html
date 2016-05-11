@@ -30,7 +30,7 @@
     <script src="libraries/blockly/javascript_compressed.js"></script>
     <script src="libraries/blockly/generators/javascript/robotica.js"></script>
     <script src="libraries/blockly/blocks/robotica.js"></script>
-    <script src="libraries/blockly/msg/js/en.js"></script>
+    <script src="libraries/blockly/msg/js/es.js"></script>
 
     <!-- JS interpreter -->
     <script src="libraries/js-interpreter/acorn_interpreter.js"></script>
@@ -106,12 +106,13 @@
             // Resume
             $('#btn_pause').show();
             me.execution.run();
-            console.log("State: " + me.execution.state);
           }
           else {
-            me.state.change(me.state.PLAY);
             var code = Blockly.JavaScript.workspaceToCode(workspace);
-            console.log(code);
+            if(!code.length) {
+              return;
+            }
+            me.state.change(me.state.PLAY);
             var onCompleted = function() {
               $('#btn_run').show();
               $('#btn_pause').hide();
@@ -122,7 +123,6 @@
             $('#btn_pause').show();
             $('#btn_stop').show();
             me.execution.run();
-            console.log("State: " + me.execution.state);
           }
           $('#btn_run').hide();
           event.stopPropagation();
@@ -131,18 +131,13 @@
           $('#btn_run').show();
           $('#btn_pause').hide();
           me.execution.pause();
-          console.log("State: " + me.execution.state);
-          event.stopPropagation();
         });
         $('#btn_stop').click(function(event) {
           $('#btn_run').show();
           $('#btn_pause').hide();
           $('#btn_stop').hide();
           me.execution.finish();
-          console.log("State after stop: 1 " + me.execution.state);
           me.state.change(me.state.PLAY);
-          console.log("State after stop: 2 " + me.execution.state);
-          event.stopPropagation();
         });
       });
   </script>
@@ -266,12 +261,9 @@
         <!-- Canvas placeholder -->
         <div class="col-xs-12 col-md-5 col-lg-5">
           <div class="drawing-area">
-            
               <div id="screen"></div>
-                
           </div>
         </div>
-
         <div class="col-xs-12 col-md-7 col-lg-7">
           <div id="blocks-panel" class="blocks-panel-large blocky-workarea">
             <div id="content-blocks" class="content">
@@ -279,177 +271,154 @@
             </div>
           </div>
         </div>
-
-          <!-- Start XML configuration -->
-          <xml id="toolbox" style="display: none">
-            <category name="Robótica" colour="65">
-              <block type="robotica_motor"></block>
-              <block type="robotica_sensor"></block>
-            </category>
-            <category name="Lógica" colour="210">
-              <block type="controls_if"></block>
-              <block type="logic_compare"></block>
-              <block type="logic_operation"></block>
-              <block type="logic_negate"></block>
-              <block type="logic_boolean"></block>
-              <block type="logic_null"></block>
-              <block type="logic_ternary"></block>
-            </category>
-            <category name="Secuencias" colour="120">
-              <block type="controls_repeat_ext">
-                <value name="TIMES">
-                  <shadow type="math_number">
-                    <field name="NUM">10</field>
-                  </shadow>
-                </value>
-              </block>
-              <block type="controls_whileUntil"></block>
-              <block type="controls_for">
-                <value name="FROM">
-                  <shadow type="math_number">
-                    <field name="NUM">1</field>
-                  </shadow>
-                </value>
-                <value name="TO">
-                  <shadow type="math_number">
-                    <field name="NUM">10</field>
-                  </shadow>
-                </value>
-                <value name="BY">
-                  <shadow type="math_number">
-                    <field name="NUM">1</field>
-                  </shadow>
-                </value>
-              </block>
-              <block type="controls_flow_statements"></block>
-            </category>
-            <category name="Matemáticas" colour="230">
-              <block type="math_number"></block>
-              <block type="math_arithmetic">
-                <value name="A">
-                  <shadow type="math_number">
-                    <field name="NUM">1</field>
-                  </shadow>
-                </value>
-                <value name="B">
-                  <shadow type="math_number">
-                    <field name="NUM">1</field>
-                  </shadow>
-                </value>
-              </block>
-              <block type="math_single">
-                <value name="NUM">
-                  <shadow type="math_number">
-                    <field name="NUM">9</field>
-                  </shadow>
-                </value>
-              </block>
-              <block type="math_trig">
-                <value name="NUM">
-                  <shadow type="math_number">
-                    <field name="NUM">45</field>
-                  </shadow>
-                </value>
-              </block>
-              <block type="math_constant"></block>
-              <block type="math_number_property">
-                <value name="NUMBER_TO_CHECK">
-                  <shadow type="math_number">
-                    <field name="NUM">0</field>
-                  </shadow>
-                </value>
-              </block>
-              <block type="math_change">
-                <value name="DELTA">
-                  <shadow type="math_number">
-                    <field name="NUM">1</field>
-                  </shadow>
-                </value>
-              </block>
-              <block type="math_round">
-                <value name="NUM">
-                  <shadow type="math_number">
-                    <field name="NUM">3.1</field>
-                  </shadow>
-                </value>
-              </block>
-              <block type="math_on_list"></block>
-              <block type="math_modulo">
-                <value name="DIVIDEND">
-                  <shadow type="math_number">
-                    <field name="NUM">64</field>
-                  </shadow>
-                </value>
-                <value name="DIVISOR">
-                  <shadow type="math_number">
-                    <field name="NUM">10</field>
-                  </shadow>
-                </value>
-              </block>
-              <block type="math_constrain">
-                <value name="VALUE">
-                  <shadow type="math_number">
-                    <field name="NUM">50</field>
-                  </shadow>
-                </value>
-                <value name="LOW">
-                  <shadow type="math_number">
-                    <field name="NUM">1</field>
-                  </shadow>
-                </value>
-                <value name="HIGH">
-                  <shadow type="math_number">
-                    <field name="NUM">100</field>
-                  </shadow>
-                </value>
-              </block>
-              <block type="math_random_int">
-                <value name="FROM">
-                  <shadow type="math_number">
-                    <field name="NUM">1</field>
-                  </shadow>
-                </value>
-                <value name="TO">
-                  <shadow type="math_number">
-                    <field name="NUM">100</field>
-                  </shadow>
-                </value>
-              </block>
-              <block type="math_random_float"></block>
-            </category>
-            <sep></sep>
-            <category name="Variables" colour="330" custom="VARIABLE"></category>
-            <category name="Funciones" colour="290" custom="PROCEDURE"></category>
-          </xml>
-          <!-- End XML Configuration -->
-
-        </div>
+        <!-- Start XML configuration -->
+        <xml id="toolbox" style="display: none">
+          <category name="Robótica" colour="65">
+            <block type="robotica_motor"></block>
+            <block type="robotica_sensor"></block>
+          </category>
+          <category name="Lógica" colour="210">
+            <block type="controls_if"></block>
+            <block type="logic_compare"></block>
+            <block type="logic_operation"></block>
+            <block type="logic_negate"></block>
+            <block type="logic_boolean"></block>
+          </category>
+          <category name="Secuencias" colour="120">
+            <block type="controls_repeat_ext">
+              <value name="TIMES">
+                <shadow type="math_number">
+                  <field name="NUM">10</field>
+                </shadow>
+              </value>
+            </block>
+            <block type="controls_whileUntil"></block>
+            <block type="controls_for">
+              <value name="FROM">
+                <shadow type="math_number">
+                  <field name="NUM">1</field>
+                </shadow>
+              </value>
+              <value name="TO">
+                <shadow type="math_number">
+                  <field name="NUM">10</field>
+                </shadow>
+              </value>
+              <value name="BY">
+                <shadow type="math_number">
+                  <field name="NUM">1</field>
+                </shadow>
+              </value>
+            </block>
+            <block type="controls_flow_statements"></block>
+          </category>
+          <category name="Matemáticas" colour="230">
+            <block type="math_number"></block>
+            <block type="math_arithmetic">
+              <value name="A">
+                <shadow type="math_number">
+                  <field name="NUM">1</field>
+                </shadow>
+              </value>
+              <value name="B">
+                <shadow type="math_number">
+                  <field name="NUM">1</field>
+                </shadow>
+              </value>
+            </block>
+            <block type="math_single">
+              <value name="NUM">
+                <shadow type="math_number">
+                  <field name="NUM">9</field>
+                </shadow>
+              </value>
+            </block>
+            <block type="math_trig">
+              <value name="NUM">
+                <shadow type="math_number">
+                  <field name="NUM">45</field>
+                </shadow>
+              </value>
+            </block>
+            <block type="math_constant"></block>
+            <block type="math_number_property">
+              <value name="NUMBER_TO_CHECK">
+                <shadow type="math_number">
+                  <field name="NUM">0</field>
+                </shadow>
+              </value>
+            </block>
+            <block type="math_change">
+              <value name="DELTA">
+                <shadow type="math_number">
+                  <field name="NUM">1</field>
+                </shadow>
+              </value>
+            </block>
+            <block type="math_round">
+              <value name="NUM">
+                <shadow type="math_number">
+                  <field name="NUM">3.1</field>
+                </shadow>
+              </value>
+            </block>
+            <block type="math_modulo">
+              <value name="DIVIDEND">
+                <shadow type="math_number">
+                  <field name="NUM">64</field>
+                </shadow>
+              </value>
+              <value name="DIVISOR">
+                <shadow type="math_number">
+                  <field name="NUM">10</field>
+                </shadow>
+              </value>
+            </block>
+            <block type="math_random_int">
+              <value name="FROM">
+                <shadow type="math_number">
+                  <field name="NUM">1</field>
+                </shadow>
+              </value>
+              <value name="TO">
+                <shadow type="math_number">
+                  <field name="NUM">100</field>
+                </shadow>
+              </value>
+            </block>
+          </category>
+          <sep></sep>
+          <category name="Variables" colour="330" custom="VARIABLE"></category>
+          <category name="Funciones" colour="290" custom="PROCEDURE"></category>
+        </xml>
+        <!-- End XML Configuration -->
+      </div>
     </div>
 
-   <script type="text/javascript">
-      var workspace = Blockly.inject('blocklyDiv', {
-          media: 'libraries/blockly/media/',
-          sounds: true,
-          toolbox: document.getElementById('toolbox'),
-          rtl: false,
-          collapse: true,
-          comments: true,
-          css: true,
-          disable: true,
-          grid: false,
-          maxBlocks: Infinity,
-          zoom: {
-            controls: true,
-            wheel: false,
-            startScale: 0.8,
-            maxScale: 2,
-            minScale: 0.2,
-            scaleSpeed: 1.2
+    <script type="text/javascript">
+        var workspace = Blockly.inject('blocklyDiv', {
+            media: 'libraries/blockly/media/',
+            sounds: true,
+            toolbox: document.getElementById('toolbox'),
+            rtl: false,
+            collapse: true,
+            comments: true,
+            css: true,
+            disable: true,
+            grid: false,
+            maxBlocks: Infinity,
+            zoom: {
+              controls: true,
+              wheel: false,
+              startScale: 0.8,
+              maxScale: 2,
+              minScale: 0.2,
+              scaleSpeed: 1.2
+            }
           }
-        }
-      );
-      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-  </script>
+        );
+        Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+    </script>
 
   </body>
 </html>
