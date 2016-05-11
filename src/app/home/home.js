@@ -7,16 +7,16 @@ this.HomeM = (function() {
   module.initialize = function() {
     /* Render view */
     IndexM.loadPage("home", function() {
-      IndexM.loadPartial("#home-navbar", "navbar", function() {
+      IndexM.loadPartial("#home-navbar-wrapper", "navbar", function() {
         NavbarM.initialize();
       });
-      IndexM.loadPartial("#home-blockly", "blockly", function() {
-        IndexM.loadPartial("#blockly-toolbox", "toolbox", function() {
+      IndexM.loadPartial("#home-simulator-wrapper", "simulator", function() {
+        SimulatorM.initialize();
+      });
+      IndexM.loadPartial("#home-blockly-wrapper", "blockly", function() {
+        IndexM.loadPartial("#blockly-toolbox-wrapper", "toolbox", function() {
           BlocklyM.initialize();
         });
-      });
-      IndexM.loadPartial("#home-simulator", "simulator", function() {
-        SimulatorM.initialize();
       });
     });
   }

@@ -5,16 +5,18 @@ this.NavbarM = (function() {
     var module = {};
 
     module.initialize = function() {
-      $('#btn_run').click(function() {
+      $('#btn_run').click(function(event) {
         if(me.interpreter !== null && me.execution.isPaused()) { 
           // Resume
+          $('#btn_pause').show();
           me.execution.run();
-          console.log("State: " + me.execution.state);
         }
         else {
-          me.state.change(me.state.PLAY);
           var code = Blockly.JavaScript.workspaceToCode(BlocklyM.workspace);
-          console.log(code);
+          if(!code.length) {
+            return;
+          }
+          me.state.change(me.state.PLAY);
           var onCompleted = function() {
             $('#btn_run').show();
             $('#btn_pause').hide();
@@ -25,27 +27,24 @@ this.NavbarM = (function() {
           $('#btn_pause').show();
           $('#btn_stop').show();
           me.execution.run();
-          console.log("State: " + me.execution.state);
         }
         $('#btn_run').hide();
+        event.stopPropagation();
       });
-
-      $('#btn_pause').click(function() {
+      
+      $('#btn_pause').click(function(event) {
         $('#btn_run').show();
+        $('#btn_pause').hide();
         me.execution.pause();
-        console.log("State: " + me.execution.state);
       });
-
-      $('#btn_stop').click(function() {
+      
+      $('#btn_stop').click(function(event) {
         $('#btn_run').show();
         $('#btn_pause').hide();
         $('#btn_stop').hide();
         me.execution.finish();
-        console.log("State after stop: 1 " + me.execution.state);
         me.state.change(me.state.PLAY);
-        console.log("State after stop: 2 " + me.execution.state);
       });
-      
     }
 
     return module;
@@ -57,7 +56,6 @@ this.NavbarM = (function() {
                                   right: 0,
                                   front: 0,
                                   back : 0};
-
       // Add an API function for the motor function
       var wrapper = function(leftWheelValue, rightWheelValue, durationValue) {
         return interpreter.createPrimitive(
@@ -71,7 +69,6 @@ this.NavbarM = (function() {
       };
       interpreter.setProperty(scope, 'motor',
           interpreter.createNativeFunction(wrapper));
-
       // Add an API function for the sensor function
       wrapper = function(sensorName) {
         return interpreter.createPrimitive(interpreter.robotSensors[sensorName]);

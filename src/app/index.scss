@@ -1,11 +1,19 @@
+@import 'variables';
+@import 'mixins';
+
+/**
+ * General layout
+ */
+
 html {
-  height: 100%;
-}
-
-body {
-  height: 100%;
-}
-
-div#page {
-  height: 100%;
+  @include full-height;
+  @include main-background;
+  body {
+    @include full-height;
+    @include main-background;
+    div#page-wrapper {
+      @include full-height;
+      @include main-background;
+    }
+  }
 }

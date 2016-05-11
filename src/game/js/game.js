@@ -29,13 +29,11 @@ var game = {
     };
 
     // Initialize the video.
-    var canvasWrapperElement = $("#simulator-canvas-wrapper");
+    var canvasWrapperElement = $("#simulator-container");
     var videoWidth = canvasWrapperElement.width();
     var videoHeight = canvasWrapperElement.height();
     var videoInitOptions = {
-      wrapper : "simulator-canvas-wrapper",
-      // scale : "auto",
-      // scaleMethod : "fit",
+      wrapper : "simulator-container",
       antiAlias: true
     };
     if (!me.video.init(videoWidth, videoHeight, videoInitOptions)) {

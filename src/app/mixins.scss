@@ -1,0 +1,18 @@
+@import 'variables';
+
+/**
+ * General purpose mixins.
+ */
+
+@mixin full-height {
+  min-height: 100%;
+}
+
+@mixin main-background {
+  background-color: $main-background-color;
+}
+
+@mixin no-margin-no-padding {
+  margin: 0px 0px;
+  padding: 0px 0px;
+}

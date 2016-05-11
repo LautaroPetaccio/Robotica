@@ -18,7 +18,7 @@ gulp.task('scripts-app', [], function() {
           //.pipe(plugins.eslint.format())
           .pipe(plugins.concat('app.min.js'))
           .pipe(plugins.sourcemaps.init())
-          .pipe(plugins.uglify())
+          .pipe(plugins.uglify().on('error', plugins.util.log))
           .pipe(plugins.sourcemaps.write('../maps/'))
           .pipe(gulp.dest('dist/scripts/'))
           .on('error', plugins.util.log);
@@ -31,7 +31,7 @@ gulp.task('scripts-game', [], function() {
           //.pipe(plugins.eslint.format())
           .pipe(plugins.concat('game.min.js'))
           .pipe(plugins.sourcemaps.init())
-          .pipe(plugins.uglify())
+          .pipe(plugins.uglify().on('error', plugins.util.log))
           .pipe(plugins.sourcemaps.write('../maps/'))
           .pipe(gulp.dest('dist/scripts/'))
           .on('error', plugins.util.log);
@@ -45,7 +45,7 @@ gulp.task('scripts-bower', [], function() {
           .pipe(plugins.flatten())
           .pipe(plugins.concat('bower.min.js'))
           .pipe(plugins.sourcemaps.init())
-          .pipe(plugins.uglify())
+          .pipe(plugins.uglify().on('error', plugins.util.log))
           .pipe(plugins.sourcemaps.write('../maps/'))
           .pipe(gulp.dest('dist/scripts/'))
           .on('error', plugins.util.log);
@@ -61,7 +61,7 @@ gulp.task('scripts-blockly', [], function() {
           .pipe(plugins.flatten())
           .pipe(plugins.concat('blockly.min.js'))
           .pipe(plugins.sourcemaps.init())
-          .pipe(plugins.uglify())
+          .pipe(plugins.uglify().on('error', plugins.util.log))
           .pipe(plugins.sourcemaps.write('../maps/'))
           .pipe(gulp.dest('dist/scripts/'))
           .on('error', plugins.util.log);
@@ -75,7 +75,7 @@ gulp.task('scripts-melonjs', [], function() {
           .pipe(plugins.flatten())
           .pipe(plugins.concat('melonjs.min.js'))
           .pipe(plugins.sourcemaps.init())
-          .pipe(plugins.uglify())
+          .pipe(plugins.uglify().on('error', plugins.util.log))
           .pipe(plugins.sourcemaps.write('../maps/'))
           .pipe(gulp.dest('dist/scripts/'))
           .on('error', plugins.util.log);
@@ -86,7 +86,7 @@ gulp.task('bundle-melonjs-resources', [], function() {
           .pipe(plugins.flatten())
           .pipe(bundleMelonJSResources('resources.min.js', 'assets/game/'))
           .pipe(plugins.sourcemaps.init())
-          .pipe(plugins.uglify())
+          .pipe(plugins.uglify().on('error', plugins.util.log))
           .pipe(plugins.sourcemaps.write('../maps/'))
           .pipe(gulp.dest('dist/scripts/'))
           .on('error', plugins.util.log);
@@ -99,7 +99,7 @@ gulp.task('scripts-acorn', [], function() {
           .pipe(plugins.flatten())
           .pipe(plugins.concat('acorn.min.js'))
           .pipe(plugins.sourcemaps.init())
-          .pipe(plugins.uglify())
+          .pipe(plugins.uglify().on('error', plugins.util.log))
           .pipe(plugins.sourcemaps.write('../maps/'))
           .pipe(gulp.dest('dist/scripts/'))
           .on('error', plugins.util.log);

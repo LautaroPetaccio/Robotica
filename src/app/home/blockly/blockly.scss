@@ -1,10 +1,58 @@
-#blockly-area {
-}
+@import 'variables';
+@import 'mixins';
+
+/**
+ * Blockly styles
+ */
 
 #blockly-container {
-  position: absolute;
+  min-height: $min-blockly-height;
+
+  #blockly-div {
+    position: absolute;
+  }
+  #blockly-toolbox-wrapper {
+    display: none;
+  }
 }
 
-#blockly-toolbox {
-    display: none;
+/************************************/
+/*  Blocks, Arduino, and XML areas  */
+/************************************/
+.content {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background-color: #ffffff;
 }
+
+#blocks-panel {
+  padding: 0px;
+  position: relative !important;
+}
+
+#content-blocks {
+  margin: 0;
+  padding: 0;
+  height: -moz-calc(100vh - 200px);     /* Firefox  */
+  height: -webkit-calc(100vh - 200px);  /* WebKit   */
+  height: -o-calc(100vh - 200px);       /* Opera    */
+  height: calc(100vh - 200px);          /* Standard */
+}
+
+
+  /*padding: 0px;
+  display: block;
+  height: 100%;*/
+
+/*#content-blocks svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible!important;
+}
+
+#content-blocks svg .blocklyMainBackground {
+  stroke: #fff;
+}
+
+*/
