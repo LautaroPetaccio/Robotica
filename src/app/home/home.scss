@@ -1,71 +1,92 @@
+@import 'bootstrap';
 @import 'variables';
 @import 'mixins';
+
+/**
+ * Home layout config.
+ */
+
+
+$home-header-height: 80px;
+
+$home-content-height: calc(100% - 80px);
+
+$simulator-expanded-height: 85%;
+
+$blockly-expanded-height: 85%;
+
+$blockly-collapsed-height: 85%;
+
 
 /**
  * Home page layout
  */
 
 #home-container {
-  @include full-height;
-  @include no-margin-no-padding;
+  height: 100%;
   
   #home-header {
-    margin: 0px 0px 40px 0px;
-    padding: 0px 0px;
+    height: $home-header-height;
 
     #home-navbar-wrapper {
-      @include no-margin-no-padding;
+      @include make-xs-column(12);
+      padding: 0px;
     }
   }
+  
   #home-content {
-    margin: 0px 15px;
-    padding: 0px 0px;
+    height: $home-content-height;
+    
+    #home-simulator-wrapper {
+    }
     
     #home-blockly-wrapper {
     }
-    #home-simulator-wrapper {
-    }
   }
 }
 
-/*#home-container .blocky-workarea {
+/**
+ * Collapsed layout mode.
+ */
+
+.content-collapsed {
   position: relative;
-  margin-right: 15px;
-  z-index: 0;
-}
-#home-container .drawing-area {
-  margin-left: 15px;
-  background-color: #fff;
-  text-align: center;
-}
-#home-container .drawing-area #screen {
-  width: 100%;
-  margin: 0 auto 0;
-  vertical-align: middle;
-} 
-#home-container .drawing-area #screen canvas {
-  border: 3px solid #666;
 }
 
-@media (max-width: 992px) {
-    #home-container .drawing-area {
-      width: 200px;
-      height: 180px;
-      position: absolute;
-      z-index: 1000;
-      margin: 0;
-      top: 20px;
-      right: 20px;
-      cursor: pointer;
-    }
-    #home-container .drawing-area #screen {
-      padding: 10px!important;
-    }
-    #home-container .drawing-area #screen canvas {
-      width: 100%;
-    }
-    #home-container .drawing-area #screen canvas {
-      border: 0;
-    }
+.simulator-collapsed {
+  width: 100px;
+  height: 100px;
+  @include main-background;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
 }
-*/
+
+.blockly-collapsed {
+  @include make-xs-column(12);
+  height: $blockly-collapsed-height;
+  @include main-background;
+}
+
+
+/**
+ * Expanded layout mode.
+ */
+
+ .content-expanded {
+}
+
+.simulator-expanded {
+  @include make-xs-column(12);
+  @include make-lg-column(5);
+  height: $simulator-expanded-height;
+  @include main-background;
+}
+
+.blockly-expanded {
+  @include make-xs-column(12);
+  @include make-lg-column(7);
+  height: $blockly-expanded-height;
+  @include main-background;
+}

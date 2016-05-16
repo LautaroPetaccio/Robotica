@@ -6,19 +6,22 @@
  */
 
 #blockly-container {
-  height: $blockly-height;
-  margin: 0px 0px 20px 0px;
-  padding: 10px 10px;
-  @include panel-shadow;
+  height: 100%;
 
-  #blockly-div {
-    position: absolute;
+  #blockly-panel {
+    height: 100%;
+    @include home-panel;
 
-    svg {
-      width: 100%;
+    #blockly-panel-body {
       height: 100%;
+      position: relative;
+
+      #blockly-div {
+        @include center-in-parent;
+      }
     }
   }
+  
   #blockly-toolbox-wrapper {
     display: none;
   }

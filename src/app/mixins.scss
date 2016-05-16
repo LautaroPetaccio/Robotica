@@ -12,11 +12,18 @@
   background-color: $main-background-color;
 }
 
-@mixin no-margin-no-padding {
-  margin: 0px 0px;
-  padding: 0px 0px;
+@mixin home-panel {
+  border-radius: 0px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.24), 0 2px 10px 0 rgba(0, 0, 0, 0.18);
+
+  .panel-body {
+    padding: 5px;
+  }
 }
 
-@mixin panel-shadow {
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.24), 0 2px 10px 0 rgba(0, 0, 0, 0.18);
+@mixin center-in-parent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

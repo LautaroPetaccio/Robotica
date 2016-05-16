@@ -1,20 +1,18 @@
 "use strict";
 
-this.IndexM = (function() {
-    
-    var module = {};
+this.Index = (function() {
 
-    module.loadPage = function(page, callback) {
-      callback = _.isFunction(callback) ? callback : function() {}
-      $("body > div#page-wrapper").load("html/" + page + ".html", callback);
-    }
+  var module = {};
 
-    module.loadPartial = function(selector, partial, callback) {
-      selector = _.isString(selector) ? selector : "body > div#page-wrapper";
-      callback = _.isFunction(callback) ? callback : function() {}
-      $(selector).load("html/" + partial + ".html", callback);
-    }
+  module.run = function() {
+    var pageWrapperSelector = "#page-wrapper";
+    Home.render(pageWrapperSelector);
+  }
 
-    return module;
+  return module;
 
 })();
+
+$("#app").load(function() {
+  Index.run();
+});

@@ -19,15 +19,18 @@
     "jquery": "^2.2.3",
     "normalize-css": "^4.1.1",
     "font-awesome": "fontawesome#^4.6.2",
-    "bootstrap": "^3.3.6",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "bootstrap-sass": "bootstrap-sass-official#^3.3.6",
+    "jquery-ui": "^1.11.4",
+    "jqueryui-touch-punch": "*",
+    "q": "1.0.1"
   },
   "overrides": {
-    "bootstrap": {
+    "bootstrap-sass": {
       "main": [
-        "dist/js/bootstrap.js",
-        "fonts/**/*",
-        "less/bootstrap.less"
+        "./assets/fonts/**/*",
+        "./assets/javascripts/**/*",
+        "./assets/stylesheets/_bootstrap.scss"
       ]
     }
   }
