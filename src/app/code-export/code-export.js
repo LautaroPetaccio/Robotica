@@ -1,6 +1,6 @@
 "use strict";
 
-this.CodeImportExportM = (function() {
+this.CodeExport = (function() {
     
     var module = {};
 
