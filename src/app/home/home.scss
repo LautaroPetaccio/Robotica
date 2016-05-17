@@ -79,14 +79,14 @@ $blockly-collapsed-height: 85%;
 
 .simulator-expanded {
   @include make-xs-column(12);
-  @include make-lg-column(5);
+  @include make-md-column(5);
   height: $simulator-expanded-height;
   @include main-background;
 }
 
 .blockly-expanded {
   @include make-xs-column(12);
-  @include make-lg-column(7);
+  @include make-md-column(7);
   height: $blockly-expanded-height;
   @include main-background;
 }

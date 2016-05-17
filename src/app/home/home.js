@@ -36,9 +36,9 @@ this.Home = (function() {
   }
   
   module.setInitialLayoutMode = function() {
-    if (_.contains(["xs", "sm", "md"], StateIndicator.getState())) {
+    if (_.contains(["xs", "sm"], StateIndicator.getState())) {
       module.setLayoutModeCollapsed();
-    } else {
+    } else { /* ["md", "lg"] */
       module.setLayoutModeExpanded();
     }
   }
