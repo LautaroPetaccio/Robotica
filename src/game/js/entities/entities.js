@@ -14,6 +14,24 @@ game.PlayerEntity = me.Entity.extend({
     this.renderable.width = this.width
     this.renderable.height = this.height;
 
+    /* Get current level */
+    var currentLevel = me.levelDirector.getCurrentLevel();
+
+    /* Get current level width and height*/
+    this.currentLevelWidth = (currentLevel.cols * currentLevel.tilewidth);
+    this.currentLevelHeight = (currentLevel.rows * currentLevel.tileheight);
+
+    this.tracer = {
+      enabled : false,
+      colour: '#000000'
+    };
+
+    /* Creating the tracer canvas to draw the robot's movements */
+    this.traceCanvas = me.video.createCanvas(this.currentLevelWidth, this.currentLevelHeight, true);
+    this.traceCanvas.getContext("2d").clearRect(0, 0, this.currentLevelWidth, this.currentLevelHeight);
+    this.traceRenderer = new me.CanvasRenderer(this.traceCanvas, me.game.viewport.width, me.game.viewport.height);
+    this.traceRenderer.setColor("#000000");
+
     /* Set the display to follow our position on both axis (in case the map is too big) */
     me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
 
@@ -47,8 +65,13 @@ game.PlayerEntity = me.Entity.extend({
     this.renderable.angle += (wheelRadious/this.l) * (leftMotor - rightMotor);
   },
 
-  updateSensors: function(sensorName) {
+  /* Extends draw function to draw the tracing */
+  draw: function(renderer) {
+    if(this.tracer.enabled)
+      this.traceRenderer.fillArc(this.pos.x, this.pos.y - 6, 6, 0, 2*Math.PI);
+    renderer.drawImage(this.traceCanvas, 0, 0);
 
+    this._super(me.Entity, 'draw', [renderer]);
   },
 
   /* -----
@@ -84,13 +107,22 @@ game.PlayerEntity = me.Entity.extend({
               var rightWheel = me.interpreter.robotInstructions[0].rightWheel;
 
               this.moveRobot(leftWheel, rightWheel, dt / 1000);
-              break;
-          }
 
-          me.interpreter.robotInstructions[0].duration -= dt / 1000;
-          // console.log("Updates duration: " + me.interpreter.robotInstructions[0].duration);
-          if(me.interpreter.robotInstructions[0].duration <= 0) {
-            me.interpreter.robotInstructions.shift();
+              me.interpreter.robotInstructions[0].duration -= dt / 1000;
+              if(me.interpreter.robotInstructions[0].duration <= 0) {
+                me.interpreter.robotInstructions.shift();
+              }
+
+              break;
+            case 'tracer_status':
+              this.tracer.enabled = me.interpreter.robotInstructions[0].enabled.data;
+              me.interpreter.robotInstructions.shift();
+              break;
+            case 'tracer_colour':
+              this.tracer.colour = me.interpreter.robotInstructions[0].colour.data;
+              this.traceRenderer.setColor(this.tracer.colour);
+              me.interpreter.robotInstructions.shift();
+              break;
           }
         }
       }

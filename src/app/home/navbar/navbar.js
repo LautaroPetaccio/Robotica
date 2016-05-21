@@ -29,6 +29,7 @@ this.HomeNavbar = (function() {
           $('#btn_stop').hide();
         }
         me.execution.onCompleted = onCompleted;
+        console.log(code);
         me.interpreter = new Interpreter(code, initApi);
         $('#btn_pause').show();
         $('#btn_stop').show();
@@ -37,13 +38,11 @@ this.HomeNavbar = (function() {
       $('#btn_run').hide();
       event.stopPropagation();
     });
-    
     $('#btn_pause').click(function(event) {
       $('#btn_run').show();
       $('#btn_pause').hide();
       me.execution.pause();
     });
-    
     $('#btn_stop').click(function(event) {
       $('#btn_run').show();
       $('#btn_pause').hide();
@@ -80,6 +79,29 @@ this.HomeNavbar = (function() {
     };
     interpreter.setProperty(scope, 'sensor',
         interpreter.createNativeFunction(wrapper));
+
+    // Add an API function for the tracer enabler
+    wrapper = function(enabled) {
+      interpreter.robotInstructions.push(
+        {action : 'tracer_status', 
+          enabled: enabled
+        })
+      return interpreter.createPrimitive(null);
+    };
+    interpreter.setProperty(scope, 'tracer',
+        interpreter.createNativeFunction(wrapper));
+
+    // Add an API function for the tracer colour
+    wrapper = function(colour) {
+      interpreter.robotInstructions.push(
+        {action : 'tracer_colour', 
+          colour: colour
+        })
+      return interpreter.createPrimitive(null);
+    };
+    interpreter.setProperty(scope, 'tracer_colour',
+        interpreter.createNativeFunction(wrapper));
+
   }
 
 })();
