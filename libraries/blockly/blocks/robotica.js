@@ -36,3 +36,31 @@ Blockly.Blocks['robotica_sensor'] = {
     this.setHelpUrl('http://www.example.com/');
   }
 };
+
+/* Enables or disables tracing support */
+Blockly.Blocks['robotica_tracer_status'] = {
+  init: function() {
+    this.appendValueInput("enable")
+        .setCheck("Boolean")
+        .appendField("Traza habilitada");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(65);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+/* Sets tracer's colour */
+Blockly.Blocks['robotica_tracer_colour'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Color de traza")
+        .appendField(new Blockly.FieldColour("#ff0000"), "trace_colour");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(65);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
