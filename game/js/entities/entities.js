@@ -107,13 +107,22 @@ game.PlayerEntity = me.Entity.extend({
               var rightWheel = me.interpreter.robotInstructions[0].rightWheel;
 
               this.moveRobot(leftWheel, rightWheel, dt / 1000);
-              break;
-          }
 
-          me.interpreter.robotInstructions[0].duration -= dt / 1000;
-          // console.log("Updates duration: " + me.interpreter.robotInstructions[0].duration);
-          if(me.interpreter.robotInstructions[0].duration <= 0) {
-            me.interpreter.robotInstructions.shift();
+              me.interpreter.robotInstructions[0].duration -= dt / 1000;
+              if(me.interpreter.robotInstructions[0].duration <= 0) {
+                me.interpreter.robotInstructions.shift();
+              }
+
+              break;
+            case 'tracer_status':
+              this.tracer.enabled = me.interpreter.robotInstructions[0].enabled.data;
+              me.interpreter.robotInstructions.shift();
+              break;
+            case 'tracer_colour':
+              this.tracer.colour = me.interpreter.robotInstructions[0].colour.data;
+              this.traceRenderer.setColor(this.tracer.colour);
+              me.interpreter.robotInstructions.shift();
+              break;
           }
         }
       }

@@ -78,6 +78,29 @@
         };
         interpreter.setProperty(scope, 'sensor',
             interpreter.createNativeFunction(wrapper));
+
+        // Add an API function for the tracer enabler
+        wrapper = function(enabled) {
+          interpreter.robotInstructions.push(
+            {action : 'tracer_status', 
+              enabled: enabled
+            })
+          return interpreter.createPrimitive(null);
+        };
+        interpreter.setProperty(scope, 'tracer',
+            interpreter.createNativeFunction(wrapper));
+
+        // Add an API function for the tracer colour
+        wrapper = function(colour) {
+          interpreter.robotInstructions.push(
+            {action : 'tracer_colour', 
+              colour: colour
+            })
+          return interpreter.createPrimitive(null);
+        };
+        interpreter.setProperty(scope, 'tracer_colour',
+            interpreter.createNativeFunction(wrapper));
+
       }
       $(window).load(function() {
           me.interpreter = null;
@@ -119,6 +142,7 @@
               $('#btn_stop').hide();
             }
             me.execution.onCompleted = onCompleted;
+            console.log(code);
             me.interpreter = myInterpreter = new Interpreter(code, initApi);
             $('#btn_pause').show();
             $('#btn_stop').show();
@@ -276,6 +300,8 @@
           <category name="Robótica" colour="65">
             <block type="robotica_motor"></block>
             <block type="robotica_sensor"></block>
+            <block type="robotica_tracer_status"></block>
+            <block type="robotica_tracer_colour"></block>
           </category>
           <category name="Lógica" colour="210">
             <block type="controls_if"></block>
