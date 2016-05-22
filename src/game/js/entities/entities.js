@@ -44,9 +44,11 @@ game.PlayerEntity = me.Entity.extend({
     /* Set the unique animation to be rendered */
     this.renderable.setCurrentAnimation("unique");
 
-    /* Defines viewport edges */
-    this.maxX = me.game.viewport.width - this.width;
-    this.maxY = me.game.viewport.height - this.height;
+    /* Defines the map limits */
+    this.maxX = this.currentLevelWidth - (this.width / 2) - 0.1;
+    this.maxY = this.currentLevelHeight - (this.height / 2) - 0.1;
+    this.minX = this.width / 2;
+    this.minY = this.height / 2;
 
     /* Range of detection */
     this.sensorRange = 50;
@@ -151,16 +153,15 @@ game.PlayerEntity = me.Entity.extend({
     }
 
     /* Limits checking */
-
-    if(this.pos.x <= 0) {
-      this.pos.x = 0;
+    if(this.pos.x <= this.minX) {
+      this.pos.x = this.minX + 1;
     }
     else if(this.pos.x >= this.maxX) {
       this.pos.x = this.maxX;
     }
 
-    if(this.pos.y <= 0) {
-      this.pos.y = 0;
+    if(this.pos.y <= this.minY) {
+      this.pos.y = this.minY + 1;
     }
     else if(this.pos.y >= this.maxY) {
       this.pos.y = this.maxY;
