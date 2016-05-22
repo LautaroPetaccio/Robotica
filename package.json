@@ -1,7 +1,11 @@
 {
-  "name": "project-skeleton",
+  "name": "robotica-dc",
   "version": "1.0.0",
-  "description": "Project Skeleton.",
+  "description": "Robótica educativa.",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/lausuper/Robotica.git"
+  },
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -46,6 +46,20 @@ Latter versions of the robot simulator used a written language using Jison as th
   [...] CLI version 3.9.1
   ```
 
+5. Install dev local dependencies (run from the project's root directory).
+
+  ```
+  $ npm install
+  [...]
+  ```
+
+6. Install front-end dependencies (run from the project's root directory).
+
+  ```
+  $ bower install
+  [...]
+  ```
+
 ## Running
 
 * Build distributable version.
