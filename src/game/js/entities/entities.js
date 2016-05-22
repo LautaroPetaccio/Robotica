@@ -161,6 +161,11 @@ game.PlayerEntity = me.Entity.extend({
 
     }
 
+    /* Sensor's settings */
+    this.sensors.left = this.sensorRange;
+    this.sensors.right = this.sensorRange;
+    this.sensors.front = this.sensorRange;
+
     /* Limits checking */
     if(this.pos.x <= this.minX) {
       this.pos.x = this.minX + 1;
@@ -186,10 +191,60 @@ game.PlayerEntity = me.Entity.extend({
    * colision handler
    * (called when colliding with other objects)
    */
-  onCollision : function (response) {
-    this.pos.sub(response.overlapV);
+ onCollision : function (response) {
+     /* If the colliding shape belongs to the robot, do a normal collision */
+     if(response.indexShapeA === 0 || typeof response.indexShapeA === "undefined") {
+       this.pos.sub(response.overlapV);
+       return true;
+     }
 
-    // Make all other objects solid
-    return true;
-  }
+     /* Create a copy of the sensor's range line and positionate it into the level */
+     var myLine = me.pool.pull("line", 
+       response.a.body.shapes[response.indexShapeA].pos.x + response.a.pos.x, 
+       response.a.body.shapes[response.indexShapeA].pos.y + response.a.pos.y,
+        [response.a.body.shapes[response.indexShapeA].points[0], 
+        response.a.body.shapes[response.indexShapeA].points[1]]);
+
+     /* Get a copy of the line's starting point */
+     var startPoint = me.pool.pull("vector", myLine.pos.x, myLine.pos.y);
+
+     /* Get all edges of the entity beeing touched by the sensor line */
+     var edges = response.b.getBodyEdgesAsLines();
+
+     /* 
+       Calculate the minium distance between the starting point and 
+       the point of intersection between the sensor line and the entity
+       edges. 
+     */
+     var minDistance = Number.MAX_SAFE_INTEGER;
+     for (var i = 0; i < edges.length; i++) {
+       var intersect = myLine.intersection(edges[i]);
+       me.pool.push(edges[i]);
+       if(intersect !== null) {
+         var distance = Math.round(startPoint.distance(intersect));
+         if(distance < minDistance)
+           minDistance = distance;
+         me.pool.push(intersect);
+       }
+     }
+
+     /* Set the sensor's values */
+     switch(response.indexShapeA) {
+       case 1:
+         response.a.sensors.left = minDistance;
+         break;
+       case 2:
+         response.a.sensors.right = minDistance;
+         break;
+       case 3:
+         response.a.sensors.front = minDistance;
+         break;
+     }
+
+     /* Return elements to the pool */
+     me.pool.push(myLine);
+     me.pool.push(startPoint);
+
+     return false;
+   }
 });
