@@ -18,7 +18,7 @@
   // ensure that me.debug is defined
   me.debug = me.debug || {};
 
-  var DEBUG_HEIGHT = 50;
+  var DEBUG_HEIGHT = 70;
 
   var Counters = me.Object.extend({
     init : function (stats) {
@@ -63,6 +63,17 @@
         "bounds",
         "children"
       ]);
+
+      this.sensors = {
+        front: 0,
+        left: 0,
+        right: 0
+      };
+
+      this.robotPos = {
+        x: 0,
+        y: 0
+      }
 
       // for z ordering
       // make it ridiculously high
@@ -205,38 +216,6 @@
           renderer.restore();
         }
       });
-
-      /*
-      // patch font.js
-      me.plugin.patch(me.Font, "draw", function (renderer, text, x, y) {
-        // call the original me.Sprite.draw function
-        this._patched(renderer, text, x, y);
-
-        // draw the font rectangle
-        if (me.debug.renderHitBox) {
-          renderer.save();
-          renderer.setColor("orange");
-          renderer.drawShape(this.getBounds());
-          _this.counters.inc("bounds");
-          renderer.restore();
-        }
-      });
-
-      // patch font.js
-      me.plugin.patch(me.Font, "drawStroke", function (renderer, text, x, y) {
-        // call the original me.Sprite.draw function
-        this._patched(renderer, text, x, y);
-
-        // draw the font rectangle
-        if (me.debug.renderHitBox) {
-          renderer.save();
-          renderer.setColor("orange");
-          renderer.drawShape(this.getBounds());
-          _this.counters.inc("bounds");
-          renderer.restore();
-        }
-      });
-      */
       
       // patch entities.js
       me.plugin.patch(me.Entity, "draw", function (renderer) {
@@ -262,7 +241,6 @@
             renderer.drawShape(shape);
             _this.counters.inc("shapes");
           }
-
           renderer.restore();
         }
 
@@ -285,6 +263,18 @@
         }
       });
 
+      me.plugin.patch(me.Entity, "update", function (dt) {
+        /* Call the original update function */
+        this._patched(dt);
+        if(typeof this.sensors !== "undefined") {
+          _this.sensors.left = this.sensors.left;
+          _this.sensors.right = this.sensors.right;
+          _this.sensors.front = this.sensors.front;
+          _this.robotPos.x = this.pos.x;
+          _this.robotPos.y = this.pos.y;
+        }
+
+      });
       // patch container.js
       me.plugin.patch(me.Container, "draw", function (renderer, rect) {
         // call the original me.Container.draw function
@@ -474,8 +464,6 @@
       // draw the draw duration
       this.font.draw(renderer, "Draw   : " + this.frameDrawTime.toFixed(2) + " ms", 285 * this.mod, 20 * this.mod);
 
-      this.font.bold();
-
       // Draw color code hints
       this.font.fillStyle.copy("red");
       this.font.draw(renderer, "Shapes   : " + this.counters.get("shapes"), 5 * this.mod, 35 * this.mod);
@@ -494,6 +482,12 @@
 
       // Reset font style
       this.font.setFont("courier", this.font_size, "white");
+
+      /* Draw sensors */
+      this.font.draw(renderer, "Front sensor: " + this.sensors.front, 5 * this.mod, 50 * this.mod);
+      this.font.draw(renderer, "Left sensor: " + this.sensors.left, 130 * this.mod, 50 * this.mod);
+      this.font.draw(renderer, "Right sensor: " + this.sensors.right, 260 * this.mod, 50 * this.mod);
+      this.font.draw(renderer, "Robot pos: (" + this.robotPos.x + ", " + this.robotPos.y + ")", 390 * this.mod, 50 * this.mod);
 
       // draw the memory heap usage
       var endX = this.width - 25;
