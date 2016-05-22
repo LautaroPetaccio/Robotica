@@ -61,6 +61,9 @@ var game = {
     // add our player entity in the entity pool
     me.pool.register("mainPlayer", game.PlayerEntity);
 
+    me.pool.register("line", me.Line, true);
+    me.pool.register("vector", me.Vector2d, true);
+
     // Start the game.
     me.state.change(me.state.PLAY);
   }
