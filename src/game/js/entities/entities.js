@@ -48,8 +48,27 @@ game.PlayerEntity = me.Entity.extend({
     this.maxX = me.game.viewport.width - this.width;
     this.maxY = me.game.viewport.height - this.height;
 
+    /* Range of detection */
+    this.sensorRange = 50;
+
+    this.sensors = {
+      front: this.sensorRange,
+      left: this.sensorRange,
+      right: this.sensorRange
+    };
+
     /* As our robot is round, make its shape to be an ellipse */
     this.body.shapes[0] = new me.Ellipse(0, 0, this.width, this.width);
+
+    /* Shapes for the sensors */
+    this.body.shapes[1] = new me.Line(0, this.width / 2, 
+      [new me.Vector2d(0,0), new me.Vector2d(0, this.sensorRange)]);
+    this.body.shapes[2] = new me.Line(0, - this.width / 2, 
+      [new me.Vector2d(0,0), new me.Vector2d(0, - this.sensorRange)]);
+    this.body.shapes[3] = new me.Line(this.width / 2, 0, 
+      [new me.Vector2d(0,0), new me.Vector2d(this.sensorRange, 0)]);
+    this.body.shapes[4] = new me.Line(- this.width / 2, 0, 
+      [new me.Vector2d(0,0), new me.Vector2d(- this.sensorRange, 0)]);
     this.body.updateBounds();
 
     /* Distance between the center of the two wheels, 30 pixels */
