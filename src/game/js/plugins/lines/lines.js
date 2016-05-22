@@ -35,8 +35,6 @@
 	    }
 	});
 
-
-
 	me.Body = me.Body.extend({
 		getEdgesAsLines : function() {
 			var result = [];
