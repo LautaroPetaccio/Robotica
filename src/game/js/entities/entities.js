@@ -75,16 +75,25 @@ game.PlayerEntity = me.Entity.extend({
 
     /* Distance between the center of the two wheels, 30 pixels */
     this.l = 30;
+    this.wheelRadious = 5;
   },
 
   /* http://planning.cs.uiuc.edu/node659.html */
-  moveRobot : function(leftMotor, rightMotor, time) {
-    wheelRadious = 5;
+  moveRobot : function(leftMotor, rightMotor, time) {    
     leftMotor *= time;
-    rightMotor *= time;  
-    this.pos.x = this.pos.x + (wheelRadious/2)*(leftMotor + rightMotor)*Math.cos(this.renderable.angle);
-    this.pos.y = this.pos.y + (wheelRadious/2)*(leftMotor + rightMotor)*Math.sin(this.renderable.angle);
-    this.renderable.angle += (wheelRadious/this.l) * (leftMotor - rightMotor);
+    rightMotor *= time;
+    var deltaAngle = (this.wheelRadious/this.l) * (rightMotor - leftMotor);
+    this.pos.x = this.pos.x + (this.wheelRadious/2)*(leftMotor + rightMotor)*Math.cos(this.renderable.angle);
+    this.pos.y = this.pos.y + (this.wheelRadious/2)*(leftMotor + rightMotor)*Math.sin(this.renderable.angle);
+    this.renderable.angle += deltaAngle;
+
+    for(i=1; i<this.body.shapes.length; i++) {
+      this.body.shapes[i].rotate(deltaAngle);
+      old_x = this.body.shapes[i].pos.x;
+      old_y = this.body.shapes[i].pos.y;
+      this.body.shapes[i].pos.x = Math.cos(deltaAngle) * (old_x-0) - Math.sin(deltaAngle) * (old_y-0) + 0;
+      this.body.shapes[i].pos.y = Math.sin(deltaAngle) * (old_x-0) + Math.cos(deltaAngle) * (old_y-0) + 0;
+    }
   },
 
   /* Extends draw function to draw the tracing */
