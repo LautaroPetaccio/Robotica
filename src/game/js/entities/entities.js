@@ -48,8 +48,9 @@ game.PlayerEntity = me.Entity.extend({
     this.maxX = me.game.viewport.width - this.width;
     this.maxY = me.game.viewport.height - this.height;
 
-    /* Instruction movements to be excecuted */
-    this.instructions = [];
+    /* As our robot is round, make its shape to be an ellipse */
+    this.body.shapes[0] = new me.Ellipse(0, 0, this.width, this.width);
+    this.body.updateBounds();
 
     /* Distance between the center of the two wheels, 30 pixels */
     this.l = 30;
