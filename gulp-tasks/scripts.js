@@ -94,7 +94,8 @@ gulp.task('bundle-melonjs-resources', [], function() {
 
 gulp.task('scripts-acorn', [], function() {
   return gulp.src([
-            'third-party/acorn/acorn_interpreter.js'
+            'third-party/acorn/acorn.js',
+            'third-party/acorn/interpreter.js'
           ])
           .pipe(plugins.flatten())
           .pipe(plugins.concat('acorn.min.js'))
