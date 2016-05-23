@@ -127,31 +127,37 @@ game.PlayerEntity = me.Entity.extend({
           }
         }
       }
+
       if(me.interpreter.robotInstructions.length > 0) {
         /* If it's not paused and we have instructions to execute, excecute them */
         if(me.interpreter.robotInstructions.length > 0 && !me.execution.isPaused()) {
-          switch(me.interpreter.robotInstructions[0].action) {
+          var instruction = me.interpreter.robotInstructions[0];
+          switch(instruction.action) {
             case 'motor':
-              // console.log("Is in move");
-              var duration = me.interpreter.robotInstructions[0].duration;
-              var leftWheel = me.interpreter.robotInstructions[0].leftWheel;
-              var rightWheel = me.interpreter.robotInstructions[0].rightWheel;
+              var duration = instruction.duration;
+              var leftWheel = instruction.leftWheel;
+              var rightWheel = instruction.rightWheel;
 
               this.moveRobot(leftWheel, rightWheel, dt / 1000);
 
-              me.interpreter.robotInstructions[0].duration -= dt / 1000;
-              if(me.interpreter.robotInstructions[0].duration <= 0) {
+              instruction.duration -= dt / 1000;
+              if(instruction.duration <= 0) {
                 me.interpreter.robotInstructions.shift();
               }
 
               break;
             case 'tracer_status':
-              this.tracer.enabled = me.interpreter.robotInstructions[0].enabled.data;
+              this.tracer.enabled = instruction.enabled.data;
               me.interpreter.robotInstructions.shift();
               break;
             case 'tracer_colour':
-              this.tracer.colour = me.interpreter.robotInstructions[0].colour.data;
+              this.tracer.colour = instruction.colour.data;
               this.traceRenderer.setColor(this.tracer.colour);
+              me.interpreter.robotInstructions.shift();
+              break;
+            case 'sensor':
+              instruction.sensorResultCallback(
+                me.interpreter.createPrimitive(this.sensors[instruction.sensorName.data]));
               me.interpreter.robotInstructions.shift();
               break;
           }
@@ -231,14 +237,14 @@ game.PlayerEntity = me.Entity.extend({
      /* Set the sensor's values */
      switch(response.indexShapeA) {
        case 1:
-         response.a.sensors.left = minDistance;
-         break;
+          response.a.sensors.right = minDistance;
+          break;
        case 2:
-         response.a.sensors.right = minDistance;
-         break;
+          response.a.sensors.left = minDistance;
+          break;
        case 3:
-         response.a.sensors.front = minDistance;
-         break;
+          response.a.sensors.front = minDistance;
+          break;
      }
 
      /* Return elements to the pool */
