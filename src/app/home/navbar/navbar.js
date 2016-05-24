@@ -92,7 +92,7 @@ this.HomeNavbar = (function() {
       interpreter.robotInstructions.push(
         {action : 'tracer_status', 
           enabled: enabled
-        })
+        });
       return interpreter.createPrimitive(null);
     };
     interpreter.setProperty(scope, 'tracer',

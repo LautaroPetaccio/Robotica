@@ -162,8 +162,6 @@ game.PlayerEntity = me.Entity.extend({
           }
         }
       }
-
-
     }
 
     /* Sensor's settings */

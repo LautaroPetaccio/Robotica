@@ -2,15 +2,6 @@
 /* Game namespace */
 var game = {
 
-  // an object where to store game information
-  parser : null,
-
-  data : {
-    // score
-    score: 0,
-  },
-
-
   // Run on page load.
 
   "onload" : function (canvasWrapper) {
@@ -41,7 +32,7 @@ var game = {
     }
 
     // Initialize the audio.
-    me.audio.init("mp3,ogg");
+    // me.audio.init("mp3,ogg");
 
     // Set a callback to run when loading is complete.
     me.loader.onload = this.loaded.bind(this);
@@ -56,7 +47,6 @@ var game = {
 
   // Run on game resources loaded.
   "loaded" : function () {
-    me.state.set(me.state.MENU, new game.TitleScreen());
     me.state.set(me.state.PLAY, new game.PlayScreen());
 
     // add our player entity in the entity pool
