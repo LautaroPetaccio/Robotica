@@ -54,23 +54,11 @@ this.HomeNavbar = (function() {
     });
 
     $('#btn_save').click(function() {
-      var defaultFilename = "robotica-dc-bloques.xml";
-      FileSave.saveTextAsFile(HomeBlockly.exportWorkspaceXml(), defaultFilename);
+      HomeBlockly.saveProgram();
     });
     
     $('#btn_load').click(function() {
-      $('#load-file-input').click();
-    });
-    
-    $('#load-file-input').change(function(event) {
-      if (event.target.files.length > 0) {
-        var fileToLoad = event.target.files[0];
-        var reader = new FileReader();
-        reader.onload = function() {
-          HomeBlockly.importWorkspaceXml(reader.result);
-        }
-        reader.readAsText(fileToLoad);
-      }
+      HomeBlockly.loadProgram();
     });
   }
 
