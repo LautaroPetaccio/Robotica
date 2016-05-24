@@ -4,6 +4,8 @@ this.HomeBlockly = (function() {
     
   var module = {};
 
+  module.workspace = null;
+
   module.render = function(selector) {
     return Views.loadView("blockly", selector).then(function() {
       return Views.loadView("blockly-toolbox", "#blockly-toolbox-wrapper").then(function() {
@@ -11,8 +13,6 @@ this.HomeBlockly = (function() {
       });
     });
   }
-
-  module.workspace = null;
 
   module.initialize = function() {
     
@@ -58,6 +58,18 @@ this.HomeBlockly = (function() {
 
   module.forceBlocklySvgResize = function() {
     Blockly.svgResize(HomeBlockly.workspace);
+  }
+
+  module.exportWorkspaceXml = function() {
+    var xmlDom = Blockly.Xml.workspaceToDom(module.workspace);
+    var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
+    return xmlText;
+  }
+
+  module.importWorkspaceXml = function(xmlText) {
+    HomeBlockly.workspace.clear();
+    var xmlDom = Blockly.Xml.textToDom(xmlText);
+    Blockly.Xml.domToWorkspace(xmlDom, HomeBlockly.workspace);
   }
   
   return module;

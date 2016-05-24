@@ -11,6 +11,7 @@ this.HomeNavbar = (function() {
   }
 
   module.initialize = function() {
+
     $('#btn_run').click(function(event) {
       if(me.interpreter !== null && me.execution.isPaused()) { 
         // Resume
@@ -51,6 +52,26 @@ this.HomeNavbar = (function() {
       me.execution.finish();
       me.state.change(me.state.PLAY);
     });
+
+    $('#btn_save').click(function() {
+      var defaultFilename = "robotica-dc-bloques.xml";
+      FileSave.saveTextAsFile(HomeBlockly.exportWorkspaceXml(), defaultFilename);
+    });
+    
+    $('#btn_load').click(function() {
+      $('#load-file-input').click();
+    });
+    
+    $('#load-file-input').change(function(event) {
+      if (event.target.files.length > 0) {
+        var fileToLoad = event.target.files[0];
+        var reader = new FileReader();
+        reader.onload = function() {
+          HomeBlockly.importWorkspaceXml(reader.result);
+        }
+        reader.readAsText(fileToLoad);
+      }
+    });
   }
 
   return module;
@@ -83,7 +104,6 @@ this.HomeNavbar = (function() {
         sensorResultCallback : callback
       });
     };
-
     interpreter.setProperty(scope, 'sensor',
         interpreter.createAsyncFunction(wrapper));
 

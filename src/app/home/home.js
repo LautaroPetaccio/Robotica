@@ -9,12 +9,11 @@ this.Home = (function() {
   var homeBlocklyWrapperElement = null;
   var homeSimulatorWrapperElement = null;
 
-
   module.render = function(selector) {
     return Views.loadView("home", selector).then(function() {
-      var blocklyPromise = HomeBlockly.render("#home-blockly-wrapper");
       var navbarPromise = HomeNavbar.render("#home-navbar-wrapper");
       var simulatorPromise = HomeSimulator.render("#home-simulator-wrapper");
+      var blocklyPromise = HomeBlockly.render("#home-blockly-wrapper");
       return Q.all([navbarPromise, simulatorPromise, blocklyPromise]).then(function() {
         module.initialize();
       });
