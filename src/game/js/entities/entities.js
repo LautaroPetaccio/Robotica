@@ -82,7 +82,7 @@ game.PlayerEntity = me.Entity.extend({
   moveRobot : function(leftMotor, rightMotor, time) {    
     leftMotor *= time;
     rightMotor *= time;
-    var deltaAngle = (this.wheelRadious/this.l) * (rightMotor - leftMotor);
+    var deltaAngle = (this.wheelRadious/this.l) * (leftMotor - rightMotor);
     this.pos.x = this.pos.x + (this.wheelRadious/2)*(leftMotor + rightMotor)*Math.cos(this.renderable.angle);
     this.pos.y = this.pos.y + (this.wheelRadious/2)*(leftMotor + rightMotor)*Math.sin(this.renderable.angle);
     this.renderable.angle += deltaAngle;
