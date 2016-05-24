@@ -22,6 +22,7 @@ this.HomeNavbar = (function() {
         if(!code.length) {
           return;
         }
+        me.state.pause();
         me.state.change(me.state.PLAY);
         var onCompleted = function() {
           $('#btn_run').show();
@@ -32,6 +33,7 @@ this.HomeNavbar = (function() {
         me.interpreter = new Interpreter(code, initApi);
         $('#btn_pause').show();
         $('#btn_stop').show();
+        me.state.resume();
         me.execution.run();
       }
       $('#btn_run').hide();
@@ -90,7 +92,7 @@ this.HomeNavbar = (function() {
       interpreter.robotInstructions.push(
         {action : 'tracer_status', 
           enabled: enabled
-        })
+        });
       return interpreter.createPrimitive(null);
     };
     interpreter.setProperty(scope, 'tracer',
