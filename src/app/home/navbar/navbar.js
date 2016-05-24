@@ -29,7 +29,6 @@ this.HomeNavbar = (function() {
           $('#btn_stop').hide();
         }
         me.execution.onCompleted = onCompleted;
-        console.log(code);
         me.interpreter = new Interpreter(code, initApi);
         $('#btn_pause').show();
         $('#btn_stop').show();
@@ -60,7 +59,7 @@ this.HomeNavbar = (function() {
                                 right: 0,
                                 front: 0,
                                 back : 0};
-    // Add an API function for the motor function
+    /* Add an API function for the motor function */
     var wrapper = function(leftWheelValue, rightWheelValue, durationValue) {
       return interpreter.createPrimitive(
         interpreter.robotInstructions.push(
@@ -73,14 +72,20 @@ this.HomeNavbar = (function() {
     };
     interpreter.setProperty(scope, 'motor',
         interpreter.createNativeFunction(wrapper));
-    // Add an API function for the sensor function
-    wrapper = function(sensorName) {
-      return interpreter.createPrimitive(interpreter.robotSensors[sensorName]);
-    };
-    interpreter.setProperty(scope, 'sensor',
-        interpreter.createNativeFunction(wrapper));
 
-    // Add an API function for the tracer enabler
+    /* Add an API function for the sensor function */
+    wrapper = function(sensorName, callback) {
+      interpreter.robotInstructions.push({
+        action : 'sensor',
+        sensorName : sensorName,
+        sensorResultCallback : callback
+      });
+    };
+
+    interpreter.setProperty(scope, 'sensor',
+        interpreter.createAsyncFunction(wrapper));
+
+    /* Add an API function for the tracer enabler */
     wrapper = function(enabled) {
       interpreter.robotInstructions.push(
         {action : 'tracer_status', 
@@ -91,7 +96,7 @@ this.HomeNavbar = (function() {
     interpreter.setProperty(scope, 'tracer',
         interpreter.createNativeFunction(wrapper));
 
-    // Add an API function for the tracer colour
+    /* Add an API function for the tracer colour */
     wrapper = function(colour) {
       interpreter.robotInstructions.push(
         {action : 'tracer_colour', 
@@ -100,6 +105,14 @@ this.HomeNavbar = (function() {
       return interpreter.createPrimitive(null);
     };
     interpreter.setProperty(scope, 'tracer_colour',
+        interpreter.createNativeFunction(wrapper));
+
+    wrapper = function(text) {
+      console.log("Console log: ");
+      console.log(text.data);
+      return interpreter.createPrimitive(null);
+    };
+    interpreter.setProperty(scope, 'console_log',
         interpreter.createNativeFunction(wrapper));
 
   }

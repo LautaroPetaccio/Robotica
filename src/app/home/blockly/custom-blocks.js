@@ -44,8 +44,9 @@
 
   Blockly.JavaScript['robotica_sensor'] = function(block) {
     var dropdown_sensor = block.getFieldValue('Sensor');
-    var code = 'sensor(' + dropdown_sensor + ')';
-    return code;
+    var code = 'sensor(\'' + dropdown_sensor + '\')';
+    // return code;
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
   };
 
   /* Enables or disables tracing support */
@@ -86,6 +87,27 @@
     var trace_colour = block.getFieldValue('trace_colour');
     var code = 'tracer_colour(\''+ trace_colour +'\');\n';
     return code;
+  };
+
+  /* Just for debugging */
+  Blockly.Blocks['console_log'] = {
+    init: function() {
+      this.appendValueInput("text")
+          .setCheck(null)
+          .appendField("Texto");
+      this.setPreviousStatement(true, null);
+      this.setNextStatement(true, null);
+      this.setColour(20);
+      this.setTooltip('');
+      this.setHelpUrl('http://www.example.com/');
+    }
+  };
+
+  Blockly.JavaScript['console_log'] = function(block) {
+    var value_text = Blockly.JavaScript.valueToCode(block, 'text', Blockly.JavaScript.ORDER_ATOMIC);
+    // TODO: Assemble JavaScript into code variable.
+    var code = 'console_log(' + value_text + ');\n';
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
   };
 
 })();
