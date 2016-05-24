@@ -8,14 +8,6 @@ game.PlayScreen = me.ScreenObject.extend({
 
         // load a level
         me.levelDirector.loadLevel("area03");
-        me.input.bindKey(me.input.KEY.LEFT, "left");
-        me.input.bindKey(me.input.KEY.RIGHT, "right");
-        me.input.bindKey(me.input.KEY.UP, "up");
-        me.input.bindKey(me.input.KEY.DOWN, "down");
-
-        // add our HUD to the game world
-        this.HUD = new game.HUD.Container();
-        me.game.world.addChild(this.HUD);
         
         /* Add the world entity */
         me.game.world.addChild(me.pool.pull("worldEntity"));
@@ -25,7 +17,6 @@ game.PlayScreen = me.ScreenObject.extend({
      *  action to perform when leaving this screen (state change)
      */
     onDestroyEvent: function() {
-        // remove the HUD from the game world
-        me.game.world.removeChild(this.HUD);
+        /* Nothing */
     }
 });

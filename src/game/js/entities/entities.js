@@ -11,7 +11,8 @@ game.PlayerEntity = me.Entity.extend({
     // call the constructor
     this._super(me.Entity, 'init', [x, y, settings]);
 
-    this.renderable.width = this.width
+
+    this.renderable.width = this.width;
     this.renderable.height = this.height;
 
     /* Get current level */
@@ -23,7 +24,6 @@ game.PlayerEntity = me.Entity.extend({
 
     this.tracer = {
       enabled : false,
-      colour: '#000000'
     };
 
     /* Creating the tracer canvas to draw the robot's movements */
@@ -151,8 +151,7 @@ game.PlayerEntity = me.Entity.extend({
               me.interpreter.robotInstructions.shift();
               break;
             case 'tracer_colour':
-              this.tracer.colour = instruction.colour.data;
-              this.traceRenderer.setColor(this.tracer.colour);
+              this.traceRenderer.setColor(instruction.colour.data);
               me.interpreter.robotInstructions.shift();
               break;
             case 'sensor':
