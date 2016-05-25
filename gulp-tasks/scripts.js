@@ -25,8 +25,7 @@ gulp.task('scripts-app', [], function() {
 });
 
 gulp.task('scripts-game', [], function() {
-  return gulp.src('src/game/**/*.js')
-          .pipe(plugins.flatten())
+  return gulp.src(['src/game/**/plugins/**/*.js', 'src/game/**/*.js'])
           //.pipe(plugins.eslint())
           //.pipe(plugins.eslint.format())
           .pipe(plugins.concat('game.min.js'))
