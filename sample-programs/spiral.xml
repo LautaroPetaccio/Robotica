@@ -1,0 +1,186 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="controls_whileUntil" id="-aU}ggNShP,ZQWbFge-v" x="36" y="46">
+    <field name="MODE">WHILE</field>
+    <value name="BOOL">
+      <block type="logic_compare" id="Qd}UmyF?v2*e(W*yA:L_">
+        <field name="OP">GT</field>
+        <value name="A">
+          <block type="robotica_sensor" id="VrdWy6%e9TCD(=2mP/@.">
+            <field name="Sensor">left</field>
+          </block>
+        </value>
+        <value name="B">
+          <block type="math_number" id="EiAyx39f2Q{|wlv]siLJ">
+            <field name="NUM">20</field>
+          </block>
+        </value>
+      </block>
+    </value>
+    <statement name="DO">
+      <block type="robotica_motor" id="MtR4cB*)MjEPY2a|ndoi">
+        <value name="leftWheel">
+          <block type="math_number" id="|MbmVztN4laMUwrR4`xU">
+            <field name="NUM">20</field>
+          </block>
+        </value>
+        <value name="rightWheel">
+          <block type="math_number" id="yE-N*gW~FLvNK~BbuHI/">
+            <field name="NUM">20</field>
+          </block>
+        </value>
+        <value name="duration">
+          <block type="math_number" id="TeFV2@wCLj@vHq]Lxr}O">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+      </block>
+    </statement>
+    <next>
+      <block type="robotica_tracer_status" id="rS9xjMe*~gwUCD@l{SV*">
+        <value name="enable">
+          <shadow type="logic_boolean" id="hSv[x7(xAsr`}X17U64a">
+            <field name="BOOL">TRUE</field>
+          </shadow>
+        </value>
+        <next>
+          <block type="variables_set" id="dV#=,IyO!p;UShau#jI;">
+            <field name="VAR">rd</field>
+            <value name="VALUE">
+              <block type="math_number" id="l!cRlLTo-03-cC+,)D|t">
+                <field name="NUM">22</field>
+              </block>
+            </value>
+            <next>
+              <block type="controls_repeat_ext" id="A0j~XNi5`U_D{/iqX,xn">
+                <value name="TIMES">
+                  <shadow type="math_number" id="Z)m8B^1J?OjXq:Z%E]t.">
+                    <field name="NUM">5</field>
+                  </shadow>
+                </value>
+                <statement name="DO">
+                  <block type="robotica_tracer_colour" id="Bi19u9l:ZOIITXZGR!6t">
+                    <field name="trace_colour">#33cc00</field>
+                    <next>
+                      <block type="robotica_motor" id="G3}24_.muAySewKqwncz">
+                        <value name="leftWheel">
+                          <block type="math_number" id="PaCyz(fgi!m+LC8DQ#Nc">
+                            <field name="NUM">15</field>
+                          </block>
+                        </value>
+                        <value name="rightWheel">
+                          <block type="variables_get" id="kfW!:k/IJ,2m[G4*Cq3C">
+                            <field name="VAR">rd</field>
+                          </block>
+                        </value>
+                        <value name="duration">
+                          <block type="math_number" id="uRuaL-])-K64/G#99`Gb">
+                            <field name="NUM">1</field>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="robotica_tracer_colour" id="FOF.9Wllu5Rm6Ev=50V^">
+                            <field name="trace_colour">#ffff00</field>
+                            <next>
+                              <block type="robotica_motor" id="wNioyZSw?4)0RvQ8xNGO">
+                                <value name="leftWheel">
+                                  <block type="math_number" id="3jKwFAe[#;nRW}tJUw2p">
+                                    <field name="NUM">15</field>
+                                  </block>
+                                </value>
+                                <value name="rightWheel">
+                                  <block type="variables_get" id="E+i.ktMs8kTURB#[xv#B">
+                                    <field name="VAR">rd</field>
+                                  </block>
+                                </value>
+                                <value name="duration">
+                                  <block type="math_number" id="CCzqF129oZgQEURM}ADr">
+                                    <field name="NUM">1</field>
+                                  </block>
+                                </value>
+                                <next>
+                                  <block type="robotica_tracer_colour" id="=@:jFP8YA9|%y*d^CAhr">
+                                    <field name="trace_colour">#ff0000</field>
+                                    <next>
+                                      <block type="robotica_motor" id="-+VlciTrwY4V^3SlXagt">
+                                        <value name="leftWheel">
+                                          <block type="math_number" id="?22nXT?)u(yWiGUI1X^#">
+                                            <field name="NUM">15</field>
+                                          </block>
+                                        </value>
+                                        <value name="rightWheel">
+                                          <block type="variables_get" id="tQ:9EJjRK`xOQWCaVLUp">
+                                            <field name="VAR">rd</field>
+                                          </block>
+                                        </value>
+                                        <value name="duration">
+                                          <block type="math_number" id="2|[s-aB,.wiRzI^qBP,f">
+                                            <field name="NUM">1</field>
+                                          </block>
+                                        </value>
+                                        <next>
+                                          <block type="robotica_tracer_colour" id="hs@z]Vmd/C5Bex)s87Cu">
+                                            <field name="trace_colour">#3333ff</field>
+                                            <next>
+                                              <block type="robotica_motor" id="ICxHMckwa^_v/h[H4y!N">
+                                                <value name="leftWheel">
+                                                  <block type="math_number" id="IE#=3+seemN9xmRqr8fF">
+                                                    <field name="NUM">15</field>
+                                                  </block>
+                                                </value>
+                                                <value name="rightWheel">
+                                                  <block type="variables_get" id="9C,89ZYIsmIib^z@C,#:">
+                                                    <field name="VAR">rd</field>
+                                                  </block>
+                                                </value>
+                                                <value name="duration">
+                                                  <block type="math_number" id="|a3alg}ra];b9rO7a*wP">
+                                                    <field name="NUM">1</field>
+                                                  </block>
+                                                </value>
+                                                <next>
+                                                  <block type="variables_set" id="gl9A#v^gWfWwWN:0u/C~">
+                                                    <field name="VAR">rd</field>
+                                                    <value name="VALUE">
+                                                      <block type="math_arithmetic" id="d^UN,fIvWrt49oI,!kH%">
+                                                        <field name="OP">MINUS</field>
+                                                        <value name="A">
+                                                          <shadow type="math_number" id="]hTZAhwe;2+ZM@pxbx_~">
+                                                            <field name="NUM">1</field>
+                                                          </shadow>
+                                                          <block type="variables_get" id="v;yB=ND2VC;K^Jy)*1Fi">
+                                                            <field name="VAR">rd</field>
+                                                          </block>
+                                                        </value>
+                                                        <value name="B">
+                                                          <shadow type="math_number" id="6fm9ZYn(LX{*_HFIJG;l">
+                                                            <field name="NUM">1</field>
+                                                          </shadow>
+                                                        </value>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </next>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>

@@ -11,6 +11,7 @@ this.HomeNavbar = (function() {
   }
 
   module.initialize = function() {
+
     $('#btn_run').click(function(event) {
       if(me.interpreter !== null && me.execution.isPaused()) { 
         // Resume
@@ -51,6 +52,14 @@ this.HomeNavbar = (function() {
       me.execution.finish();
       me.state.change(me.state.PLAY);
     });
+
+    $('#btn_save').click(function() {
+      HomeBlockly.saveProgram();
+    });
+    
+    $('#btn_load').click(function() {
+      HomeBlockly.loadProgram();
+    });
   }
 
   return module;
@@ -83,7 +92,6 @@ this.HomeNavbar = (function() {
         sensorResultCallback : callback
       });
     };
-
     interpreter.setProperty(scope, 'sensor',
         interpreter.createAsyncFunction(wrapper));
 
