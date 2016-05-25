@@ -12,12 +12,12 @@
           .appendField("Rueda derecha");
       this.appendValueInput("duration")
           .setCheck("Number")
-          .appendField("Duracion");
+          .appendField("Duración");
       this.setInputsInline(true);
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(65);
-      this.setTooltip('');
+      this.setTooltip('Hacer que el robot se mueva con determinada potencia en cada rueda durante el tiempo definido.');
       this.setHelpUrl('http://www.example.com/');
     }
   };
@@ -37,7 +37,7 @@
           .appendField(new Blockly.FieldDropdown([["Izquierda", "left"], ["Derecha", "right"], ["Adelante", "front"], ["Atrás", "back"]]), "Sensor");
       this.setOutput(true, "Number");
       this.setColour(65);
-      this.setTooltip('');
+      this.setTooltip('Activa el sensor de proximidad en la dirección determinada.');
       this.setHelpUrl('http://www.example.com/');
     }
   };
@@ -58,7 +58,7 @@
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(65);
-      this.setTooltip('');
+      this.setTooltip('Si es verdadero, entonces habilita la traza.');
       this.setHelpUrl('http://www.example.com/');
     }
   };
@@ -78,7 +78,7 @@
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(65);
-      this.setTooltip('');
+      this.setTooltip('Define el color de la traza.');
       this.setHelpUrl('http://www.example.com/');
     }
   };
