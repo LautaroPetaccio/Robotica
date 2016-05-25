@@ -12,7 +12,7 @@
           .appendField("Rueda derecha");
       this.appendValueInput("duration")
           .setCheck("Number")
-          .appendField("Duracion");
+          .appendField("Duración");
       this.setInputsInline(true);
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
