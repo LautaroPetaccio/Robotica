@@ -66,6 +66,8 @@ this.HomeBlockly = (function() {
 
     downloadCodeButtonElement.click(HomeBlockly.onDownloadCodeButtonClick);
 
+    downloadCodeNameInputElement.keypress(HomeBlockly.onKeyPressedInDowloadCodeNameInput);
+
     hiddenFileInputElement.change(HomeBlockly.onHiddenFileInputChange);
   }
   
@@ -92,6 +94,13 @@ this.HomeBlockly = (function() {
       downloadFile += ".xml";
     }
     FileSave.saveTextAsFile(HomeBlockly.exportWorkspaceXml(), downloadFile);
+  }
+
+  module.onKeyPressedInDowloadCodeNameInput = function(event) {
+    if (event.which == 13) {
+        event.preventDefault();
+        HomeBlockly.onDownloadCodeButtonClick();
+    }
   }
 
   module.loadProgram = function() {
