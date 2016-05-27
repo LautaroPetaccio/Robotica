@@ -17,7 +17,7 @@ this.HomeBlockly = (function() {
     return Views.loadView("blockly", selector).then(function() {
       var blocklyToolboxPromise = Views.loadView("blockly-toolbox", "#blockly-toolbox-wrapper");
       var downloadCodeModalPromise = Views.loadView("download-code-modal", "#download-code-modal-wrapper");
-      Q.all([blocklyToolboxPromise, downloadCodeModalPromise]).then(function() {
+      return Q.all([blocklyToolboxPromise, downloadCodeModalPromise]).then(function() {
         module.initialize();
       });
     });
