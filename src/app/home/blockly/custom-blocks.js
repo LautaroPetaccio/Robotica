@@ -24,15 +24,7 @@
 
   Blockly.JavaScript['robotica_motor'] = function(block) {
     var value_leftwheel = Blockly.JavaScript.valueToCode(block, 'leftWheel', Blockly.JavaScript.ORDER_ATOMIC);
-    if(value_leftwheel > 100)
-      value_leftwheel = 100;
-    if(value_leftwheel < -100)
-      value_leftwheel = -100;
     var value_rightwheel = Blockly.JavaScript.valueToCode(block, 'rightWheel', Blockly.JavaScript.ORDER_ATOMIC);
-    if(value_rightwheel > 100)
-      value_rightwheel = 100;
-    if(value_rightwheel < -100)
-      value_rightwheel = -100;
     var value_duration = Blockly.JavaScript.valueToCode(block, 'duration', Blockly.JavaScript.ORDER_ATOMIC);
     var code = "motor(" + value_leftwheel + ' , ' + value_rightwheel + ' , ' + value_duration + ');\n';
     return code;

@@ -23,7 +23,8 @@
     "bootstrap-sass": "bootstrap-sass-official#^3.3.6",
     "jquery-ui": "^1.11.4",
     "jqueryui-touch-punch": "*",
-    "q": "1.0.1"
+    "q": "1.0.1",
+    "toastr": "^2.1.2"
   },
   "overrides": {
     "bootstrap-sass": {

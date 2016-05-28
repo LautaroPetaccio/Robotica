@@ -21,6 +21,7 @@ this.HomeNavbar = (function() {
       else {
         var code = Blockly.JavaScript.workspaceToCode(HomeBlockly.workspace);
         if(!code.length) {
+          module.notificarProgramaVacio();
           return;
         }
         me.state.pause();
@@ -62,6 +63,22 @@ this.HomeNavbar = (function() {
     });
   }
 
+  module.notificarProgramaVacio = _.throttle(function() {
+    toastr.info('No hay código para ejecutar.', 'Programa vacío', {timeOut: 2000});
+  }, 3000, {trailing: false});
+
+  module.notificarOverflowRuedaIzquierda = _.throttle(function() {
+    notificarOverflow('La potencia de la rueda izquierda está fuera del rango [-100, 100].');
+  }, 3000, {trailing: false});
+
+  module.notificarOverflowRuedaDerecha = _.throttle(function() {
+    notificarOverflow('La potencia de la rueda derecha está fuera del rango [-100, 100].');
+  }, 3000, {trailing: false});
+
+  function notificarOverflow(mensaje) {
+    toastr.warning(mensaje, 'Overflow', {timeOut: 2000});
+  }
+
   return module;
 
   function initApi(interpreter, scope) {
@@ -72,6 +89,14 @@ this.HomeNavbar = (function() {
                                 back : 0};
     /* Add an API function for the motor function */
     var wrapper = function(leftWheelValue, rightWheelValue, durationValue) {
+      if (leftWheelValue.data < -100 || leftWheelValue.data > 100) {
+        leftWheelValue.data = ((leftWheelValue.data % 100) + 100) % 100;
+        module.notificarOverflowRuedaIzquierda();
+      }
+      if (rightWheelValue.data < -100 || rightWheelValue.data > 100) {
+        rightWheelValue.data = ((rightWheelValue.data % 100) + 100) % 100;
+        module.notificarOverflowRuedaDerecha();
+      }
       return interpreter.createPrimitive(
         interpreter.robotInstructions.push(
           {action : 'motor', 
