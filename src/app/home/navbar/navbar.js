@@ -60,6 +60,10 @@ this.HomeNavbar = (function() {
     $('#btn_load').click(function() {
       HomeBlockly.loadProgram();
     });
+
+    $('#btn_maps').click(function() {
+      HomeSimulator.showMapsModal();
+    });
   }
 
   return module;

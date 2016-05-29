@@ -6,7 +6,10 @@ this.HomeSimulator = (function() {
 
   module.render = function(selector) {
     return Views.loadView("simulator", selector).then(function() {
-      module.initialize();
+      var mapsModalPromise = Views.loadView("maps-modal", "#maps-modal-wrapper");
+      return Q.all([mapsModalPromise]).then(function() {
+        module.initialize();
+      });
     });
   }
 
@@ -49,6 +52,10 @@ this.HomeSimulator = (function() {
       screenElement.height(screenHeight);
       canvasElement.width(screenWidth);
       canvasElement.height(screenHeight);
+  }
+
+  module.showMapsModal = function() {
+    $("#maps-modal").modal('show');
   }
     
   return module;
