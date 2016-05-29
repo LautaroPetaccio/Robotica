@@ -36,6 +36,8 @@
     "micromatch": "^2.3.8",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.1.5",
-    "through2": "^2.0.1"
+    "through2": "^2.0.1",
+    "swig" : "^1.4.2",
+    "gulp-imagemin" : "^3.0.1"
   }
 }
