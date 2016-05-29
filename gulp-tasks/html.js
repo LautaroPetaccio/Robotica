@@ -4,7 +4,7 @@ var plugins = require('gulp-load-plugins')(['gulp-*']);
 
 /* Html tasks */
 
-gulp.task('html', ['html-index', 'html-other']);
+gulp.task('html', ['html-index', 'html-other', 'maps-modal']);
 
 gulp.task('html-index', [], function() {
   return gulp.src('src/app/index.html')
