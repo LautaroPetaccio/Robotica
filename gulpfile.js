@@ -6,12 +6,16 @@ require('require-dir')('gulp-tasks/');
 
 /* Main tasks */
 
+gulp.task('bower', function() {
+  return plugins.bower();
+});
+
 gulp.task('build', [], function() {
-    return runSequence(['html', 'scripts', 'styles', 'fonts', 'assets']);
+    return runSequence('bower', ['html', 'scripts', 'styles', 'fonts', 'assets']);
 });
 
 gulp.task('serve', [], function() {
-    return runSequence(['html', 'scripts', 'styles', 'fonts', 'assets'], 'browser-sync-init', 'browser-sync-watch');
+    return runSequence('bower', ['html', 'scripts', 'styles', 'fonts', 'assets'], 'browser-sync-init', 'browser-sync-watch');
 });
 
 gulp.task('clean', [], function() {
