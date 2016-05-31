@@ -8,11 +8,10 @@
       <div class="modal-body">
         <ul class="media-list">
         {% for map in maps %}
-          <li class="media">
+
+          <li class="media" id="{{ map.name }}">
             <div class="media-left">
-              <a href="#">
                 <img class="media-object" width="64px" height="64px" src="{{ thumbnailsDirectory + map.name + '/' + map.name }}.png" alt="{{ map.name }}">
-              </a>
             </div>
             <div class="media-body">
               <h4 class="media-heading">{{ map.title }}</h4>

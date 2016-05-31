@@ -19,6 +19,13 @@ var game = {
       hasFinished : function() { return this.state == 2; },
     };
 
+    me.game.changeMap = function(mapName) {
+      me.game.map = mapName;
+      me.state.pause();
+      me.state.change(me.state.PLAY);
+      me.state.resume();
+    }
+
     // Initialize the video.
     if (!me.video.init(640, 640, {wrapper : canvasWrapper, antiAlias: true})) {
       alert("Your browser does not support HTML5 canvas.");
@@ -47,6 +54,9 @@ var game = {
 
   // Run on game resources loaded.
   "loaded" : function () {
+    /* Set the map to be loaded */
+    me.game.map = "area03";
+
     me.state.set(me.state.PLAY, new game.PlayScreen());
 
     // add our player entity in the entity pool

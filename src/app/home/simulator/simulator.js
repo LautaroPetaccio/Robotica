@@ -38,6 +38,7 @@ this.HomeSimulator = (function() {
     
     window.addEventListener('resize', module.onContainerResize, false);
     module.onContainerResize();
+    $(".media").click(module.onMapSelectionClick);
   }
 
   module.onContainerResize = function() {
@@ -57,7 +58,12 @@ this.HomeSimulator = (function() {
   module.showMapsModal = function() {
     $("#maps-modal").modal('show');
   }
-    
+
+  module.onMapSelectionClick = function () {
+    me.game.changeMap($(this).attr("id"));
+    $("#maps-modal").modal('hide');
+  }
+
   return module;
 
 })();
