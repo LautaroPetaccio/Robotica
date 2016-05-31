@@ -29,7 +29,7 @@ this.Home = (function() {
     module.setInitialLayoutMode();
 
     homeNavbarCollapseElement.on('shown.bs.collapse hidden.bs.collapse', HomeBlockly.forceBlocklySvgResize);
-    homeSimulatorWrapperElement.click(module.toggleLayoutMode);
+    homeSimulatorWrapperElement.dblclick(module.toggleLayoutMode);
     window.addEventListener('resize', module.setInitialLayoutMode, false);
     window.addEventListener('orientationchange', module.resetDraggablePosition, false);
   }
