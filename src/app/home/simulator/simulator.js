@@ -6,10 +6,7 @@ this.HomeSimulator = (function() {
 
   module.render = function(selector) {
     return Views.loadView("simulator", selector).then(function() {
-      var mapsModalPromise = Views.loadView("maps-modal", "#maps-modal-wrapper");
-      return Q.all([mapsModalPromise]).then(function() {
-        module.initialize();
-      });
+      module.initialize();
     });
   }
 
@@ -38,7 +35,6 @@ this.HomeSimulator = (function() {
     
     window.addEventListener('resize', module.onContainerResize, false);
     module.onContainerResize();
-    $(".media").click(module.onMapSelectionClick);
   }
 
   module.onContainerResize = function() {
@@ -53,15 +49,6 @@ this.HomeSimulator = (function() {
       screenElement.height(screenHeight);
       canvasElement.width(screenWidth);
       canvasElement.height(screenHeight);
-  }
-
-  module.showMapsModal = function() {
-    $("#maps-modal").modal('show');
-  }
-
-  module.onMapSelectionClick = function () {
-    me.game.changeMap($(this).attr("id"));
-    $("#maps-modal").modal('hide');
   }
 
   return module;

@@ -62,8 +62,14 @@ this.HomeNavbar = (function() {
     });
 
     $('#btn_maps').click(function() {
-      HomeSimulator.showMapsModal();
+      Home.showMapsModal();
     });
+  }
+
+  module.toggleNavbar = function() {
+    if ($('#home-navbar-collapse').hasClass('in')) {
+      $('#home-navbar-collapse-button').click();
+    }
   }
 
   return module;
