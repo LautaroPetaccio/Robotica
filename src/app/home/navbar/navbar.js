@@ -61,6 +61,16 @@ this.HomeNavbar = (function() {
     $('#btn_load').click(function() {
       HomeBlockly.loadProgram();
     });
+
+    $('#btn_maps').click(function() {
+      Home.showMapsModal();
+    });
+  }
+
+  module.toggleNavbar = function() {
+    if ($('#home-navbar-collapse').hasClass('in')) {
+      $('#home-navbar-collapse-button').click();
+    }
   }
 
   module.notificarProgramaVacio = _.throttle(function() {

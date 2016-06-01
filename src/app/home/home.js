@@ -8,13 +8,15 @@ this.Home = (function() {
   var homeContentElement = null;
   var homeBlocklyWrapperElement = null;
   var homeSimulatorWrapperElement = null;
+  var mapsModalElement = null;
 
   module.render = function(selector) {
     return Views.loadView("home", selector).then(function() {
       var navbarPromise = HomeNavbar.render("#home-navbar-wrapper");
       var simulatorPromise = HomeSimulator.render("#home-simulator-wrapper");
       var blocklyPromise = HomeBlockly.render("#home-blockly-wrapper");
-      return Q.all([navbarPromise, simulatorPromise, blocklyPromise]).then(function() {
+      var mapsModalPromise = Views.loadView("maps-modal", "#maps-modal-wrapper");
+      return Q.all([navbarPromise, simulatorPromise, blocklyPromise, mapsModalPromise]).then(function() {
         module.initialize();
       });
     });
@@ -25,6 +27,7 @@ this.Home = (function() {
     homeContentElement = $("#home-content");
     homeBlocklyWrapperElement = $("#home-blockly-wrapper");
     homeSimulatorWrapperElement = $("#home-simulator-wrapper");
+    mapsModalElement = $("#maps-modal");
     
     module.setInitialLayoutMode();
 
@@ -32,6 +35,8 @@ this.Home = (function() {
     homeSimulatorWrapperElement.click(module.toggleLayoutMode);
     window.addEventListener('resize', module.setInitialLayoutMode, false);
     window.addEventListener('orientationchange', module.resetDraggablePosition, false);
+
+    $("#maps-modal .media").click(module.onMapSelectionClick);
   }
   
   module.setInitialLayoutMode = function() {
@@ -91,6 +96,16 @@ this.Home = (function() {
       homeSimulatorWrapperElement.animate({ top: "10px", right: "10px" });
       module.enableSimulatorDragging();
     }
+  }
+
+  module.showMapsModal = function() {
+    mapsModalElement.modal('show');
+  }
+
+  module.onMapSelectionClick = function () {
+    me.game.changeMap($(this).attr("id"));
+    mapsModalElement.modal('hide');
+    HomeNavbar.toggleNavbar();
   }
   
   return module;

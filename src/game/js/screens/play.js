@@ -4,7 +4,7 @@ game.PlayScreen = me.ScreenObject.extend({
      */
     onResetEvent: function() {
         // load a level
-        me.levelDirector.loadLevel("area03");
+        me.levelDirector.loadLevel(me.game.map);
         
         /* Add the world entity */
         me.game.world.addChild(me.pool.pull("worldEntity"));

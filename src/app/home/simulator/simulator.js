@@ -50,7 +50,7 @@ this.HomeSimulator = (function() {
       canvasElement.width(screenWidth);
       canvasElement.height(screenHeight);
   }
-    
+
   return module;
 
 })();

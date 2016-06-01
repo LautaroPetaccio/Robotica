@@ -90,3 +90,17 @@ $blockly-collapsed-height: 85%;
   height: $blockly-expanded-height;
   @include main-background;
 }
+
+/**
+ * Hidden modals.
+ */
+
+#maps-modal-wrapper {
+  #maps-modal {
+    display: none;
+  }
+
+  .media {
+    cursor:pointer;
+  }
+}
