@@ -14,13 +14,15 @@ this.HomeBlockly = (function() {
   var blocklyDivWrapperElement = undefined;
 
   module.render = function(selector) {
-    return Views.loadView("blockly", selector).then(function() {
-      var blocklyToolboxPromise = Views.loadView("blockly-toolbox", "#blockly-toolbox-wrapper");
-      var downloadCodeModalPromise = Views.loadView("download-code-modal", "#download-code-modal-wrapper");
-      return Q.all([blocklyToolboxPromise, downloadCodeModalPromise]).then(function() {
-        module.initialize();
-      });
-    });
+    return Views.loadView("blockly", selector)
+        .then(module.renderSubviews)
+        .then(module.initialize);
+  }
+
+  module.renderSubviews = function() {
+    var blocklyToolboxPromise = Views.loadView("blockly-toolbox", "#blockly-toolbox-wrapper");
+    var downloadCodeModalPromise = Views.loadView("download-code-modal", "#download-code-modal-wrapper");
+    return Q.all([blocklyToolboxPromise, downloadCodeModalPromise]);
   }
 
   module.initialize = function() {

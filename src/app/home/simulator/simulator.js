@@ -5,9 +5,8 @@ this.HomeSimulator = (function() {
   var module = {};
 
   module.render = function(selector) {
-    return Views.loadView("simulator", selector).then(function() {
-      module.initialize();
-    });
+    return Views.loadView("simulator", selector)
+        .then(module.initialize);
   }
 
   module.initialize = function() {
