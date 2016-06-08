@@ -171,14 +171,14 @@ game.PlayerEntity = me.Entity.extend({
 
     /* Limits checking */
     if(this.pos.x <= this.minX) {
-      this.pos.x = this.minX + 1;
+      this.pos.x = this.minX;
     }
     else if(this.pos.x >= this.maxX) {
       this.pos.x = this.maxX;
     }
 
     if(this.pos.y <= this.minY) {
-      this.pos.y = this.minY + 1;
+      this.pos.y = this.minY + 0.10;
     }
     else if(this.pos.y >= this.maxY) {
       this.pos.y = this.maxY;
@@ -266,7 +266,7 @@ game.WorldFrameEntity = me.Entity.extend({
     this.mapWidth = actualMap.cols * actualMap.tilewidth;
     this.mapHeight = actualMap.rows * actualMap.tileheight;
 
-      /* Top line */
+    /* Top line */
     this.body.shapes[0] = new me.Line(0, 0, [new me.Vector2d(0, 0), 
       new me.Vector2d(this.mapWidth, 0)]);
     /* Left line */
