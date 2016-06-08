@@ -270,8 +270,8 @@
           _this.sensors.left = this.sensors.left;
           _this.sensors.right = this.sensors.right;
           _this.sensors.front = this.sensors.front;
-          _this.robotPos.x = this.pos.x;
-          _this.robotPos.y = this.pos.y;
+          _this.robotPos.x = Math.round(this.pos.x);
+          _this.robotPos.y = Math.round(this.pos.y);
         }
 
       });
