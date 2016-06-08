@@ -255,8 +255,7 @@ game.PlayerEntity = me.Entity.extend({
 game.WorldFrameEntity = me.Entity.extend({
   init: function() {
     settings = {
-      name : "wordEntity",
-      // image : "",
+      name : "worldEntity",
       width : me.game.viewport.width,
       height : me.game.viewport.height
     };
@@ -274,11 +273,12 @@ game.WorldFrameEntity = me.Entity.extend({
     this.body.shapes[1] = new me.Line(0, 0, [new me.Vector2d(0, 0), 
       new me.Vector2d(0, this.mapHeight)]);
     /* Right line */
-    this.body.shapes[1] = new me.Line(0, 0, [new me.Vector2d(this.mapWidth, 0), 
+    this.body.shapes[2] = new me.Line(0, 0, [new me.Vector2d(this.mapWidth, 0), 
       new me.Vector2d(this.mapWidth, this.mapHeight)]);
     /* Bottom line */
-    this.body.shapes[2] = new me.Line(0, 0, [new me.Vector2d(0, this.mapHeight), 
+    this.body.shapes[3] = new me.Line(0, 0, [new me.Vector2d(0, this.mapHeight), 
       new me.Vector2d(this.mapWidth, this.mapHeight)]);
+
     this.body.updateBounds();
   }
 
