@@ -171,14 +171,14 @@ game.PlayerEntity = me.Entity.extend({
 
     /* Limits checking */
     if(this.pos.x <= this.minX) {
-      this.pos.x = this.minX + 1;
+      this.pos.x = this.minX;
     }
     else if(this.pos.x >= this.maxX) {
       this.pos.x = this.maxX;
     }
 
     if(this.pos.y <= this.minY) {
-      this.pos.y = this.minY + 1;
+      this.pos.y = this.minY + 0.10;
     }
     else if(this.pos.y >= this.maxY) {
       this.pos.y = this.maxY;
@@ -255,8 +255,7 @@ game.PlayerEntity = me.Entity.extend({
 game.WorldFrameEntity = me.Entity.extend({
   init: function() {
     settings = {
-      name : "wordEntity",
-      // image : "",
+      name : "worldEntity",
       width : me.game.viewport.width,
       height : me.game.viewport.height
     };
@@ -267,18 +266,19 @@ game.WorldFrameEntity = me.Entity.extend({
     this.mapWidth = actualMap.cols * actualMap.tilewidth;
     this.mapHeight = actualMap.rows * actualMap.tileheight;
 
-      /* Top line */
+    /* Top line */
     this.body.shapes[0] = new me.Line(0, 0, [new me.Vector2d(0, 0), 
       new me.Vector2d(this.mapWidth, 0)]);
     /* Left line */
     this.body.shapes[1] = new me.Line(0, 0, [new me.Vector2d(0, 0), 
       new me.Vector2d(0, this.mapHeight)]);
     /* Right line */
-    this.body.shapes[1] = new me.Line(0, 0, [new me.Vector2d(this.mapWidth, 0), 
+    this.body.shapes[2] = new me.Line(0, 0, [new me.Vector2d(this.mapWidth, 0), 
       new me.Vector2d(this.mapWidth, this.mapHeight)]);
     /* Bottom line */
-    this.body.shapes[2] = new me.Line(0, 0, [new me.Vector2d(0, this.mapHeight), 
+    this.body.shapes[3] = new me.Line(0, 0, [new me.Vector2d(0, this.mapHeight), 
       new me.Vector2d(this.mapWidth, this.mapHeight)]);
+
     this.body.updateBounds();
   }
 
