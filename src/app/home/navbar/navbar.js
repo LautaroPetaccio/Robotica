@@ -5,9 +5,8 @@ this.HomeNavbar = (function() {
   var module = {};
 
   module.render = function(selector) {
-    return Views.loadView("navbar", selector).then(function() {
-      module.initialize();
-    });
+    return Views.loadView("navbar", selector)
+        .then(module.initialize);
   }
 
   module.initialize = function() {

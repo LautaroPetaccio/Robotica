@@ -11,15 +11,17 @@ this.Home = (function() {
   var mapsModalElement = null;
 
   module.render = function(selector) {
-    return Views.loadView("home", selector).then(function() {
-      var navbarPromise = HomeNavbar.render("#home-navbar-wrapper");
-      var simulatorPromise = HomeSimulator.render("#home-simulator-wrapper");
-      var blocklyPromise = HomeBlockly.render("#home-blockly-wrapper");
-      var mapsModalPromise = Views.loadView("maps-modal", "#maps-modal-wrapper");
-      return Q.all([navbarPromise, simulatorPromise, blocklyPromise, mapsModalPromise]).then(function() {
-        module.initialize();
-      });
-    });
+    return Views.loadView("home", selector)
+        .then(module.renderSubviews)
+        .then(module.initialize);
+  }
+
+  module.renderSubviews = function() {
+    var navbarPromise = HomeNavbar.render("#home-navbar-wrapper");
+    var simulatorPromise = HomeSimulator.render("#home-simulator-wrapper");
+    var blocklyPromise = HomeBlockly.render("#home-blockly-wrapper");
+    var mapsModalPromise = Views.loadView("maps-modal", "#maps-modal-wrapper");
+    return Q.all([navbarPromise, simulatorPromise, blocklyPromise, mapsModalPromise]);
   }
   
   module.initialize = function() {
