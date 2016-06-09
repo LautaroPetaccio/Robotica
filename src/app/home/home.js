@@ -21,6 +21,7 @@ this.Home = (function() {
     var simulatorPromise = HomeSimulator.render("#home-simulator-wrapper");
     var blocklyPromise = HomeBlockly.render("#home-blockly-wrapper");
     var mapsModalPromise = Views.loadView("maps-modal", "#maps-modal-wrapper");
+    var helpPromise = Help.render("#home-help-wrapper");
     return Q.all([navbarPromise, simulatorPromise, blocklyPromise, mapsModalPromise]);
   }
   
