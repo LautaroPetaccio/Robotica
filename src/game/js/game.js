@@ -16,6 +16,7 @@ var game = {
       run : function() { this.state = 0; },
       finish : function() { this.state = 2; },
       isPaused : function() { return this.state == 1; },
+      isRunning : function() { return this.state == 0; },
       hasFinished : function() { return this.state == 2; },
     };
 

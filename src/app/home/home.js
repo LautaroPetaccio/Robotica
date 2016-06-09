@@ -39,8 +39,41 @@ this.Home = (function() {
     window.addEventListener('orientationchange', module.resetDraggablePosition, false);
 
     $("#maps-modal .media").click(module.onMapSelectionClick);
+
+    $(document).keydown(module.keyShortcut);
   }
   
+  module.keyShortcut = function(event) {
+    if(navigator.appVersion.indexOf("Mac") != -1) {
+      if(!event.metaKey) return true;
+    }
+    else
+      if(!event.ctrlKey) return true;
+
+    if(event.which == 83) {
+      HomeBlockly.saveProgram();
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    if(event.which == 79) {
+      HomeBlockly.loadProgram();
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    if(event.which == 82) {
+      if(!me.execution.isRunning())
+        $('#btn_run').trigger("click");
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    if(event.which == 80) {
+      if(me.execution.isRunning())
+        $('#btn_pause').trigger("click");
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }
+
   module.setInitialLayoutMode = function() {
     if (_.contains(["xs", "sm"], StateIndicator.getState())) {
       module.setLayoutModeCollapsed();
