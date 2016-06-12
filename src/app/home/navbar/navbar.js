@@ -20,10 +20,11 @@ this.HomeNavbar = (function() {
     
     // Shortcuts.
     console.log(key)
-    key('ctrl+s, ⌘+s', keyHandler(module.onClickSave));
-    key('ctrl+o, ⌘+o', keyHandler(module.onClickLoad));
-    key('ctrl+r, ⌘+r', keyHandler(module.onClickRun));
+    key('ctrl+g, ⌘+g', keyHandler(module.onClickSave));
+    key('ctrl+a, ⌘+a', keyHandler(module.onClickLoad));
+    key('ctrl+e, ⌘+e', keyHandler(module.onClickRun));
     key('ctrl+p, ⌘+p', keyHandler(module.onClickPause));
+    key('ctrl+d, ⌘+d', keyHandler(module.onClickStop));
     key('ctrl+m, ⌘+m', keyHandler(module.onClickMaps));
 
     function keyHandler(handler) {
