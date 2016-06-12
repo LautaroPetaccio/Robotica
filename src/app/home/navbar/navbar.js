@@ -12,12 +12,7 @@ this.HomeNavbar = (function() {
   module.initialize = function() {
 
     $('#btn_run').click(function(event) {
-      if(me.interpreter !== null && me.execution.isPaused()) { 
-        // Resume
-        $('#btn_pause').show();
-        me.execution.run();
-      }
-      else {
+      if(me.execution.hasFinished()) {
         var code = Blockly.JavaScript.workspaceToCode(HomeBlockly.workspace);
         if(!code.length) {
           module.notifyEmptyProgram();
@@ -36,14 +31,19 @@ this.HomeNavbar = (function() {
         $('#btn_stop').show();
         me.state.resume();
         me.execution.run();
+      } else if (me.execution.isPaused()) {
+        $('#btn_pause').show();
+        me.execution.run();
       }
       $('#btn_run').hide();
       event.stopPropagation();
     });
     $('#btn_pause').click(function(event) {
-      $('#btn_run').show();
-      $('#btn_pause').hide();
-      me.execution.pause();
+      if(me.execution.isRunning()) {
+        $('#btn_run').show();
+        $('#btn_pause').hide();
+        me.execution.pause();
+      }
     });
     $('#btn_stop').click(function(event) {
       $('#btn_run').show();

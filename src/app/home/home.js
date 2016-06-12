@@ -40,40 +40,20 @@ this.Home = (function() {
 
     $("#maps-modal .media").click(module.onMapSelectionClick);
 
-    $(document).keydown(module.keyShortcut);
+    key('ctrl+s, ⌘+s', keyHandler(function(){ HomeBlockly.saveProgram(); }));
+    key('ctrl+o, ⌘+o', keyHandler(function(){ HomeBlockly.loadProgram(); }));
+    key('ctrl+r, ⌘+r', keyHandler(function(){ $('#btn_run').trigger("click"); }));
+    key('ctrl+p, ⌘+p', keyHandler(function(){ $('#btn_pause').trigger("click"); }));
   }
-  
-  module.keyShortcut = function(event) {
-    if(navigator.appVersion.indexOf("Mac") != -1) {
-      if(!event.metaKey) return true;
-    }
-    else
-      if(!event.ctrlKey) return true;
 
-    if(event.which == 83) {
-      HomeBlockly.saveProgram();
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    if(event.which == 79) {
-      HomeBlockly.loadProgram();
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    if(event.which == 82) {
-      if(!me.execution.isRunning())
-        $('#btn_run').trigger("click");
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    if(event.which == 80) {
-      if(me.execution.isRunning())
-        $('#btn_pause').trigger("click");
+  function keyHandler(handler) {
+    return function(event) {
+      handler(event);
       event.preventDefault();
       event.stopPropagation();
     }
   }
-
+  
   module.setInitialLayoutMode = function() {
     if (_.contains(["xs", "sm"], StateIndicator.getState())) {
       module.setLayoutModeCollapsed();
