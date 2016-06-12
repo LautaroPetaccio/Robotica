@@ -40,10 +40,11 @@ this.Home = (function() {
 
     $("#maps-modal .media").click(module.onMapSelectionClick);
 
-    key('ctrl+s, ⌘+s', keyHandler(function(){ HomeBlockly.saveProgram(); }));
-    key('ctrl+o, ⌘+o', keyHandler(function(){ HomeBlockly.loadProgram(); }));
-    key('ctrl+r, ⌘+r', keyHandler(function(){ $('#btn_run').trigger("click"); }));
-    key('ctrl+p, ⌘+p', keyHandler(function(){ $('#btn_pause').trigger("click"); }));
+    key('ctrl+s, ⌘+s', keyHandler(HomeBlockly.saveProgram));
+    key('ctrl+o, ⌘+o', keyHandler(HomeBlockly.loadProgram));
+    key('ctrl+r, ⌘+r', keyHandler(HomeNavbar.onClickRun));
+    key('ctrl+p, ⌘+p', keyHandler(HomeNavbar.onClickPause));
+    key('ctrl+m, ⌘+m', keyHandler(HomeNavbar.onClickMaps));
   }
 
   function keyHandler(handler) {
