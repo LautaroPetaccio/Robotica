@@ -39,22 +39,8 @@ this.Home = (function() {
     window.addEventListener('orientationchange', module.resetDraggablePosition, false);
 
     $("#maps-modal .media").click(module.onMapSelectionClick);
-
-    key('ctrl+s, ⌘+s', keyHandler(HomeBlockly.saveProgram));
-    key('ctrl+o, ⌘+o', keyHandler(HomeBlockly.loadProgram));
-    key('ctrl+r, ⌘+r', keyHandler(HomeNavbar.onClickRun));
-    key('ctrl+p, ⌘+p', keyHandler(HomeNavbar.onClickPause));
-    key('ctrl+m, ⌘+m', keyHandler(HomeNavbar.onClickMaps));
   }
 
-  function keyHandler(handler) {
-    return function(event) {
-      handler(event);
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  }
-  
   module.setInitialLayoutMode = function() {
     if (_.contains(["xs", "sm"], StateIndicator.getState())) {
       module.setLayoutModeCollapsed();

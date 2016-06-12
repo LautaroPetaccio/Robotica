@@ -10,12 +10,29 @@ this.HomeNavbar = (function() {
   }
 
   module.initialize = function() {
+    // Click events binding.
     $('#btn_run').click(module.onClickRun);
     $('#btn_pause').click(module.onClickPause);
     $('#btn_stop').click(module.onClickStop);
     $('#btn_save').click(module.onClickSave);
     $('#btn_load').click(module.onClickLoad);
     $('#btn_maps').click(module.onClickMaps);
+    
+    // Shortcuts.
+    console.log(key)
+    key('ctrl+s, ⌘+s', keyHandler(module.onClickSave));
+    key('ctrl+o, ⌘+o', keyHandler(module.onClickLoad));
+    key('ctrl+r, ⌘+r', keyHandler(module.onClickRun));
+    key('ctrl+p, ⌘+p', keyHandler(module.onClickPause));
+    key('ctrl+m, ⌘+m', keyHandler(module.onClickMaps));
+
+    function keyHandler(handler) {
+      return function(event) {
+        handler(event);
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    }
   }
 
   module.onClickRun = function(event) {
