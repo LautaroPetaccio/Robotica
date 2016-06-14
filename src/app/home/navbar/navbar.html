@@ -1,5 +1,5 @@
 <div id="navbar-container">
-  <nav class="navbar navbar-inverse">
+  <nav class="navbar navbar-default">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
@@ -10,6 +10,17 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="#">Robótica en la escuela</a>
+        <div class="navbar-left animation-controlls visible-xs">
+          <button type="button" id="btn_run" class="btn btn_run btn-raised btn-success">
+            <i class="glyphicon glyphicon-play" aria-hidden="true"></i>
+          </button>
+          <button type="button" id="btn_pause" class="btn btn_pause btn-raised btn-warning" style="display: none;">
+            <i class="glyphicon glyphicon-pause" aria-hidden="true"></i>
+          </button>
+          <button type="button" id="btn_stop" class="btn btn_stop btn-raised btn-danger" style="display: none;">
+            <i class="glyphicon glyphicon-stop" aria-hidden="true"></i>
+          </button>
+        </div>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -19,11 +30,19 @@
           <li><a id="btn_save" href="#"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Guardar código</a></li>
           <li><a href="#"><span class="glyphicon glyphicon-export" aria-hidden="true"></span> Exportar</a></li>
         </ul>
-        <ul class="navbar-form navbar-left">
-          <button type="button" id="btn_run" class="btn btn-primary"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Correr</button>
-          <button type="button" id="btn_pause" class="btn btn-warning" style="display: none;"><span class="glyphicon glyphicon-pause" aria-hidden="true"></span> Pausar</button>
-          <button type="button" id="btn_stop" class="btn btn-danger" style="display: none;"><span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Detener</button>
-        </ul>
+
+        <div class="navbar-form navbar-left animation-controlls hidden-xs">
+          <button type="button" id="btn_run" class="btn btn_run btn-raised btn-success">
+            <i class="glyphicon glyphicon-play" aria-hidden="true"></i>
+          </button>
+          <button type="button" id="btn_pause" class="btn btn_pause btn-raised btn-warning" style="display: none;">
+            <i class="glyphicon glyphicon-pause" aria-hidden="true"></i>
+          </button>
+          <button type="button" id="btn_stop" class="btn btn_stop btn-raised btn-danger" style="display: none;">
+            <i class="glyphicon glyphicon-stop" aria-hidden="true"></i>
+          </button>
+        </div>
+
         <ul class="nav navbar-nav navbar-right">
           <li><a id="btn_maps" href="#"><span class="glyphicon glyphicon-floppy-open" aria-hidden="true"></span> Mapas</a></li>
           <li class="dropdown">

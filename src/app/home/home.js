@@ -25,6 +25,7 @@ this.Home = (function() {
   }
   
   module.initialize = function() {
+    $.material.init();
     homeNavbarCollapseElement = $('#home-navbar-collapse');
     homeContentElement = $("#home-content");
     homeBlocklyWrapperElement = $("#home-blockly-wrapper");

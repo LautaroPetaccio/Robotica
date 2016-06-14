@@ -11,10 +11,10 @@ this.HomeNavbar = (function() {
 
   module.initialize = function() {
 
-    $('#btn_run').click(function(event) {
+    $('.btn_run').click(function(event) {
       if(me.interpreter !== null && me.execution.isPaused()) { 
         // Resume
-        $('#btn_pause').show();
+        $('.btn_pause').show();
         me.execution.run();
       }
       else {
@@ -26,29 +26,29 @@ this.HomeNavbar = (function() {
         me.state.pause();
         me.state.change(me.state.PLAY);
         var onCompleted = function() {
-          $('#btn_run').show();
-          $('#btn_pause').hide();
-          $('#btn_stop').hide();
+          $('.btn_run').show();
+          $('.btn_pause').hide();
+          $('.btn_stop').hide();
         }
         me.execution.onCompleted = onCompleted;
         me.interpreter = new Interpreter(code, initApi);
-        $('#btn_pause').show();
-        $('#btn_stop').show();
+        $('.btn_pause').show();
+        $('.btn_stop').show();
         me.state.resume();
         me.execution.run();
       }
-      $('#btn_run').hide();
+      $('.btn_run').hide();
       event.stopPropagation();
     });
-    $('#btn_pause').click(function(event) {
-      $('#btn_run').show();
-      $('#btn_pause').hide();
+    $('.btn_pause').click(function(event) {
+      $('.btn_run').show();
+      $('.btn_pause').hide();
       me.execution.pause();
     });
-    $('#btn_stop').click(function(event) {
-      $('#btn_run').show();
-      $('#btn_pause').hide();
-      $('#btn_stop').hide();
+    $('.btn_stop').click(function(event) {
+      $('.btn_run').show();
+      $('.btn_pause').hide();
+      $('.btn_stop').hide();
       me.execution.finish();
       me.state.change(me.state.PLAY);
     });
