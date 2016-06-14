@@ -28,12 +28,12 @@ this.HomeNavbar = (function() {
         var onCompleted = function() {
           $('.btn_run').show();
           $('.btn_pause').hide();
-          $('.btn_stop').hide();
+          $('.btn_stop').addClass('disabled');
         }
         me.execution.onCompleted = onCompleted;
         me.interpreter = new Interpreter(code, initApi);
         $('.btn_pause').show();
-        $('.btn_stop').show();
+        $('.btn_stop').removeClass('disabled');
         me.state.resume();
         me.execution.run();
       }
@@ -48,7 +48,7 @@ this.HomeNavbar = (function() {
     $('.btn_stop').click(function(event) {
       $('.btn_run').show();
       $('.btn_pause').hide();
-      $('.btn_stop').hide();
+      $('.btn_stop').addClass('disabled');
       me.execution.finish();
       me.state.change(me.state.PLAY);
     });

@@ -2,15 +2,18 @@
 
 
 #navbar-container {
-  .navbar .animation-controlls .btn.btn-raised {
-    border-radius: 20px;
-    padding: 10px 14px;
+  .navbar .animation-controlls .btn.btn-raised .glyphicon {
+      left: -6px;
   }
-  .navbar .animation-controlls .btn.btn-raised.btn-danger {
-      left: -1px;
+  .navbar .animation-controlls .btn.btn-raised.btn-danger .glyphicon {
+      left: -7px;
   }
   .navbar .animation-controlls .btn.btn-raised.btn-warning {
       background-color: #ec971f;
+  }
+  .navbar .animation-controlls .btn.disabled {
+    pointer-events:none;
+    background-color: #666;
   }
   @media (max-width: 767px) {
     .animation-controlls button {
