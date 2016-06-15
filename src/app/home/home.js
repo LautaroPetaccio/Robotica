@@ -9,6 +9,9 @@ this.Home = (function() {
   var homeBlocklyWrapperElement = null;
   var homeSimulatorWrapperElement = null;
   var mapsModalElement = null;
+  var homeSimulatorCanvasMinified = true;
+  var homeSimulatorCanvasMinifiedTop = null;
+  var homeSimulatorCanvasMinifiedLeft = null;
 
   module.render = function(selector) {
     return Views.loadView("home", selector)
@@ -74,10 +77,53 @@ this.Home = (function() {
   }
   
   module.toggleLayoutMode = function() {
-    if (homeContentElement.hasClass('content-collapsed')) {
-      module.setLayoutModeExpanded();
+    if (_.contains(["xs", "sm"], StateIndicator.getState())) {
+      if (homeSimulatorCanvasMinified) {
+
+        if (homeSimulatorCanvasMinifiedTop == null) {
+          homeSimulatorWrapperElement.css({
+            top: homeSimulatorWrapperElement.position().top,
+            left: homeSimulatorWrapperElement.position().left
+          });
+        }
+        homeSimulatorCanvasMinifiedTop = homeSimulatorWrapperElement.position().top;
+        homeSimulatorCanvasMinifiedLeft = homeSimulatorWrapperElement.position().left;
+
+        homeSimulatorWrapperElement.find("#simulator-screen, canvas").css({
+          width: '100%',
+          height: '100%'
+        });
+        homeSimulatorWrapperElement.stop().animate({
+          top: '20px',
+          left: '15%'
+        }, 250, function() {
+            homeSimulatorWrapperElement.stop().animate({
+              width: '650px',
+              height: '583px'
+            }, 500, function() {});
+        });
+        homeSimulatorCanvasMinified = false;
+
+      } else {
+
+        homeSimulatorWrapperElement.stop().animate({
+          width: '100px',
+          height: '100px'
+        }, 500, function() {
+            homeSimulatorWrapperElement.stop().animate({
+              top: homeSimulatorCanvasMinifiedTop,
+              left: homeSimulatorCanvasMinifiedLeft
+            }, 250, function() {});
+        });
+        homeSimulatorCanvasMinified = true;
+
+      }
     } else {
-      module.setLayoutModeCollapsed();
+      if (homeContentElement.hasClass('content-collapsed')) {
+        module.setLayoutModeExpanded();
+      } else {
+        module.setLayoutModeCollapsed();
+      }
     }
   }
 
