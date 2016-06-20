@@ -18,6 +18,9 @@
     pointer-events:none;
     background-color: #666;
   }
+  .navbar-default .navbar-nav>li>a {
+    font-size: 11pt;
+  }
   @media (max-width: 767px) {
     .animation-controlls button {
       margin-top: 4px;
