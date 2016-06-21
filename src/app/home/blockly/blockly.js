@@ -62,6 +62,9 @@ this.HomeBlockly = (function() {
 
     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
 
+    /* Set math blocks color */
+    Blockly.Blocks.math.HUE = 35;
+
     downloadCodeModalElement.on('shown.bs.modal', function () {
       downloadCodeNameInputElement.focus();
     });

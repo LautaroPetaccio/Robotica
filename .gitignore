@@ -6,3 +6,9 @@ node_modules/
 
 # Build
 dist/
+
+# VIM files
+*.swp
+
+# Build library for Blockly
+third-party/closure-library

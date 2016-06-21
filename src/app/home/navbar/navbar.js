@@ -11,15 +11,14 @@ this.HomeNavbar = (function() {
 
   module.initialize = function() {
     // Click events binding.
-    $('#btn_run').click(module.onClickRun);
-    $('#btn_pause').click(module.onClickPause);
-    $('#btn_stop').click(module.onClickStop);
-    $('#btn_save').click(module.onClickSave);
-    $('#btn_load').click(module.onClickLoad);
-    $('#btn_maps').click(module.onClickMaps);
+    $('.btn_run').click(module.onClickRun);
+    $('.btn_pause').click(module.onClickPause);
+    $('.btn_stop').click(module.onClickStop);
+    $('.btn_save').click(module.onClickSave);
+    $('.btn_load').click(module.onClickLoad);
+    $('.btn_maps').click(module.onClickMaps);
     
     // Shortcuts.
-    console.log(key)
     key('ctrl+g, ⌘+g', keyHandler(module.onClickSave));
     key('ctrl+a, ⌘+a', keyHandler(module.onClickLoad));
     key('ctrl+e, ⌘+e', keyHandler(module.onClickRun));
@@ -46,37 +45,37 @@ this.HomeNavbar = (function() {
       me.state.pause();
       me.state.change(me.state.PLAY);
       var onCompleted = function() {
-        $('#btn_run').show();
-        $('#btn_pause').hide();
-        $('#btn_stop').hide();
+        $('.btn_run').show();
+        $('.btn_pause').hide();
+        $('.btn_stop').hide();
       }
       me.execution.onCompleted = onCompleted;
       me.interpreter = new Interpreter(code, initApi);
-      $('#btn_pause').show();
-      $('#btn_stop').show();
+      $('.btn_pause').show();
+      $('.btn_stop').show();
       me.state.resume();
       me.execution.run();
     } else if (me.execution.isPaused()) {
-      $('#btn_pause').show();
+      $('.btn_pause').show();
       me.execution.run();
     }
-    $('#btn_run').hide();
+    $('.btn_run').hide();
     event.stopPropagation();
   }
 
   module.onClickPause = function(event) {
     if(me.execution.isRunning()) {
-      $('#btn_run').show();
-      $('#btn_pause').hide();
+      $('.btn_run').show();
+      $('.btn_pause').hide();
       me.execution.pause();
     }
   }
 
   module.onClickStop = function(event) {
     if(!me.execution.hasFinished()) {
-      $('#btn_run').show();
-      $('#btn_pause').hide();
-      $('#btn_stop').hide();
+      $('.btn_run').show();
+      $('.btn_pause').hide();
+      $('.btn_stop').hide();
       me.execution.finish();
       me.state.change(me.state.PLAY);
     }

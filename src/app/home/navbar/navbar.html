@@ -1,5 +1,5 @@
 <div id="navbar-container">
-  <nav class="navbar navbar-inverse">
+  <nav class="navbar navbar-default">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
@@ -9,31 +9,50 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Robótica en la escuela</a>
+        <a class="navbar-brand" href="#"><img src="assets/navbar/logo-robotica.png" alt="Robótica en la escuela"/></a>
+        <div class="navbar-left animation-controlls btn-group-sm visible-xs">
+          <button type="button" id="btn_run_out" class="btn btn_run btn-raised btn-success btn-fab">
+            <i class="glyphicon glyphicon-play" aria-hidden="true"></i>
+          </button>
+          <button type="button" id="btn_pause_out" class="btn btn_pause btn-raised btn-warning btn-fab" style="display: none;">
+            <i class="glyphicon glyphicon-pause" aria-hidden="true"></i>
+          </button>
+          <button type="button" id="btn_stop_out" class="btn btn_stop btn-raised btn-danger btn-fab disabled">
+            <i class="glyphicon glyphicon-stop" aria-hidden="true"></i>
+          </button>
+        </div>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="home-navbar-collapse">
         <ul class="nav navbar-nav">
-          <li><a id="btn_load" href="#"><span class="glyphicon glyphicon-floppy-open" aria-hidden="true"></span> Cargar código</a></li>
-          <li><a id="btn_save" href="#"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Guardar código</a></li>
-          <li><a href="#"><span class="glyphicon glyphicon-export" aria-hidden="true"></span> Exportar</a></li>
+          <li><a id="btn_load" class="btn_load" href="#"><span class="glyphicon glyphicon-floppy-open" aria-hidden="true"></span> Cargar código</a></li>
+          <li><a id="btn_save" class="btn_save" href="#"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Guardar código</a></li>
+          <!-- <li><a href="#"><span class="glyphicon glyphicon-export" aria-hidden="true"></span> Exportar</a></li> -->
         </ul>
-        <ul class="navbar-form navbar-left">
-          <button type="button" id="btn_run" class="btn btn-primary"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Correr</button>
-          <button type="button" id="btn_pause" class="btn btn-warning" style="display: none;"><span class="glyphicon glyphicon-pause" aria-hidden="true"></span> Pausar</button>
-          <button type="button" id="btn_stop" class="btn btn-danger" style="display: none;"><span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Detener</button>
-        </ul>
+
+        <div class="navbar-form navbar-left animation-controlls btn-group-sm hidden-xs">
+          <button type="button" id="btn_run_in" class="btn btn_run btn-raised btn-success btn-fab">
+            <i class="glyphicon glyphicon-play" aria-hidden="true"></i>
+          </button>
+          <button type="button" id="btn_pause_in" class="btn btn_pause btn-raised btn-warning btn-fab" style="display: none;">
+            <i class="glyphicon glyphicon-pause" aria-hidden="true"></i>
+          </button>
+          <button type="button" id="btn_stop_in" class="btn btn_stop btn-raised btn-danger btn-fab disabled">
+            <i class="glyphicon glyphicon-stop" aria-hidden="true"></i>
+          </button>
+        </div>
+
         <ul class="nav navbar-nav navbar-right">
-          <li><a id="btn_maps" href="#"><span class="glyphicon glyphicon-floppy-open" aria-hidden="true"></span> Mapas</a></li>
-          <li class="dropdown">
+          <li><a id="btn_maps" class="btn_maps" href="#"><span class="glyphicon glyphicon-floppy-open" aria-hidden="true"></span> Mapas</a></li>
+          <!-- <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ayuda<span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="#">Lenguaje</a></li>
               <li><a href="#">Problemas frecuentes</a></li>
               <li><a href="#">Tips</a></li>
             </ul>
-          </li>
+          </li> -->
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
