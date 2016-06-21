@@ -25,7 +25,8 @@
     "jqueryui-touch-punch": "*",
     "q": "1.0.1",
     "toastr": "^2.1.2",
-    "bootstrap-material-design": "^0.5.10"
+    "bootstrap-material-design": "^0.5.10",
+    "keymaster": "^1.6.3"
   },
   "overrides": {
     "bootstrap-sass": {

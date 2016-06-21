@@ -1,0 +1,66 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="robotica_motor" id="x,az?tjQ_yHICj16qQ=N" x="19" y="99">
+    <value name="leftWheel">
+      <shadow type="math_number" id="aZEv.R[z27SjPQhb{6n3">
+        <field name="NUM">90</field>
+      </shadow>
+    </value>
+    <value name="rightWheel">
+      <shadow type="math_number" id="`0G.?MaQc3963e+W^pR/">
+        <field name="NUM">100</field>
+      </shadow>
+    </value>
+    <value name="duration">
+      <shadow type="math_number" id="G?G~J9J/NiZvruA;9Lwn">
+        <field name="NUM">1</field>
+      </shadow>
+    </value>
+    <next>
+      <block type="controls_repeat_ext" id=";4n0-`hzL[5[X-O=*IdF">
+        <value name="TIMES">
+          <shadow type="math_number" id="nVGq(j(Eh4kSf8B#o:y;">
+            <field name="NUM">5</field>
+          </shadow>
+        </value>
+        <statement name="DO">
+          <block type="robotica_motor" id="6pQ}wIV,!9ldM?HAi5%#">
+            <value name="leftWheel">
+              <shadow type="math_number" id="y7uK`jZ(fclTNO4[]23+">
+                <field name="NUM">100</field>
+              </shadow>
+            </value>
+            <value name="rightWheel">
+              <shadow type="math_number" id="mJjzjEeoU0va3{x%0@b5">
+                <field name="NUM">80</field>
+              </shadow>
+            </value>
+            <value name="duration">
+              <shadow type="math_number" id="dmlTOAWDna*AwYSq-p=9">
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+            <next>
+              <block type="robotica_motor" id="BY~![eP+VDDw4u6cad0z">
+                <value name="leftWheel">
+                  <shadow type="math_number" id="t|aa^c@yhYMoO~ogU)y|">
+                    <field name="NUM">90</field>
+                  </shadow>
+                </value>
+                <value name="rightWheel">
+                  <shadow type="math_number" id="4=_._PpExg1fwP,c8%b#">
+                    <field name="NUM">100</field>
+                  </shadow>
+                </value>
+                <value name="duration">
+                  <shadow type="math_number" id="s9f}}Ze?@0z]Fm)(1r4/">
+                    <field name="NUM">2</field>
+                  </shadow>
+                </value>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </next>
+  </block>
+</xml>

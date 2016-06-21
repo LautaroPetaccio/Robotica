@@ -43,7 +43,7 @@ this.Home = (function() {
 
     $("#maps-modal .media").click(module.onMapSelectionClick);
   }
-  
+
   module.setInitialLayoutMode = function() {
     if (_.contains(["xs", "sm"], StateIndicator.getState())) {
       module.setLayoutModeCollapsed();
