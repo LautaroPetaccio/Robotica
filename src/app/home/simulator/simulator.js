@@ -50,6 +50,127 @@ this.HomeSimulator = (function() {
       canvasElement.height(screenHeight);
   }
 
+  module.pause = function(onPause) {
+    if(me.execution.isRunning()) {
+      onPause();
+      me.execution.pause();
+    }
+  }
+
+  module.stop = function(onStop) {
+    if(!me.execution.hasFinished()) {
+      onStop();
+      me.execution.finish();
+      me.state.change(me.state.PLAY);
+    }
+  }
+
+  module.run = function(onRun, onCompleted) {
+    if(me.execution.hasFinished()) {
+      var code = Blockly.JavaScript.workspaceToCode(HomeBlockly.workspace);
+      if(!code.length) {
+        module.notifyEmptyProgram();
+        return;
+      }
+      me.state.pause();
+      me.state.change(me.state.PLAY);
+      me.execution.onCompleted = onCompleted;
+      me.interpreter = new Interpreter(code, initApi);
+      me.state.resume();
+    }
+    if(!me.execution.isRunning()) {
+      onRun();
+      me.execution.run();
+    }
+  }
+
+  module.notifyEmptyProgram = _.throttle(function() {
+    toastr.info('No hay código para ejecutar.', 'Programa vacío', {timeOut: 2000});
+  }, 3000, {trailing: false});
+
+  module.notifySaturationLeftWheel = _.throttle(function() {
+    notifySaturation('La potencia de la rueda izquierda está fuera del rango [-100, 100].');
+  }, 3000, {trailing: false});
+
+  module.notifySaturationRightWheel = _.throttle(function() {
+    notifySaturation('La potencia de la rueda derecha está fuera del rango [-100, 100].');
+  }, 3000, {trailing: false});
+
+  function notifySaturation(mensaje) {
+    toastr.warning(mensaje, 'Potencia fuera de límite', {timeOut: 2000});
+  }
+
+  function initApi(interpreter, scope) {
+    interpreter.robotInstructions = new Array();
+    interpreter.robotSensors = {left : 0,
+                                right: 0,
+                                front: 0,
+                                back : 0};
+    /* Add an API function for the motor function */
+    var wrapper = function(leftWheelValue, rightWheelValue, durationValue) {
+      if (leftWheelValue.data < -100 || leftWheelValue.data > 100) {
+        leftWheelValue.data = Math.max(-100, Math.min(100, leftWheelValue.data));
+        module.notifySaturationLeftWheel();
+      }
+      if (rightWheelValue.data < -100 || rightWheelValue.data > 100) {
+        rightWheelValue.data = Math.max(-100, Math.min(100, rightWheelValue.data));
+        module.notifySaturationRightWheel();
+      }
+      return interpreter.createPrimitive(
+        interpreter.robotInstructions.push(
+          {action : 'motor', 
+          leftWheel : leftWheelValue.data,
+          rightWheel : rightWheelValue.data,
+          duration : durationValue.data
+          })
+      );
+    };
+    interpreter.setProperty(scope, 'motor',
+        interpreter.createNativeFunction(wrapper));
+
+    /* Add an API function for the sensor function */
+    wrapper = function(sensorName, callback) {
+      interpreter.robotInstructions.push({
+        action : 'sensor',
+        sensorName : sensorName,
+        sensorResultCallback : callback
+      });
+    };
+    interpreter.setProperty(scope, 'sensor',
+        interpreter.createAsyncFunction(wrapper));
+
+    /* Add an API function for the tracer enabler */
+    wrapper = function(enabled) {
+      interpreter.robotInstructions.push(
+        {action : 'tracer_status', 
+          enabled: enabled
+        });
+      return interpreter.createPrimitive(null);
+    };
+    interpreter.setProperty(scope, 'tracer',
+        interpreter.createNativeFunction(wrapper));
+
+    /* Add an API function for the tracer colour */
+    wrapper = function(colour) {
+      interpreter.robotInstructions.push(
+        {action : 'tracer_colour', 
+          colour: colour
+        })
+      return interpreter.createPrimitive(null);
+    };
+    interpreter.setProperty(scope, 'tracer_colour',
+        interpreter.createNativeFunction(wrapper));
+
+    wrapper = function(text) {
+      console.log("Console log: ");
+      console.log(text.data);
+      return interpreter.createPrimitive(null);
+    };
+    interpreter.setProperty(scope, 'console_log',
+        interpreter.createNativeFunction(wrapper));
+
+  }
+
   return module;
 
 })();
