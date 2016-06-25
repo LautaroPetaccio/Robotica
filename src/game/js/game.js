@@ -60,8 +60,16 @@ var game = {
 
     me.state.set(me.state.PLAY, new game.PlayScreen());
 
-    // add our player entity in the entity pool
+    /* Add our player entity in the entity pool */
     me.pool.register("mainPlayer", game.PlayerEntity);
+
+    /* HUD Container */
+    me.pool.register("HUDContainer", game.HUD.Container, true);
+    me.pool.register("HUDBackground", game.HUD.Background, true);
+    me.pool.register("HUDRobotPosition", game.HUD.RobotPosition, true);
+    me.pool.register("HUDRobotSensors", game.HUD.RobotSensors, true);
+    me.pool.register("HUDRobotShapes", game.HUD.RobotShapes, true);
+
 
     me.pool.register("worldEntity", game.WorldFrameEntity);
     me.pool.register("line", me.Line, true);

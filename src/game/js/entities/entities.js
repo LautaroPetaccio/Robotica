@@ -9,6 +9,7 @@ game.PlayerEntity = me.Entity.extend({
   ------ */ 
   init: function(x, y, settings) {
     // call the constructor
+    settings.name = "robot"
     this._super(me.Entity, 'init', [x, y, settings]);
 
 
