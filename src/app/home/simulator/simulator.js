@@ -37,17 +37,21 @@ this.HomeSimulator = (function() {
   }
 
   module.onContainerResize = function() {
-      var screenElement = $("#simulator-screen");
-      var canvasElement = $("#simulator-screen > canvas");
-      var screenWrapperElement = screenElement.parent();
-      var screenWrapperWidth = screenWrapperElement.width();
-      var screenWrapperHeight = screenWrapperElement.height();
-      var screenWidth = Math.min(screenWrapperWidth, screenWrapperHeight);
-      var screenHeight = screenWidth;
-      screenElement.width(screenWidth);
-      screenElement.height(screenHeight);
-      canvasElement.width(screenWidth);
-      canvasElement.height(screenHeight);
+    var screenElement = $("#simulator-screen");
+    var canvasElement = $("#simulator-screen > canvas");
+    var screenWrapperElement = screenElement.parent();
+    var screenWrapperWidth = screenWrapperElement.width();
+    var screenWrapperHeight = screenWrapperElement.height();
+    var screenWidth = Math.min(screenWrapperWidth, screenWrapperHeight);
+    var screenHeight = screenWidth;
+    screenElement.width(screenWidth);
+    screenElement.height(screenHeight);
+    canvasElement.width(screenWidth);
+    canvasElement.height(screenHeight);
+  }
+
+  module.activateSensorsHUD = function() {
+    
   }
 
   return module;
