@@ -50,7 +50,13 @@ this.HomeSimulator = (function() {
     canvasElement.height(screenHeight);
   }
 
-  module.activateSensorsHUD = function() {}
+  module.enableSensorsHUD = function() {
+    me.game.HUD.enableHUD();
+  }
+
+  module.disableSensorsHUD = function() {
+    me.game.HUD.disableHUD();
+  }
 
   module.onWorkspaceChange = function(event) {
     if(event.type == Blockly.Events.CHANGE || 

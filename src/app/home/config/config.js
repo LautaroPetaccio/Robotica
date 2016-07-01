@@ -20,7 +20,9 @@ this.Config = (function() {
 
   module.changeHUDCheckbox = function() {
     if($(this).is(':checked'))
-      this.HomeSimulator.activateSensorsHUD();
+      HomeSimulator.enableSensorsHUD();
+    else
+      HomeSimulator.disableSensorsHUD();
     console.log("Cambio valor");
     console.log("Value: " + $(this).is(':checked'));
   }

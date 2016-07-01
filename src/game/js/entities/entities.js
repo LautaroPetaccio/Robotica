@@ -189,6 +189,8 @@ game.PlayerEntity = me.Entity.extend({
 
     me.collision.check(this);
 
+    // console.log("Entity position: (" + this.pos.x + ", " + this.pos.y + ")");
+
     return true;
   },
    /**

@@ -8,9 +8,14 @@ game.PlayScreen = me.ScreenObject.extend({
     /* Add the world entity */
     me.game.world.addChild(me.pool.pull("worldEntity"));
 
+    console.log("Valor de me.game.HUD");
+    console.log(me.game.HUD.enabled);
     /* Add the HUD */
-    // this.HUD = me.pool.pull("HUDContainer", robotEntity);
-    // me.game.world.addChild(this.HUD);
+    if(me.game.HUD.enabled) {
+      console.log("HUD enabled");
+      me.game.HUD.HUDContainer = me.pool.pull("HUDContainer", robotEntity);
+      me.game.world.addChild(me.game.HUD.HUDContainer);
+    }
   },
 
     /**

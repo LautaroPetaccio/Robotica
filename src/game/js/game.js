@@ -39,8 +39,21 @@ var game = {
         });
     }
 
-    // Initialize the audio.
-    // me.audio.init("mp3,ogg");
+    me.game.HUD = {
+      HUDContainer : null,
+      enabled : false,
+      enableHUD : function() {
+        this.enabled = true;
+        var robotEntity = me.game.world.getChildByProp("name", "robot")[0];
+        this.HUDContainer = me.pool.pull("HUDContainer", robotEntity);
+        me.game.world.addChild(this.HUDContainer);
+      },
+      disableHUD : function() {
+        this.enabled = false;
+        console.log("HUD disabled");
+        me.game.world.removeChild(this.HUDContainer);
+      }
+    };
 
     // Set a callback to run when loading is complete.
     me.loader.onload = this.loaded.bind(this);

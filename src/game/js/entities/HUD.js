@@ -8,7 +8,7 @@ game.HUD = game.HUD || {};
 game.HUD.Container = me.Container.extend({
   init : function(robotEntity) {
     this._super(me.Container, 'init');
-    /* Make sure we use screen coordinates */
+    /* Make sure we follow the viewport */
     this.floating = true;
     /* Make sure our object is always draw first */
     this.z = Infinity;
@@ -34,9 +34,17 @@ game.HUD.RobotSensors = me.Renderable.extend({
   },
 
   draw : function (renderer) {
-    this.font.draw(renderer, "Sensor izquierdo: " + this.sensors.left, this.pos.x, this.pos.y);
-    this.font.draw(renderer, "Sensor derecho: " + this.sensors.right, this.pos.x + 240, this.pos.y);
-    this.font.draw(renderer, "Sensor frontal: " + this.sensors.front, this.pos.x + 460, this.pos.y);
+    this.font.draw(renderer, "Sensor izquierdo: " + this.sensors.left, 
+      this.pos.x, 
+      this.pos.y);
+
+    this.font.draw(renderer, "Sensor derecho: " + this.sensors.right, 
+      this.pos.x + 240, 
+      this.pos.y);
+
+    this.font.draw(renderer, "Sensor frontal: " + this.sensors.front, 
+      this.pos.x + 460,
+      this.pos.y);
   }
 });
 
@@ -44,8 +52,8 @@ game.HUD.RobotSensors = me.Renderable.extend({
 game.HUD.RobotPosition = me.Renderable.extend({
   init : function(x, y, robotPosition) {
     this._super(me.Renderable, 'init', [x, y, 10, 10]);
-    this.localRobotPosition = { x : 0, y : 0 };
     this.robotPosition = robotPosition;
+    this.localRobotPosition = { x : 0, y : 0 };
     this.font = new me.Font("courier", 14, "white");
   },
 
@@ -62,7 +70,7 @@ game.HUD.RobotPosition = me.Renderable.extend({
 
   draw : function (renderer) {
     var text = "Posición del robot: (" + this.localRobotPosition.x + ", " + this.localRobotPosition.y + ")";
-    this.font.draw(renderer, text, this.pos.x, this.pos.y);
+    this.font.draw(renderer, text, this.pos.x + 2, this.pos.y);
   }
 });
 
@@ -74,12 +82,13 @@ game.HUD.RobotShapes = me.Renderable.extend({
   },
 
   update : function() {
+
     /* Only update if the position or the angle changed */
     if(this.localRobotPosition.x != this.robotEntity.pos.x ||
       this.localRobotPosition.y != this.robotEntity.pos.y ||
       this.localRobotPosition.angle != this.robotEntity.renderable.angle) {
-      this.localRobotPosition.x = Math.round(this.robotEntity.pos.x);
-      this.localRobotPosition.y = Math.round(this.robotEntity.pos.y);
+      this.localRobotPosition.x = this.robotEntity.pos.x;
+      this.localRobotPosition.y = this.robotEntity.pos.y;
       this.localRobotPosition.angle = this.robotEntity.renderable.angle;
       return true;
     }
@@ -88,10 +97,11 @@ game.HUD.RobotShapes = me.Renderable.extend({
 
   draw : function(renderer) {
     renderer.save();
-    renderer.setLineWidth(1);
+    renderer.setLineWidth(1.5);
     /* Draw all shapes */
     renderer.setColor("red");
-    renderer.translate(this.localRobotPosition.x, this.localRobotPosition.y);
+    renderer.translate(this.localRobotPosition.x - me.game.viewport.pos.x, 
+      this.localRobotPosition.y - me.game.viewport.pos.y);
     for (var i = this.robotEntity.body.shapes.length - 1, 
       shape; i--, (shape = this.robotEntity.body.shapes[i]);) {
       renderer.drawShape(shape);
