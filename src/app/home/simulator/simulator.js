@@ -37,23 +37,36 @@ this.HomeSimulator = (function() {
   }
 
   module.onContainerResize = function() {
-      var screenElement = $("#simulator-screen");
-      var canvasElement = $("#simulator-screen > canvas");
-      var screenWrapperElement = screenElement.parent();
-      var screenWrapperWidth = screenWrapperElement.width();
-      var screenWrapperHeight = screenWrapperElement.height();
-      var screenWidth = Math.min(screenWrapperWidth, screenWrapperHeight);
-      var screenHeight = screenWidth;
-      screenElement.width(screenWidth);
-      screenElement.height(screenHeight);
-      canvasElement.width(screenWidth);
-      canvasElement.height(screenHeight);
+    var screenElement = $("#simulator-screen");
+    var canvasElement = $("#simulator-screen > canvas");
+    var screenWrapperElement = screenElement.parent();
+    var screenWrapperWidth = screenWrapperElement.width();
+    var screenWrapperHeight = screenWrapperElement.height();
+    var screenWidth = Math.min(screenWrapperWidth, screenWrapperHeight);
+    var screenHeight = screenWidth;
+    screenElement.width(screenWidth);
+    screenElement.height(screenHeight);
+    canvasElement.width(screenWidth);
+    canvasElement.height(screenHeight);
+  }
+
+  module.onWorkspaceChange = function(event) {
+    if(event.type == Blockly.Events.CHANGE || 
+      event.type == Blockly.Events.CREATE || 
+      event.type == Blockly.Events.DELETE) {
+      /* If the code was modified, finish the execution */
+      me.execution.finish();
+      /* Remove the event listener */
+      HomeBlockly.workspace.removeChangeListener(module.onWorkspaceChange);
+    }
   }
 
   module.pause = function(onPause) {
     if(me.execution.isRunning()) {
       onPause();
       me.execution.pause();
+      /* While being paused, check if the code was modified */
+      HomeBlockly.workspace.addChangeListener(module.onWorkspaceChange);
     }
   }
 
