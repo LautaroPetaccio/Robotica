@@ -152,6 +152,7 @@ this.Home = (function() {
 
   module.onMapSelectionClick = function () {
     me.game.changeMap($(this).attr("id"));
+    HomeBlockly.workspace.clear();
     mapsModalElement.modal('hide');
     HomeNavbar.toggleNavbar();
   }
