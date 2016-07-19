@@ -37,80 +37,17 @@ this.HomeSimulator = (function() {
   }
 
   module.onContainerResize = function() {
-    var screenElement = $("#simulator-screen");
-    var canvasElement = $("#simulator-screen > canvas");
-    var screenWrapperElement = screenElement.parent();
-    var screenWrapperWidth = screenWrapperElement.width();
-    var screenWrapperHeight = screenWrapperElement.height();
-    var screenWidth = Math.min(screenWrapperWidth, screenWrapperHeight);
-    var screenHeight = screenWidth;
-    screenElement.width(screenWidth);
-    screenElement.height(screenHeight);
-    canvasElement.width(screenWidth);
-    canvasElement.height(screenHeight);
-  }
-
-  module.onWorkspaceChange = function(event) {
-    if(event.type == Blockly.Events.CHANGE || 
-      event.type == Blockly.Events.CREATE || 
-      event.type == Blockly.Events.DELETE) {
-      /* If the code was modified, finish the execution */
-      me.execution.finish();
-      /* Remove the event listener */
-      HomeBlockly.workspace.removeChangeListener(module.onWorkspaceChange);
-    }
-  }
-
-  module.pause = function(onPause) {
-    if(me.execution.isRunning()) {
-      onPause();
-      me.execution.pause();
-      /* While being paused, check if the code was modified */
-      HomeBlockly.workspace.addChangeListener(module.onWorkspaceChange);
-    }
-  }
-
-  module.stop = function(onStop) {
-    if(!me.execution.hasFinished()) {
-      onStop();
-      me.execution.finish();
-      me.state.change(me.state.PLAY);
-    }
-  }
-
-  module.run = function(onRun, onCompleted) {
-    if(me.execution.hasFinished()) {
-      var code = Blockly.JavaScript.workspaceToCode(HomeBlockly.workspace);
-      if(!code.length) {
-        module.notifyEmptyProgram();
-        return;
-      }
-      me.state.pause();
-      me.state.change(me.state.PLAY);
-      me.execution.onCompleted = onCompleted;
-      me.interpreter = SimulatorInterpreter.createInterpreter(code);
-      me.state.resume();
-    }
-    if(!me.execution.isRunning()) {
-      onRun();
-      me.execution.run();
-    }
-  }
-
-  module.notifyEmptyProgram = _.throttle(function() {
-    toastr.info('No hay código para ejecutar.', 'Programa vacío', {timeOut: 2000});
-  }, 3000, {trailing: false});
-
-  module.notifySaturationLeftWheel = _.throttle(function() {
-    notifySaturation('La potencia de la rueda izquierda está fuera del rango [-100, 100].');
-  }, 3000, {trailing: false});
-
-  module.notifySaturationRightWheel = _.throttle(function() {
-    notifySaturation('La potencia de la rueda derecha está fuera del rango [-100, 100].');
-  }, 3000, {trailing: false});
-
-  function notifySaturation(mensaje) {
-    toastr.warning(mensaje, 'Potencia fuera de límite', {timeOut: 2000});
+      var screenElement = $("#simulator-screen");
+      var canvasElement = $("#simulator-screen > canvas");
+      var screenWrapperElement = screenElement.parent();
+      var screenWrapperWidth = screenWrapperElement.width();
+      var screenWrapperHeight = screenWrapperElement.height();
+      var screenWidth = Math.min(screenWrapperWidth, screenWrapperHeight);
+      var screenHeight = screenWidth;
+      screenElement.width(screenWidth);
+      screenElement.height(screenHeight);
+      canvasElement.width(screenWidth);
+      canvasElement.height(screenHeight);
   }
 
   return module;
