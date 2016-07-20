@@ -19,12 +19,15 @@ this.Config = (function() {
   }
 
   module.changeHUDCheckbox = function() {
-    if($(this).is(':checked'))
+    // Hide config modal.
+    $("#config-modal").modal("hide");
+    HomeNavbar.toggleNavbar();
+    // Enable / disable HUD.
+    if($(this).is(':checked')) {
       HomeSimulator.enableSensorsHUD();
-    else
+    } else {
       HomeSimulator.disableSensorsHUD();
-    console.log("Cambio valor");
-    console.log("Value: " + $(this).is(':checked'));
+    }
   }
 
   return module;
