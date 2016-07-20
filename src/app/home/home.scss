@@ -32,25 +32,28 @@ $home-content-height: calc(100% - 80px);
     
     #home-simulator-wrapper {
       float: left;
+      
+      .simulator-collapsed {
+        transition: transform .2s ease;
+      }
+      
+      .simulator-expanded {
+        transition: transform .2s ease;
+      }
     }
 
     #home-blockly-wrapper {
       float: left;
+      
+      .blockly-collapsed {
+        transition: transform .2s ease;
+      }
+      
+      .blockly-expanded {
+        transition: transform .2s ease;
+      }
     }
   }
-}
-
-.simulator-collapsed {
-  transition: transform .2s ease;
-}
-.blockly-collapsed {
-  transition: transform .2s ease;
-}
-.simulator-expanded {
-  transition: transform .2s ease;
-}
-.blockly-expanded {
-  transition: transform .2s ease;
 }
 
 /**
@@ -105,8 +108,8 @@ $home-content-height: calc(100% - 80px);
     width: 100px;
     height: 100px;
     position: absolute;
-    top: calc(80px + 25px); // $home-header-height + 25px
-    right: 50px;
+    bottom: 20%;
+    right: 150px;
     z-index: 1;
   }
 
@@ -125,9 +128,9 @@ $home-content-height: calc(100% - 80px);
     width: 500px;
     height: 500px;
     position: absolute;
-    bottom: 60%;
-    right: 50%;
-    transform: translate(50%, 60%);
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -40%);
     z-index: 1;
   }
 
@@ -146,8 +149,8 @@ $home-content-height: calc(100% - 80px);
     width: 100px;
     height: 100px;
     position: absolute;
-    top: calc(80px + 25px); // $home-header-height + 25px
-    right: 50px;
+    bottom: 20%;
+    right: 150px;
     z-index: 1;
   }
 

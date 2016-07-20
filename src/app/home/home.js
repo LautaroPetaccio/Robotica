@@ -52,6 +52,19 @@ this.Home = (function() {
     }
   }
   
+  module.setLayoutModeCollapsed = function() {
+    homeContentElement.removeClass('content-expanded');
+    homeSimulatorWrapperElement.removeClass('simulator-expanded');
+    homeBlocklyWrapperElement.removeClass('blockly-expanded');
+    homeContentElement.addClass('content-collapsed');
+    homeSimulatorWrapperElement.addClass('simulator-collapsed');
+    homeBlocklyWrapperElement.addClass('blockly-collapsed');
+    module.enableSimulatorDragging();
+    HomeSimulator.onContainerResize();
+    HomeBlockly.onContainerResize();
+    homeSimulatorWrapperElement.effect("shake");
+  }
+  
   module.setLayoutModeExpanded = function() {
     homeContentElement.removeClass('content-collapsed');
     homeSimulatorWrapperElement.removeClass('simulator-collapsed');
@@ -64,23 +77,11 @@ this.Home = (function() {
     HomeBlockly.onContainerResize();
   }
   
-  module.setLayoutModeCollapsed = function() {
-    homeContentElement.removeClass('content-expanded');
-    homeSimulatorWrapperElement.removeClass('simulator-expanded');
-    homeBlocklyWrapperElement.removeClass('blockly-expanded');
-    homeContentElement.addClass('content-collapsed');
-    homeSimulatorWrapperElement.addClass('simulator-collapsed');
-    homeBlocklyWrapperElement.addClass('blockly-collapsed');
-    module.enableSimulatorDragging();
-    HomeSimulator.onContainerResize();
-    HomeBlockly.onContainerResize();
-  }
-  
   module.toggleLayoutMode = function() {
-    if (homeContentElement.hasClass('content-collapsed')) {
-      module.setLayoutModeExpanded();
-    } else {
+    if (homeContentElement.hasClass('content-expanded')) {
       module.setLayoutModeCollapsed();
+    } else {
+      module.setLayoutModeExpanded();
     }
   }
 
@@ -98,7 +99,6 @@ this.Home = (function() {
   module.resetDraggablePosition = function() {
     if (homeContentElement.hasClass('content-collapsed')) {
       module.disableSimulatorDragging();
-      //homeSimulatorWrapperElement.animate({ top: "10px", right: "10px" });
       module.enableSimulatorDragging();
     }
   }
