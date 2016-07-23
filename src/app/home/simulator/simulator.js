@@ -61,6 +61,10 @@ this.HomeSimulator = (function() {
     }
   }
 
+  module.changeMap = function(selectedMap) {
+    me.game.changeMap(selectedMap);
+  }
+
   module.pause = function(onPause) {
     if(me.execution.isRunning()) {
       onPause();
