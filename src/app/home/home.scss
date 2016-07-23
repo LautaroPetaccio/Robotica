@@ -31,6 +31,7 @@ $blockly-collapsed-height: 85%;
     #home-navbar-wrapper {
       @include make-xs-column(12);
       padding: 0px;
+      z-index: 1;
     }
   }
   

@@ -24,7 +24,8 @@ this.Home = (function() {
     var simulatorPromise = HomeSimulator.render("#home-simulator-wrapper");
     var blocklyPromise = HomeBlockly.render("#home-blockly-wrapper");
     var mapsModalPromise = Views.loadView("maps-modal", "#maps-modal-wrapper");
-    return Q.all([navbarPromise, simulatorPromise, blocklyPromise, mapsModalPromise]);
+    var configPromise = Config.render("#home-config-wrapper");
+    return Q.all([navbarPromise, simulatorPromise, blocklyPromise, mapsModalPromise, configPromise]);
   }
   
   module.initialize = function() {
