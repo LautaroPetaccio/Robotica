@@ -50,7 +50,6 @@ var game = {
       },
       disableHUD : function() {
         this.enabled = false;
-        console.log("HUD disabled");
         me.game.world.removeChild(this.HUDContainer);
       }
     };
