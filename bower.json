@@ -27,7 +27,7 @@
     "toastr": "^2.1.2",
     "bootstrap-material-design": "^0.5.10",
     "keymaster": "^1.6.3",
-    "bootbox.js": "^4.4.0"
+    "mdi": "^1.6.50"
   },
   "overrides": {
     "bootstrap-sass": {
@@ -35,6 +35,11 @@
         "./assets/fonts/**/*",
         "./assets/javascripts/**/*",
         "./assets/stylesheets/_bootstrap.scss"
+      ]
+    },
+    "mdi": {
+      "main": [
+        "./fonts/*"
       ]
     }
   }
