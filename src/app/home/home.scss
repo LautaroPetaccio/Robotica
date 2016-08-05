@@ -6,9 +6,9 @@
  * Home layout config.
  */
 
-$home-header-height: 80px;
+$home-header-height: 60px;
 
-$home-content-height: calc(100% - 80px);
+$home-content-height: calc(100% - 60px);
 
 /**
  * Home page layout
@@ -16,12 +16,15 @@ $home-content-height: calc(100% - 80px);
 
 #home-container {
   height: 100%;
+  overflow: hidden;
   
   #home-header {
     height: $home-header-height;
+    margin-bottom: 20px;
 
     #home-navbar-wrapper {
       @include make-xs-column(12);
+      height: 100%;
       padding: 0px;
     }
   }
@@ -190,7 +193,7 @@ $home-content-height: calc(100% - 80px);
     width: 100px;
     height: 100px;
     position: absolute;
-    top: calc(80px + 25px); // $home-header-height + 25px
+    top: calc(60px + 25px); // $home-header-height + 25px
     right: 50px;
     z-index: 1;
   }

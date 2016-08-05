@@ -62,7 +62,6 @@ this.Home = (function() {
     module.enableSimulatorDragging();
     HomeSimulator.onContainerResize();
     HomeBlockly.onContainerResize();
-    homeSimulatorWrapperElement.effect("shake");
   }
   
   module.setLayoutModeExpanded = function() {

@@ -2,6 +2,19 @@
 
 
 #navbar-container {
+
+  .navbar {
+    margin: 0px;
+    z-index: 1;
+
+    .animation-controlls {
+
+      button {
+        margin: 8px 0px;
+      }
+    }
+  }
+
   .navbar.navbar-default {
     background-color: #007A6F;
   }
@@ -22,10 +35,10 @@
     font-weight: 400;
   }
   .navbar .animation-controlls .btn.btn-raised.btn-danger .glyphicon {
-      left: -7px;
+    left: -7px;
   }
   .navbar .animation-controlls .btn.btn-raised.btn-warning {
-      background-color: #ec971f;
+    background-color: #ec971f;
   }
   .navbar .animation-controlls .btn.disabled {
     pointer-events:none;
@@ -34,22 +47,5 @@
   .navbar-default .navbar-nav>li>a {
     font-size: 11pt;
   }
-  @media (max-width: 767px) {
-    .animation-controlls button {
-      margin-top: 4px;
-    }
-  }
-  @media (min-width: 768px) {
-    .navbar, .navbar button {
-      margin-top: 0;
-    }
-    .navbar .navbar-form {
-      margin: 5px 0 -5px 0;
-    }
-  }
-  @media (min-width: 1200px) {
-    .navbar .navbar-form {
-      margin: 7px 0 -7px 0;
-    }
-  }
+
 }
