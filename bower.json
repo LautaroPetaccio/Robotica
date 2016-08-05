@@ -27,7 +27,8 @@
     "toastr": "^2.1.2",
     "bootstrap-material-design": "^0.5.10",
     "keymaster": "^1.6.3",
-    "mdi": "^1.6.50"
+    "mdi": "^1.6.50",
+    "bootbox.js": "^4.4.0"
   },
   "overrides": {
     "bootstrap-sass": {
