@@ -5,8 +5,11 @@
   .navbar.navbar-default {
     background-color: #007A6F;
   }
+  .navbar .animation-controlls {
+    padding: 10px 15px;
+  }
   .navbar .animation-controlls .btn.btn-raised .glyphicon {
-      left: -6px;
+    left: -6px;
   }
   .navbar-brand {
     font-size: 1.7em;
