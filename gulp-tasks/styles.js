@@ -26,7 +26,7 @@ gulp.task('styles-bower', ['styles-bower-scss', 'styles-bower-bootstrap', 'style
 
 gulp.task('styles-bower-scss', [], function() {
   return gulp.src(mainBowerFiles())
-          .pipe(plugins.filter("**/*.{css,scss}"))
+          .pipe(plugins.filter(["**/*.{css,scss}", "!bower_components/mdi/**/*"]))
           .pipe(newer('dist/styles/bower-scss.min.css'))
           .pipe(plugins.flatten())
           .pipe(plugins.sass().on('error', plugins.sass.logError))
