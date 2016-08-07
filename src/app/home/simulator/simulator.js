@@ -50,6 +50,14 @@ this.HomeSimulator = (function() {
     canvasElement.height(screenHeight);
   }
 
+  module.enableSensorsHUD = function() {
+    me.game.HUD.enableHUD();
+  }
+
+  module.disableSensorsHUD = function() {
+    me.game.HUD.disableHUD();
+  }
+
   module.onWorkspaceChange = function(event) {
     if(event.type == Blockly.Events.CHANGE || 
       event.type == Blockly.Events.CREATE || 
@@ -59,6 +67,10 @@ this.HomeSimulator = (function() {
       /* Remove the event listener */
       HomeBlockly.workspace.removeChangeListener(module.onWorkspaceChange);
     }
+  }
+
+  module.changeMap = function(selectedMap) {
+    me.game.changeMap(selectedMap);
   }
 
   module.pause = function(onPause) {

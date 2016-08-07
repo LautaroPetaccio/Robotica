@@ -1,5 +1,6 @@
 /* Imports */
 var gulp = require('gulp');
+var newer = require('gulp-newer');
 var plugins = require('gulp-load-plugins')(['gulp-*']);
 
 /* Html tasks */
@@ -8,6 +9,7 @@ gulp.task('html', ['html-index', 'html-other', 'maps-modal']);
 
 gulp.task('html-index', [], function() {
   return gulp.src('src/app/index.html')
+          .pipe(newer('dist/'))
           .pipe(plugins.sourcemaps.init())
           .pipe(plugins.htmlmin({collapseWhitespace: true}))
           .pipe(plugins.sourcemaps.write('maps/'))
@@ -17,6 +19,7 @@ gulp.task('html-index', [], function() {
 
 gulp.task('html-other', [], function() {
   return gulp.src(['src/app/**/*.html', '!src/app/index.html'])
+          .pipe(newer('dist/html/'))
           .pipe(plugins.flatten())
           .pipe(plugins.sourcemaps.init())
           .pipe(plugins.htmlmin({collapseWhitespace: true}))

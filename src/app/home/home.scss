@@ -26,6 +26,7 @@ $home-content-height: calc(100% - 60px);
       @include make-xs-column(12);
       height: 100%;
       padding: 0px;
+      z-index: 1;
     }
   }
   

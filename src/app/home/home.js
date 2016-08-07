@@ -24,7 +24,8 @@ this.Home = (function() {
     var simulatorPromise = HomeSimulator.render("#home-simulator-wrapper");
     var blocklyPromise = HomeBlockly.render("#home-blockly-wrapper");
     var mapsModalPromise = Views.loadView("maps-modal", "#maps-modal-wrapper");
-    return Q.all([navbarPromise, simulatorPromise, blocklyPromise, mapsModalPromise]);
+    var configPromise = Config.render("#home-config-wrapper");
+    return Q.all([navbarPromise, simulatorPromise, blocklyPromise, mapsModalPromise, configPromise]);
   }
   
   module.initialize = function() {
@@ -107,11 +108,40 @@ this.Home = (function() {
   }
 
   module.onMapSelectionClick = function () {
-    me.game.changeMap($(this).attr("id"));
+    var selectedMap = $(this).attr("id");
+    // Hide map selection modal.
     mapsModalElement.modal('hide');
     HomeNavbar.toggleNavbar();
+    // If there is no code in workspace, change map. Otherwise, ask for confirmation first.
+    var code = Blockly.JavaScript.workspaceToCode(HomeBlockly.workspace);
+    if (!code || !code.trim().length) {
+      module.onMapChange(selectedMap);
+    } else {
+      bootbox.dialog({
+        message: "Un cambio de mapa eliminará el código existente. Querés continuar?",
+        title: "Cambiar Mapa",
+        buttons: {
+          default: {
+            label: "Cancelar",
+            className: "btn-default"
+          },
+          success: {
+            label: "Cambiar mapa",
+            className: "btn-success",
+            callback: function() {
+              module.onMapChange(selectedMap);
+            }
+          }
+        }
+      });
+    }
   }
   
+  module.onMapChange = function(selectedMap) {
+    HomeSimulator.changeMap(selectedMap);
+    HomeBlockly.workspace.clear();
+  }
+
   return module;
 
 })();

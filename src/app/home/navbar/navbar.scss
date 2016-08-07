@@ -6,20 +6,16 @@
   .navbar {
     margin: 0px;
     z-index: 1;
-
-    .animation-controlls {
-
-      button {
-        margin: 8px 0px;
-      }
-    }
   }
 
   .navbar.navbar-default {
     background-color: #007A6F;
   }
+  .navbar .animation-controlls {
+    padding: 10px 15px;
+  }
   .navbar .animation-controlls .btn.btn-raised .glyphicon {
-      left: -6px;
+    left: -6px;
   }
   .navbar-brand {
     font-size: 1.7em;
@@ -43,6 +39,9 @@
   .navbar .animation-controlls .btn.disabled {
     pointer-events:none;
     background-color: #666;
+  }
+  .navbar span {
+    font-size: 1.5em;
   }
   .navbar-default .navbar-nav>li>a {
     font-size: 11pt;

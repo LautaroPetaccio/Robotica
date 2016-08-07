@@ -15,30 +15,19 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="home-navbar-collapse">
         <ul class="nav navbar-nav">
-          <li>
-            <a id="btn_load" class="btn_load" href="#">
-              <span class="glyphicon glyphicon-floppy-open" aria-hidden="true"></span>
-              Cargar código
-            </a>
-          </li>
-          <li>
-            <a id="btn_save" class="btn_save" href="#">
-              <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
-              Guardar código
-            </a>
-          </li>
-          <li class="hidden-xs">
-            <div class="animation-controlls btn-group-sm">
-              <button type="button" id="btn_run_out" class="btn btn_run btn-raised btn-success btn-fab">
-                <i class="glyphicon glyphicon-play" aria-hidden="true"></i>
-              </button>
-              <button type="button" id="btn_pause_out" class="btn btn_pause btn-raised btn-warning btn-fab" style="display: none;">
-                <i class="glyphicon glyphicon-pause" aria-hidden="true"></i>
-              </button>
-              <button type="button" id="btn_stop_out" class="btn btn_stop btn-raised btn-danger btn-fab disabled">
-                <i class="glyphicon glyphicon-stop" aria-hidden="true"></i>
-              </button>
-            </div>
+          <li><a id="btn_load" class="btn_load" href="#"><span class="mdi mdi-upload" aria-hidden="true"></span> Cargar código</a></li>
+          <li><a id="btn_save" class="btn_save" href="#"><span class="mdi mdi-download" aria-hidden="true"></span> Guardar código</a></li>
+          <!-- <li><a href="#"><span class="glyphicon glyphicon-export" aria-hidden="true"></span> Exportar</a></li> -->
+          <li class="animation-controlls btn-group-sm hidden-xs">
+            <button type="button" id="btn_run_out" class="btn btn_run btn-raised btn-success btn-fab">
+              <i class="glyphicon glyphicon-play" aria-hidden="true"></i>
+            </button>
+            <button type="button" id="btn_pause_out" class="btn btn_pause btn-raised btn-warning btn-fab" style="display: none;">
+              <i class="glyphicon glyphicon-pause" aria-hidden="true"></i>
+            </button>
+            <button type="button" id="btn_stop_out" class="btn btn_stop btn-raised btn-danger btn-fab disabled">
+              <i class="glyphicon glyphicon-stop" aria-hidden="true"></i>
+            </button>
           </li>
         </ul>
 
@@ -55,7 +44,7 @@
         </div>
 
         <ul class="nav navbar-nav navbar-right">
-          <li><a id="btn_maps" class="btn_maps" href="#"><span class="glyphicon glyphicon-floppy-open" aria-hidden="true"></span> Mapas</a></li>
+          <li><a id="btn_maps" class="btn_maps" href="#"><span class="mdi mdi-map" aria-hidden="true"></span></a></li>
           <!-- <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ayuda<span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -64,6 +53,11 @@
               <li><a href="#">Tips</a></li>
             </ul>
           </li> -->
+          <li>
+            <a id="btn_config" href="#">
+              <span class="mdi mdi-settings" aria-hidden="true">
+            </a>
+          </li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
