@@ -53,18 +53,6 @@ this.Home = (function() {
     }
   }
   
-  module.setLayoutModeExpanded = function() {
-    homeContentElement.removeClass('content-collapsed');
-    homeSimulatorWrapperElement.removeClass('simulator-collapsed');
-    homeBlocklyWrapperElement.removeClass('blockly-collapsed');
-    homeContentElement.addClass('content-expanded');
-    homeSimulatorWrapperElement.addClass('simulator-expanded');
-    homeBlocklyWrapperElement.addClass('blockly-expanded');
-    module.disableSimulatorDragging();
-    HomeSimulator.onContainerResize();
-    HomeBlockly.onContainerResize();
-  }
-  
   module.setLayoutModeCollapsed = function() {
     homeContentElement.removeClass('content-expanded');
     homeSimulatorWrapperElement.removeClass('simulator-expanded');
@@ -77,54 +65,23 @@ this.Home = (function() {
     HomeBlockly.onContainerResize();
   }
   
+  module.setLayoutModeExpanded = function() {
+    homeContentElement.removeClass('content-collapsed');
+    homeSimulatorWrapperElement.removeClass('simulator-collapsed');
+    homeBlocklyWrapperElement.removeClass('blockly-collapsed');
+    homeContentElement.addClass('content-expanded');
+    homeSimulatorWrapperElement.addClass('simulator-expanded');
+    homeBlocklyWrapperElement.addClass('blockly-expanded');
+    module.disableSimulatorDragging();
+    HomeSimulator.onContainerResize();
+    HomeBlockly.onContainerResize();
+  }
+  
   module.toggleLayoutMode = function() {
-    if (_.contains(["xs", "sm"], StateIndicator.getState())) {
-      if (homeSimulatorCanvasMinified) {
-
-        if (homeSimulatorCanvasMinifiedTop == null) {
-          homeSimulatorWrapperElement.css({
-            top: homeSimulatorWrapperElement.position().top,
-            left: homeSimulatorWrapperElement.position().left
-          });
-        }
-        homeSimulatorCanvasMinifiedTop = homeSimulatorWrapperElement.position().top;
-        homeSimulatorCanvasMinifiedLeft = homeSimulatorWrapperElement.position().left;
-
-        homeSimulatorWrapperElement.find("#simulator-screen, canvas").css({
-          width: '100%',
-          height: '100%'
-        });
-        homeSimulatorWrapperElement.stop().animate({
-          top: '20px',
-          left: '15%'
-        }, 250, function() {
-            homeSimulatorWrapperElement.stop().animate({
-              width: '650px',
-              height: '583px'
-            }, 500, function() {});
-        });
-        homeSimulatorCanvasMinified = false;
-
-      } else {
-
-        homeSimulatorWrapperElement.stop().animate({
-          width: '100px',
-          height: '100px'
-        }, 500, function() {
-            homeSimulatorWrapperElement.stop().animate({
-              top: homeSimulatorCanvasMinifiedTop,
-              left: homeSimulatorCanvasMinifiedLeft
-            }, 250, function() {});
-        });
-        homeSimulatorCanvasMinified = true;
-
-      }
+    if (homeContentElement.hasClass('content-expanded')) {
+      module.setLayoutModeCollapsed();
     } else {
-      if (homeContentElement.hasClass('content-collapsed')) {
-        module.setLayoutModeExpanded();
-      } else {
-        module.setLayoutModeCollapsed();
-      }
+      module.setLayoutModeExpanded();
     }
   }
 
@@ -142,7 +99,6 @@ this.Home = (function() {
   module.resetDraggablePosition = function() {
     if (homeContentElement.hasClass('content-collapsed')) {
       module.disableSimulatorDragging();
-      homeSimulatorWrapperElement.animate({ top: "10px", right: "10px" });
       module.enableSimulatorDragging();
     }
   }

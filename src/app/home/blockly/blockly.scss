@@ -6,17 +6,22 @@
  */
 
 #blockly-container {
+  width: 100%;
   height: 100%;
 
   #blockly-panel {
+    width: 100%;
     height: 100%;
     @include home-panel;
 
     #blockly-panel-body {
+      width: 100%;
       height: 100%;
       position: relative;
 
       #blockly-div {
+        width: 100%;
+        height: 100%;
         @include center-in-parent;
       }
     }

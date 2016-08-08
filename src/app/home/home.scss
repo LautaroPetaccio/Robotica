@@ -6,17 +6,9 @@
  * Home layout config.
  */
 
+$home-header-height: 60px;
 
-$home-header-height: 80px;
-
-$home-content-height: calc(100% - 80px);
-
-$simulator-expanded-height: 85%;
-
-$blockly-expanded-height: 85%;
-
-$blockly-collapsed-height: 85%;
-
+$home-content-height: calc(100% - 60px);
 
 /**
  * Home page layout
@@ -24,12 +16,15 @@ $blockly-collapsed-height: 85%;
 
 #home-container {
   height: 100%;
+  overflow: hidden;
   
   #home-header {
     height: $home-header-height;
+    margin-bottom: 20px;
 
     #home-navbar-wrapper {
       @include make-xs-column(12);
+      height: 100%;
       padding: 0px;
       z-index: 1;
     }
@@ -37,59 +32,194 @@ $blockly-collapsed-height: 85%;
   
   #home-content {
     height: $home-content-height;
+    padding: 0px 20px;
     
     #home-simulator-wrapper {
+      float: left;
+      
+      .simulator-collapsed {
+        transition: transform .2s ease;
+      }
+      
+      .simulator-expanded {
+        transition: transform .2s ease;
+      }
     }
-    
+
     #home-blockly-wrapper {
+      float: left;
+      
+      .blockly-collapsed {
+        transition: transform .2s ease;
+      }
+      
+      .blockly-expanded {
+        transition: transform .2s ease;
+      }
     }
   }
 }
 
 /**
- * Collapsed layout mode.
+ * Collapsed layout mode - Screen size XS.
  */
 
-.content-collapsed {
-  position: relative;
-}
+@media (max-width: $screen-xs-max) {
+  .simulator-collapsed {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1;
+  }
 
-.simulator-collapsed {
-  width: 100px;
-  height: 100px;
-  @include main-background;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 1;
+  .blockly-collapsed {
+    width: 100%;
+    height: 100%;
+    padding-bottom: 20px;
+  }
 }
-
-.blockly-collapsed {
-  @include make-xs-column(12);
-  height: $blockly-collapsed-height;
-  @include main-background;
-}
-
 
 /**
- * Expanded layout mode.
+ * Expanded layout mode - Screen size XS.
  */
 
- .content-expanded {
+@media (max-width: $screen-xs-max) {
+  .simulator-expanded {
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+
+  .blockly-expanded {
+    width: 100%;
+    height: 100%;
+    padding-bottom: 20px;
+  }
 }
 
-.simulator-expanded {
-  @include make-xs-column(12);
-  @include make-md-column(5);
-  height: $simulator-expanded-height;
-  @include main-background;
+/**
+ * Collapsed layout mode - Screen size SM.
+ */
+
+@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+  .simulator-collapsed {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    bottom: 20%;
+    right: 150px;
+    z-index: 1;
+  }
+
+  .blockly-collapsed {
+    width: 100%;
+    height: 85%;
+  }
 }
 
-.blockly-expanded {
-  @include make-xs-column(12);
-  @include make-md-column(7);
-  height: $blockly-expanded-height;
-  @include main-background;
+/**
+ * Expanded layout mode - Screen size SM.
+ */
+
+@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+  .simulator-expanded {
+    width: 480px;
+    height: 480px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+    z-index: 1;
+  }
+
+  .blockly-expanded {
+    width: 100%;
+    height: 85%;
+  }
+}
+
+/**
+ * Collapsed layout mode - Screen size MD.
+ */
+
+@media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+  .simulator-collapsed {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    bottom: 20%;
+    right: 150px;
+    z-index: 1;
+  }
+
+  .blockly-collapsed {
+    width: 100%;
+    height: 85%;
+  }
+}
+
+/**
+ * Expanded layout mode - Screen size MD.
+ */
+
+@media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+  .simulator-expanded {
+    width: 560px;
+    height: 560px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+
+  .blockly-expanded {
+    width: 100%;
+    height: 85%;
+  }
+}
+
+/**
+ * Collapsed layout mode - Screen size LG.
+ */
+
+@media (min-width: $screen-lg-min) {
+  .simulator-collapsed {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: calc(60px + 25px); // $home-header-height + 25px
+    right: 50px;
+    z-index: 1;
+  }
+
+  .blockly-collapsed {
+    width: 100%;
+    height: 560px;
+  }
+}
+
+/**
+ * Expanded layout mode - Screen size LG.
+ */
+
+@media (min-width: $screen-lg-min) {
+  .simulator-expanded {
+    width: 560px;
+    height: 560px;
+  }
+
+  .blockly-expanded {
+    width: calc(100% - 560px);
+    height: 560px;
+    padding-left: 20px;
+  }
 }
 
 /**

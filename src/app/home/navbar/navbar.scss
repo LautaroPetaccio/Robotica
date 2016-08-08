@@ -2,6 +2,10 @@
 
 
 #navbar-container {
+  .navbar {
+    margin: 0px;
+    z-index: 1;
+  }
   .navbar.navbar-default {
     background-color: #007A6F;
   }
@@ -39,6 +43,11 @@
   }
   .navbar-default .navbar-nav>li>a {
     font-size: 11pt;
+  }
+  .navbar-right {
+    a {
+      display: inline-block;
+    }
   }
   @media (max-width: 767px) {
     .animation-controlls button {
