@@ -22,11 +22,11 @@ gulp.task('styles-app', [], function() {
           .on('error', plugins.util.log);
 });
 
-gulp.task('styles-bower', ['styles-bower-scss', 'styles-bower-bootstrap']);
+gulp.task('styles-bower', ['styles-bower-scss', 'styles-bower-bootstrap', 'styles-mdi', 'styles-mdi-map']);
 
 gulp.task('styles-bower-scss', [], function() {
   return gulp.src(mainBowerFiles())
-          .pipe(plugins.filter("**/*.{css,scss}"))
+          .pipe(plugins.filter(["**/*.{css,scss}", "!bower_components/mdi/**/*"]))
           .pipe(newer('dist/styles/bower-scss.min.css'))
           .pipe(plugins.flatten())
           .pipe(plugins.sass().on('error', plugins.sass.logError))
@@ -49,5 +49,19 @@ gulp.task('styles-bower-bootstrap', [], function() {
           .pipe(plugins.cleanCss({compatibility: 'ie8'}))
           .pipe(plugins.sourcemaps.write('../maps/'))
           .pipe(gulp.dest('dist/styles/'))
+          .on('error', plugins.util.log);
+});
+
+gulp.task('styles-mdi', [], function() {
+  return gulp.src(mainBowerFiles())
+          .pipe(plugins.filter("**/materialdesignicons.min.css"))
+          .pipe(gulp.dest('dist/styles/'))
+          .on('error', plugins.util.log);
+});
+
+gulp.task('styles-mdi-map', [], function() {
+  return gulp.src(mainBowerFiles())
+          .pipe(plugins.filter("**/materialdesignicons.min.css.map"))
+          .pipe(gulp.dest('dist/maps/'))
           .on('error', plugins.util.log);
 });
