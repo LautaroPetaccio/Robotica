@@ -34,7 +34,7 @@
     init: function() {
       this.appendDummyInput()
           .appendField("Sensor")
-          .appendField(new Blockly.FieldDropdown([["Izquierda", "left"], ["Derecha", "right"], ["Adelante", "front"], ["Atrás", "back"]]), "Sensor");
+          .appendField(new Blockly.FieldDropdown([["Izquierda", "left"], ["Derecha", "right"], ["Adelante", "front"]]), "Sensor");
       this.setOutput(true, "Number");
       this.setColour(65);
       this.setTooltip('Activa el sensor de proximidad en la dirección determinada.');
