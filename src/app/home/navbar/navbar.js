@@ -15,6 +15,7 @@ this.HomeNavbar = (function() {
     $('.btn_pause').click(module.onClickPause);
     $('.btn_stop').click(module.onClickStop);
     $('.btn_save').click(module.onClickSave);
+    $('.btn_export').click(module.onClickExport);
     $('.btn_load').click(module.onClickLoad);
     $('.btn_maps').click(module.onClickMaps);
     
@@ -67,6 +68,10 @@ this.HomeNavbar = (function() {
 
   module.onClickSave = function(event) {
     HomeBlockly.saveProgram();
+  }
+
+  module.onClickExport = function(event) {
+    HomeBlockly.exportProgram();
   }
 
   module.onClickLoad = function(event) {
