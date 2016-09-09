@@ -125,9 +125,7 @@ this.HomeBlockly = (function() {
   }
 
   module.exportWorkspaceArduino = function() {
-    // var xmlDom = Blockly.Xml.workspaceToDom(module.workspace);
-    // var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
-    return "placeholder";
+    return Blockly.Arduino.workspaceToCode(module.workspace);
   }
 
   module.importWorkspaceXml = function(xmlText) {
