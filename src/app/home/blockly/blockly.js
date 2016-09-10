@@ -117,15 +117,27 @@ this.HomeBlockly = (function() {
     }
   }
 
-  /* TODO repeated code */
   module.exportWorkspaceXml = function() {
     var xmlDom = Blockly.Xml.workspaceToDom(module.workspace);
     var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
     return xmlText;
   }
 
+  module.addArduinoFooter = function(code) {
+    code = code.slice(0, -1);
+    code += "  while(true) {\n    delay(1000);\n  }\n}";
+    return code;
+  }
+
+  /* TODO Add header */
+  module.addArduinoHeader = function (code) {
+    return code;
+  }
+
   module.exportWorkspaceArduino = function() {
-    return Blockly.Arduino.workspaceToCode(module.workspace);
+    var code = Blockly.Arduino.workspaceToCode(module.workspace);
+    code = module.addArduinoFooter(code);
+    return code;
   }
 
   module.importWorkspaceXml = function(xmlText) {
