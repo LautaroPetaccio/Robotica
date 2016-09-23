@@ -6,9 +6,8 @@ this.HomeBlockly = (function() {
 
   module.workspace = null;
 
-  var downloadCodeModalElement = undefined;
-  var downloadCodeNameInputElement = undefined;
-  var downloadCodeButtonElement = undefined;
+  var downloadCodeModal = undefined;
+  var exportCodeModal = undefined;
   var hiddenFileInputElement = undefined;
   var blocklyDivElement = undefined;
   var blocklyDivWrapperElement = undefined;
@@ -21,15 +20,19 @@ this.HomeBlockly = (function() {
 
   module.renderSubviews = function() {
     var blocklyToolboxPromise = Views.loadView("blockly-toolbox", "#blockly-toolbox-wrapper");
-    var downloadCodeModalPromise = Views.loadView("download-code-modal", "#download-code-modal-wrapper");
-    return Q.all([blocklyToolboxPromise, downloadCodeModalPromise]);
+    downloadCodeModal = new FileDownloadModal("#download-code-modal-wrapper", 
+      {"onSaveButtonClick" : HomeBlockly.onDownloadCodeButtonClick,
+       "modalTitle" : "Guardar código"});
+    exportCodeModal = new FileDownloadModal("#export-code-modal-wrapper", 
+      {"onSaveButtonClick" : HomeBlockly.onExportCodeButtonClick,
+       "modalTitle" : "Exportar código para Arduino"});
+    var exportCodePromise = exportCodeModal.render();
+    var fileDownloadPromise = downloadCodeModal.render();
+    return Q.all([blocklyToolboxPromise, fileDownloadPromise, exportCodePromise]);
   }
 
   module.initialize = function() {
-    
-    downloadCodeModalElement = $("#download-code-modal");
-    downloadCodeNameInputElement = $('#download-code-name-input');
-    downloadCodeButtonElement = $("#download-code-button");
+
     hiddenFileInputElement = $('#hidden-file-input');
     blocklyDivElement = $("#blockly-div");
     blocklyDivWrapperElement = blocklyDivElement.parent();
@@ -65,14 +68,6 @@ this.HomeBlockly = (function() {
     /* Set math blocks color */
     Blockly.Blocks.math.HUE = 35;
 
-    downloadCodeModalElement.on('shown.bs.modal', function () {
-      downloadCodeNameInputElement.focus();
-    });
-
-    downloadCodeButtonElement.click(HomeBlockly.onDownloadCodeButtonClick);
-
-    downloadCodeNameInputElement.keypress(HomeBlockly.onKeyPressedInDowloadCodeNameInput);
-
     hiddenFileInputElement.change(HomeBlockly.onHiddenFileInputChange);
   }
   
@@ -89,23 +84,22 @@ this.HomeBlockly = (function() {
   }
 
   module.saveProgram = function() {
-    downloadCodeModalElement.modal('show');
+    downloadCodeModal.show();
   }
 
-  module.onDownloadCodeButtonClick = function() {
-    downloadCodeModalElement.modal('hide');
-    var downloadFile = downloadCodeNameInputElement.val() || "robotica-dc.xml";
-    if (downloadFile.length < 4 || downloadFile.substr(downloadFile.length - 4) != ".xml") {
-      downloadFile += ".xml";
-    }
-    FileSave.saveTextAsFile(HomeBlockly.exportWorkspaceXml(), downloadFile);
+  module.exportProgram = function() {
+    exportCodeModal.show();
   }
 
-  module.onKeyPressedInDowloadCodeNameInput = function(event) {
-    if (event.which == 13) {
-        event.preventDefault();
-        HomeBlockly.onDownloadCodeButtonClick();
-    }
+  /* TODO repeated code */
+  module.onDownloadCodeButtonClick = function(fileName) {
+    fileName = FileSave.formatFileName(fileName, ".xml");
+    FileSave.saveTextAsFile(HomeBlockly.exportWorkspaceXml(), fileName);
+  }
+
+  module.onExportCodeButtonClick = function(fileName) {
+    fileName = FileSave.formatFileName(fileName, ".c");
+    FileSave.saveTextAsFile(HomeBlockly.exportWorkspaceArduino(), fileName);
   }
 
   module.loadProgram = function() {
@@ -127,6 +121,23 @@ this.HomeBlockly = (function() {
     var xmlDom = Blockly.Xml.workspaceToDom(module.workspace);
     var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
     return xmlText;
+  }
+
+  module.addArduinoFooter = function(code) {
+    code = code.slice(0, -1);
+    code += "  while(true) {\n    delay(1000);\n  }\n}";
+    return code;
+  }
+
+  /* TODO Add header */
+  module.addArduinoHeader = function (code) {
+    return code;
+  }
+
+  module.exportWorkspaceArduino = function() {
+    var code = Blockly.Arduino.workspaceToCode(module.workspace);
+    code = module.addArduinoFooter(code);
+    return code;
   }
 
   module.importWorkspaceXml = function(xmlText) {

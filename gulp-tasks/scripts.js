@@ -56,10 +56,11 @@ gulp.task('scripts-bower', [], function() {
 
 gulp.task('scripts-blockly', [], function() {
   return gulp.src([
-            'third-party/google-blockly/blockly_compressed.js',
-            'third-party/google-blockly/blocks_compressed.js',
-            'third-party/google-blockly/javascript_compressed.js',
-            'third-party/google-blockly/msg/js/es.js'
+            'third-party/ardublockly/blockly/blockly_compressed.js',
+            'third-party/ardublockly/blockly/blocks_compressed.js',
+            'third-party/ardublockly/blockly/arduino_compressed.js',
+            'third-party/ardublockly/blockly/javascript_compressed.js',
+            'third-party/ardublockly/blockly/msg/js/es.js',
           ])
           .pipe(newer('dist/scripts/blockly.min.js'))
           .pipe(plugins.flatten())

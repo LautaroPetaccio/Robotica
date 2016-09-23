@@ -34,6 +34,14 @@ this.FileSave = (function() {
       }
     }
 
+    module.formatFileName = function(fileName, extension) {
+      fileName = fileName || "robotica-dc" + extension;
+      if (fileName.length < 4 || fileName.substr(fileName.length - 4) != extension) {
+        fileName += extension;
+      }
+      return fileName;
+    }
+
     return module;
 
 })();
