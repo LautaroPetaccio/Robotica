@@ -4,6 +4,8 @@ this.SimulatorInterpreter = (function() {
   
   var module = {};
 
+  module.parentModule = null;
+
   module.createInterpreter = function(code) {
     return new Interpreter(code, initApi);
   }
@@ -15,11 +17,11 @@ this.SimulatorInterpreter = (function() {
     var motorWrapper = function(leftWheelValue, rightWheelValue, durationValue) {
       if (leftWheelValue.data < -100 || leftWheelValue.data > 100) {
         leftWheelValue.data = Math.max(-100, Math.min(100, leftWheelValue.data));
-        module.notifySaturationLeftWheel();
+        module.parentModule.notifySaturationLeftWheel();
       }
       if (rightWheelValue.data < -100 || rightWheelValue.data > 100) {
         rightWheelValue.data = Math.max(-100, Math.min(100, rightWheelValue.data));
-        module.notifySaturationRightWheel();
+        module.parentModule.notifySaturationRightWheel();
       }
       return interpreter.createPrimitive(
         interpreter.robotInstructions.push(

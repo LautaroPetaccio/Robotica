@@ -100,6 +100,7 @@ this.HomeSimulator = (function() {
       me.state.pause();
       me.state.change(me.state.PLAY);
       me.execution.onCompleted = onCompleted;
+      SimulatorInterpreter.parentModule = module;
       me.interpreter = SimulatorInterpreter.createInterpreter(code);
       me.state.resume();
     }
