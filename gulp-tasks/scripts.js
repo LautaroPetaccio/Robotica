@@ -15,12 +15,12 @@ gulp.task('scripts-src', ['scripts-app', 'scripts-game']);
 gulp.task('scripts-app', [], function() {
   return gulp.src('src/app/**/*.js')
           .pipe(newer('dist/scripts/app.min.js'))
+          .pipe(plugins.uglify().on('error', plugins.util.log))
           .pipe(plugins.flatten())
           //.pipe(plugins.eslint())
           //.pipe(plugins.eslint.format())
           .pipe(plugins.concat('app.min.js'))
           .pipe(plugins.sourcemaps.init())
-          .pipe(plugins.uglify().on('error', plugins.util.log))
           .pipe(plugins.sourcemaps.write('../maps/'))
           .pipe(gulp.dest('dist/scripts/'))
           .on('error', plugins.util.log);
