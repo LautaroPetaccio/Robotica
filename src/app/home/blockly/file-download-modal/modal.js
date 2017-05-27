@@ -10,13 +10,13 @@ this.FileDownloadModal = function(wrapper, options) {
 	this.render = function() {
     return Views.loadView("file-download-modal", wrapper).then(function (value) {
       var wrapperElement = $(wrapper);
-      downloadFileModalElement = wrapperElement.find(".file-download-modal");
-      downloadFileNameInputElement = wrapperElement.find(".file-download-name-input");
-      downloadFileButtonElement = wrapperElement.find(".file-download-button");
-      downloadFileCancelButtonElement = wrapperElement.find(".file-cancel-button");;
+      this.$downloadFileModal = wrapperElement.find(".file-download-modal"); /* ??*/
+      this.$downloadFileNameInput = wrapperElement.find(".file-download-name-input");
+      this.$downloadFileButton = wrapperElement.find(".file-download-button");
+      this.$cancelFileDownloadButton = wrapperElement.find(".file-cancel-button");;
 
       if(options.modalTitle) {
-        downloadFileModalElement.find(".modal-title").html(options.modalTitle);
+        this.$downloadFileModal.find(".modal-title").html(options.modalTitle);
       }
 
       if(options.onSaveButtonClick) {

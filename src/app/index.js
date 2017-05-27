@@ -1,18 +1,24 @@
 "use strict";
 
+var app = app || {};
+
 this.Index = (function() {
 
   var module = {};
 
   module.run = function() {
     var pageWrapperSelector = "#page-wrapper";
-    Home.render(pageWrapperSelector);
+    Home.initialize();
   }
 
   return module;
 
 })();
 
-$("#app").load(function() {
+$(document).ready(function() {
   Index.run();
 });
+
+// $("#app").load(function() {
+//   Index.run();
+// });

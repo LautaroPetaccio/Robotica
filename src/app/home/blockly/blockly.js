@@ -32,7 +32,7 @@ this.HomeBlockly = (function() {
   }
 
   module.initialize = function() {
-
+    console.log("================ Se ejecuta ==============");
     hiddenFileInputElement = $('#hidden-file-input');
     blocklyDivElement = $("#blockly-div");
     blocklyDivWrapperElement = blocklyDivElement.parent();

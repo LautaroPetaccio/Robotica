@@ -12,23 +12,14 @@ this.Home = (function() {
   var homeSimulatorCanvasMinified = true;
   var homeSimulatorCanvasMinifiedTop = null;
   var homeSimulatorCanvasMinifiedLeft = null;
-
-  module.render = function(selector) {
-    return Views.loadView("home", selector)
-        .then(module.renderSubviews)
-        .then(module.initialize);
-  }
-
-  module.renderSubviews = function() {
-    var navbarPromise = HomeNavbar.render("#home-navbar-wrapper");
-    var simulatorPromise = HomeSimulator.render("#home-simulator-wrapper");
-    var blocklyPromise = HomeBlockly.render("#home-blockly-wrapper");
-    var mapsModalPromise = Views.loadView("maps-modal", "#maps-modal-wrapper");
-    var configPromise = Config.render("#home-config-wrapper");
-    return Q.all([navbarPromise, simulatorPromise, blocklyPromise, mapsModalPromise, configPromise]);
-  }
   
   module.initialize = function() {
+    console.log("Initialized has been executed");
+    var navbarPromise = HomeNavbar.initialize();
+    var simulatorPromise = HomeSimulator.initialize();
+    var blocklyPromise = HomeBlockly.initialize();
+    var configPromise = Config.initialize();
+
     $.material.init();
     homeNavbarCollapseElement = $('#home-navbar-collapse');
     homeContentElement = $("#home-content");
