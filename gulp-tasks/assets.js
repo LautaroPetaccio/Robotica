@@ -35,7 +35,7 @@ gulp.task('assets-game', ['bundle-melonjs-resources'], function() {
 gulp.task('assets-third-party', ['assets-blockly']);
 
 gulp.task('assets-blockly', [], function() {
-  return gulp.src('third-party/google-blockly/media/**/*')
+  return gulp.src('third-party/ardublockly/blockly/media/**/*')
           .pipe(newer('dist/assets/blockly/'))
           .pipe(plugins.flatten())
           .pipe(gulp.dest('dist/assets/blockly/'))
