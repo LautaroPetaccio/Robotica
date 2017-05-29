@@ -10,7 +10,7 @@ var mainBowerFiles = require('main-bower-files');
 gulp.task('styles', ['styles-app', 'styles-bower']);
 
 gulp.task('styles-app', [], function() {
-  return gulp.src('src/app/**/*.scss')
+  return gulp.src('src/app/css/*.scss')
           .pipe(newer('dist/styles/app.min.css'))
           .pipe(plugins.flatten())
           .pipe(plugins.sass().on('error', plugins.sass.logError))

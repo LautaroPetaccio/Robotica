@@ -6,7 +6,7 @@ var imagemin = require('gulp-imagemin');
 
 /* Assets tasks */
 
-gulp.task('assets', ['favicon', 'assets-game', 'assets-third-party', 'assets-navbar']);
+gulp.task('assets', ['favicon', 'assets-game', 'assets-third-party', 'assets-app']);
 
 gulp.task('favicon', [], function() {
   return gulp.src('src/app/**/favicon.ico')
@@ -16,11 +16,11 @@ gulp.task('favicon', [], function() {
           .on('error', plugins.util.log);
 });
 
-gulp.task('assets-navbar', [], function() {
-  return gulp.src('src/app/home/navbar/*.png')
-          .pipe(newer('dist/assets/navbar/'))
+gulp.task('assets-app', [], function() {
+  return gulp.src('src/app/images/*.png')
+          .pipe(newer('dist/assets/images/'))
           .pipe(imagemin())
-          .pipe(gulp.dest('dist/assets/navbar/'))
+          .pipe(gulp.dest('dist/assets/images/'))
           .on('error', plugins.util.log);
 });
 
