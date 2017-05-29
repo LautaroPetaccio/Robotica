@@ -13,7 +13,7 @@ gulp.task('scripts', ['scripts-src', 'scripts-third-party']);
 gulp.task('scripts-src', ['scripts-app', 'scripts-game']);
 
 gulp.task('scripts-app', [], function() {
-  return gulp.src('src/app/**/*.js')
+  return gulp.src(['src/app/others/*.js', 'src/app/models/*.js', 'src/app/views/*.js', 'src/app/index.js'])
           .pipe(newer('dist/scripts/app.min.js'))
           .pipe(plugins.flatten())
           //.pipe(plugins.eslint())
