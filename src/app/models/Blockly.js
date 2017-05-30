@@ -25,21 +25,18 @@ this.app.models.Blockly = Backbone.Model.extend({
     this.get('workspace').removeChangeListener(onChange);
   },
 
-  addArduinoFooter : function(code) {
-    code = code.slice(0, -1);
-    code += "  while(true) {\n    delay(1000);\n  }\n}";
-    return code;
-  },
-
-  /* TODO Add header */
-  addArduinoHeader : function (code) {
-    return code;
-  },
-
   exportWorkspaceArduino : function() {
     var code = Blockly.Arduino.workspaceToCode(this.get('workspace'));
-    code = this.addArduinoFooter(code);
-    return code;
+    var setupRE = /void setup\(.*\) \{([\s\S]*?)\}/;
+    var loopRE = /void loop\(.*\) \{([\s\S]*?)\s\}/;
+    var allDefsRE = /([\s\S]*?)void setup()/;
+    var allDefs = code.match(allDefsRE)[1];
+    console.log("allDefs : " + allDefs);
+    var setup = code.match(setupRE)[1];
+    console.log("setup : " + setup);
+    var loop = code.match(loopRE)[1];
+    console.log("loop : " + loop);
+    return arduinoCode.format(allDefs, setup, loop);
   },
 
   exportWorkspaceJavascript : function() {
