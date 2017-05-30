@@ -7,7 +7,6 @@ this.app.views = app.views || {};
 this.app.views.Blockly = Backbone.View.extend({
 
   render : function() {
-    console.log("Render loaded");
     var blocklyOptions = {
       media: 'assets/blockly/',
       sounds: true,

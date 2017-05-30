@@ -15,7 +15,6 @@ this.app.models.FileSave = Backbone.Model.extend({
   },
 
   downloadWithFileName : function(fileName) {
-    // console.log("File extension: " + this.get('fileExtension'));
     var text = this.get('extractCode')();
     this.saveTextAsFile(text, this.formatFileName(fileName, this.get('fileExtension')));
   },
