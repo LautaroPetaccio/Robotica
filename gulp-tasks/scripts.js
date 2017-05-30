@@ -3,14 +3,17 @@ var gulp = require('gulp');
 var newer = require('gulp-newer');
 var plugins = require('gulp-load-plugins')(['gulp-*']);
 var mainBowerFiles = require('main-bower-files');
+const rename = require('gulp-rename');
 var path = require('path');
+var insert = require('gulp-insert');
+
 var bundleMelonJSResources = require(path.resolve(__dirname, './bundleMelonJSResources.js'));
 
 /* Scripts tasks */
 
 gulp.task('scripts', ['scripts-src', 'scripts-third-party']);
 
-gulp.task('scripts-src', ['scripts-app', 'scripts-game']);
+gulp.task('scripts-src', ['scripts-app', 'arduino-to-js', 'scripts-game']);
 
 gulp.task('scripts-app', [], function() {
   return gulp.src(['src/app/others/*.js', 'src/app/models/*.js', 'src/app/views/*.js', 'src/app/index.js'])
@@ -22,6 +25,18 @@ gulp.task('scripts-app', [], function() {
           .pipe(plugins.sourcemaps.init())
           .pipe(plugins.uglify().on('error', plugins.util.log))
           .pipe(plugins.sourcemaps.write('../maps/'))
+          .pipe(gulp.dest('dist/scripts/'))
+          .on('error', plugins.util.log);
+});
+
+gulp.task('arduino-to-js', [], function() {
+  return gulp.src(['src/app/others/arduino.ino'])
+          .pipe(newer('dist/scripts/app.min.js'))
+          .pipe(insert.prepend('"use strict";\nthis.arduinoCode = `'))
+          .pipe(insert.append('`'))
+          .pipe(rename({
+            extname: '.js'
+          }))
           .pipe(gulp.dest('dist/scripts/'))
           .on('error', plugins.util.log);
 });
