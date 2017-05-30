@@ -1,27 +1,30 @@
 "use strict";
 
-this.SimulatorInterpreter = (function() {
-  
-  var module = {};
+this.app = app || {};
 
-  module.parentModule = null;
+this.app.models = app.models || {};
 
-  module.createInterpreter = function(code) {
-    return new Interpreter(code, initApi);
-  }
+this.app.models.SimulatorInterpreter = Backbone.Model.extend({
+  initialize : function() {
 
-  function initApi(interpreter, scope) {
+  },
+
+  createInterpreter : function(code) {
+    return new Interpreter(code, this.initApi);
+  },
+
+  initApi : function(interpreter, scope) {
     interpreter.robotInstructions = new Array();
 
     /* Add an API function for the motor function */
     var motorWrapper = function(leftWheelValue, rightWheelValue, durationValue) {
       if (leftWheelValue.data < -100 || leftWheelValue.data > 100) {
         leftWheelValue.data = Math.max(-100, Math.min(100, leftWheelValue.data));
-        module.parentModule.notifySaturationLeftWheel();
+        app.simulatorModel.notifySaturationLeftWheel();
       }
       if (rightWheelValue.data < -100 || rightWheelValue.data > 100) {
         rightWheelValue.data = Math.max(-100, Math.min(100, rightWheelValue.data));
-        module.parentModule.notifySaturationRightWheel();
+        app.simulatorModel.notifySaturationRightWheel();
       }
       return interpreter.createPrimitive(
         interpreter.robotInstructions.push(
@@ -77,7 +80,4 @@ this.SimulatorInterpreter = (function() {
     interpreter.setProperty(scope, 'tracer',
         interpreter.createNativeFunction(tracerEnableWrapper));
   }
-
-  return module;
-
-})();
+});

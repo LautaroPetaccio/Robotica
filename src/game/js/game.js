@@ -4,7 +4,7 @@ var game = {
 
   // Run on page load.
 
-  "onload" : function (canvasWrapper) {
+  onload : function (canvasWrapper) {
     /* 
       0 => running
       1 => paused
@@ -19,7 +19,7 @@ var game = {
       isPaused : function() { return this.state == 1; },
       hasFinished : function() { return this.state == 2; }
     };
-
+    console.log("Guat?");
     me.game.changeMap = function(mapName) {
       me.game.map = mapName;
       me.state.pause();
@@ -66,7 +66,7 @@ var game = {
   },
 
   // Run on game resources loaded.
-  "loaded" : function () {
+  loaded : function () {
     /* Set the map to be loaded */
     me.game.map = "area03";
 
