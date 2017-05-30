@@ -27,21 +27,45 @@ app.views.Simulator = Backbone.View.extend({
             window.scrollTo(0, 1);
         });
     }
-    $(window).on('resize.resizeview', this.onContainerResize.bind(this));
-    this.onContainerResize();
+    $(window).on('resize.resizeview', this.render.bind(this));
+    $(window).on('orientationchange', this.render.bind(this));
+    this.$screenElement = this.$el.find("#simulator-screen");
+    this.$canvasElement = this.$el.find("#simulator-screen > canvas");
+    this.render();
   },
   /* Needs refactoring */
   onContainerResize : function() {
-    var screenElement = $("#simulator-screen");
-    var canvasElement = $("#simulator-screen > canvas");
-    var screenWrapperElement = screenElement.parent();
+    var screenWrapperElement = this.$screenElement.parent();
     var screenWrapperWidth = screenWrapperElement.width();
     var screenWrapperHeight = screenWrapperElement.height();
     var screenWidth = Math.min(screenWrapperWidth, screenWrapperHeight);
     var screenHeight = screenWidth;
-    screenElement.width(screenWidth);
-    screenElement.height(screenHeight);
-    canvasElement.width(screenWidth);
-    canvasElement.height(screenHeight);
+    this.$screenElement.width(screenWidth);
+    this.$screenElement.height(screenHeight);
+    this.$canvasElement.width(screenWidth);
+    this.$canvasElement.height(screenHeight);
+  },
+
+  enableSimulatorDragging : function() {
+    this.$el.draggable({ containment: "window" });
+    this.$el.draggable('enable');
+  },
+  
+  disableSimulatorDragging : function() {
+    this.$el.draggable({ containment: "window" });
+    this.$el.draggable('disable');
+    this.$el.attr('style', '');
+  },
+
+  resetDraggablePosition : function() {
+    if (this.$el.hasClass('content-collapsed')) {
+      this.disableSimulatorDragging();
+      this.enableSimulatorDragging();
+    }
+  },
+
+  render : function() {
+    this.onContainerResize();
+    this.resetDraggablePosition();
   }
 });

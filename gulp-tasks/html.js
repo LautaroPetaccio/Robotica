@@ -12,6 +12,7 @@ const gulpHelpers = require(path.resolve(__dirname, './gulp-helpers.js'));
 
 gulp.task('html', ['html-index']);
 
+/* TODO: check that if any of the templates files are new */
 gulp.task('html-index', [], function() {
   var mapsData = gulpHelpers.generateMapsData();
   return gulp.src('src/app/templates/index.hbs')

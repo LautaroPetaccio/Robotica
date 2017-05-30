@@ -17,8 +17,7 @@ app.views.AppView = Backbone.View.extend({
     this.setInitialLayoutMode();
 
     this.$homeNavbarCollapseElement.on('shown.bs.collapse hidden.bs.collapse', app.blocklyView.forceBlocklySvgResize);
-    this.$homeSimulatorWrapperElement.click(this.toggleLayoutMode);
-    window.addEventListener('orientationchange', $.proxy(this.resetDraggablePosition, this), false);
+    this.$homeSimulatorWrapperElement.click($.proxy(this.toggleLayoutMode, this));
   },
   setInitialLayoutMode : function() {
     if (_.contains(["xs", "sm"], this.getState())) {
@@ -35,7 +34,7 @@ app.views.AppView = Backbone.View.extend({
     this.$homeContentElement.addClass('content-collapsed');
     this.$homeSimulatorWrapperElement.addClass('simulator-collapsed');
     this.$homeBlocklyWrapperElement.addClass('blockly-collapsed');
-    this.$module.enableSimulatorDragging();
+    app.simulatorView.enableSimulatorDragging();
     app.simulatorView.onContainerResize();
     app.blocklyView.onContainerResize();
   },
@@ -47,7 +46,7 @@ app.views.AppView = Backbone.View.extend({
     this.$homeContentElement.addClass('content-expanded');
     this.$homeSimulatorWrapperElement.addClass('simulator-expanded');
     this.$homeBlocklyWrapperElement.addClass('blockly-expanded');
-    this.disableSimulatorDragging();
+    app.simulatorView.disableSimulatorDragging();
     app.simulatorView.onContainerResize();
     app.blocklyView.onContainerResize();
   },
@@ -57,24 +56,6 @@ app.views.AppView = Backbone.View.extend({
       this.setLayoutModeCollapsed();
     } else {
       this.setLayoutModeExpanded();
-    }
-  },
-
-  enableSimulatorDragging : function() {
-    this.$homeSimulatorWrapperElement.draggable({ containment: "window" });
-    this.$homeSimulatorWrapperElement.draggable('enable');
-  },
-  
-  disableSimulatorDragging : function() {
-    this.$homeSimulatorWrapperElement.draggable({ containment: "window" });
-    this.$homeSimulatorWrapperElement.draggable('disable');
-    this.$homeSimulatorWrapperElement.attr('style', '');
-  },
-
-  resetDraggablePosition : function() {
-    if (this.$homeContentElement.hasClass('content-collapsed')) {
-      this.disableSimulatorDragging();
-      this.enableSimulatorDragging();
     }
   },
 
