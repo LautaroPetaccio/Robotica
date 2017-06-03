@@ -17,6 +17,7 @@ gulp.task('html', ['html-index']);
 gulp.task('html-index', [], function() {
   var mapsData = gulpHelpers.generateMapsData();
   return gulp.src('src/app/templates/index.hbs')
+          .pipe(newer({dest: 'dist/index.html', extra : 'src/app/templates/*.hbs'}))
           .pipe(hb({
               helpers: [
                   'node_modules/handlebars-layouts/index.js'
@@ -31,7 +32,6 @@ gulp.task('html-index', [], function() {
           .pipe(rename({
             extname: '.html'
           }))
-          .pipe(newer('dist/index.html'))
           .pipe(plugins.sourcemaps.init())
           .pipe(plugins.htmlmin({collapseWhitespace: true}))
           .pipe(plugins.sourcemaps.write('maps/'))
