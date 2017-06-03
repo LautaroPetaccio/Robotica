@@ -15,11 +15,8 @@ gulp.task('browser-sync-init', function() {
 });
 
 gulp.task('browser-sync-watch', function() {
-  gulp.watch('src/app/index.html').on('change', function() {
+  gulp.watch('src/app/templates/*.hbs').on('change', function() {
     runSequence('html-index', 'browser-sync-reload');
-  });
-  gulp.watch(['src/app/**/*.html', '!src/app/index.html']).on('change', function() {
-    runSequence('html-other', 'browser-sync-reload');
   });
   gulp.watch('src/app/**/*.js').on('change', function() {
     runSequence('scripts-app', 'browser-sync-reload');

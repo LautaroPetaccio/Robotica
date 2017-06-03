@@ -1,26 +1,19 @@
-<div id="maps-modal" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Lista de mapas</h4>
-      </div>
-      <div class="modal-body">
-        <ul class="media-list">
-        {{#each maps}}
+{{#extend "modal-layout"}}
+    {{#content "title"}} Lista de mapas {{/content}}
+    {{#content "body"}}
+      <ul class="media-list">
+      {{#each maps}}
 
-          <li class="media" id="{{ this.name }}">
-            <div class="media-left">
-                <img class="media-object" width="64px" height="64px" src="assets/game/{{ this.name }}.png" alt="{{ this.name }}">
+        <li class="media" id="{{ this.name }}">
+          <div class="media-left">
+              <img class="media-object" width="64px" height="64px" src="assets/game/{{ this.name }}.png" alt="{{ this.name }}">
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">{{ this.title }}</h4>
+              {{ this.description }}
             </div>
-            <div class="media-body">
-              <h4 class="media-heading">{{ this.title }}</h4>
-                {{ this.description }}
-              </div>
-          </li>
-        {{/each}}
-        </ul>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </li>
+      {{/each}}
+      </ul>
+    {{/content}}
+{{/extend}}
