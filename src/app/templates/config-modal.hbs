@@ -1,14 +1,10 @@
-<div id="config-modal" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header"> <h4 class="modal-title"> Configuraciones </h4> </div>
-      <div class="modal-body">
-        <div class="togglebutton">
-          <label style="color:black; font-weight: 300;">
-            <input type="checkbox" id="sensor_hud_checkbox">Modo de visualización de sensores
-          </label>
-        </div>
-      </div>
+{{#extend "modal-layout"}}
+ {{#content "title"}} Configuraciones {{/content}}
+ {{#content "body"}}
+    <div class="togglebutton">
+      <label style="color:black; font-weight: 300;">
+        <input type="checkbox" id="sensor_hud_checkbox">Modo de visualización de sensores
+      </label>
     </div>
-  </div>
-</div> 
+ {{/content}}
+{{/extend}}
