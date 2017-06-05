@@ -6,7 +6,6 @@ this.app.views = app.views || {};
 
 this.app.views.NavBar = Backbone.View.extend({
 
-	// Delegated events for creating new items, and clearing completed ones.
   events: {
     'click .btn_run' : 'onClickRun',
     'click .btn_pause' : 'onClickPause',
@@ -18,9 +17,6 @@ this.app.views.NavBar = Backbone.View.extend({
     'click .btn_config' : 'onClickConfig'
   },
 
-	// At initialization we bind to the relevant events on the `Todos`
-	// collection, when items are added or changed. Kick things off by
-	// loading any preexisting todos that might be saved in *localStorage*.
   initialize: function () {
     this.$btn_run = this.$el.find('.btn_run');
     this.$btn_pause = this.$el.find('.btn_pause');
@@ -85,22 +81,18 @@ this.app.views.NavBar = Backbone.View.extend({
   },
 
   onClickSave : function(event) {
-    // app.downloadArduinoCodeModal.saveProgram();
-    app.downloadArduinoCodeView.show();
+    app.downloadCodeView.show();
   },
 
   onClickExport : function(event) {
-    // app.downloadArduinoCodeModal.exportProgram();
-    app.downloadArduinoCodeView.show();
+    app.exportCodeView.show();
   },
 
   onClickLoad : function(event) {
-    // app.LoadProgramView.loadProgram();
     app.blocklyView.loadProgram();
   },
 
   onClickMaps : function(event) {
-    // app.MapsModalView.show();
     app.mapsSelectorView.show();
   },
 

@@ -77,39 +77,30 @@ game.PlayerEntity = me.Entity.extend({
     /* Distance between the center of the two wheels, 30 pixels */
     this.l = 30;
     this.wheelRadious = 5;
-    this.timeDiferential = 5000;
 
-    this.displacementConstant = this.timeFactorForDisplacement(this.robotDisplacement(100, 100, 1), 1, 3.5);
+    this.maxAngularVel = 16 * Math.PI;
+    this.minAngularVel = -16 * Math.PI;
+    this.maxNumericalVelocity = 100;
+    this.minNumericalVelocity = -100;
 
     this.firstUpdate = true;
   },
 
-  /* Not taking into account the incremental movements */
-  robotDisplacement : function(leftMotor, rightMotor, time) {
-    leftMotor *= time;
-    rightMotor *= time;
-    var initialX = 0;
-    var initialY = 0;
-    var newX = initialX + (this.wheelRadious/2)*(leftMotor + rightMotor)*Math.cos(0);
-    var newY = initialY + (this.wheelRadious/2)*(leftMotor + rightMotor)*Math.sin(0);
-    var movedDistance = Math.sqrt(Math.pow((initialX-newX), 2) + Math.pow((initialY-newY), 2));
-    return movedDistance;
-  },
-
-  timeFactorForDisplacement : function(displacement, time, neededProportionalDisplacement) {
-    var displacementProportionalToRobot = displacement / this.width;
-    return neededProportionalDisplacement * time / displacementProportionalToRobot;
-    // time -> movedDistance / width
-    // x -> 3.5
+  mapValue : function(value, out_min, out_max, in_min, in_max) {
+    return (value - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
   },
 
   /* http://planning.cs.uiuc.edu/node659.html */
-  moveRobot : function(leftMotor, rightMotor, time) {    
-    leftMotor *= time;
-    rightMotor *= time;
-    var deltaAngle = (this.wheelRadious/this.l) * (leftMotor - rightMotor);
-    this.pos.x = this.pos.x + (this.wheelRadious/2)*(leftMotor + rightMotor)*Math.cos(this.renderable.angle);
-    this.pos.y = this.pos.y + (this.wheelRadious/2)*(leftMotor + rightMotor)*Math.sin(this.renderable.angle);
+  moveRobot : function(leftMotorVelocity, rightMotorVelocity, time) {
+    /* Convert numerical velocity to angular velocity */
+    leftMotorVelocity = time * this.mapValue(leftMotorVelocity, 
+      this.minAngularVel, this.maxAngularVel, this.minNumericalVelocity, this.maxNumericalVelocity);
+    rightMotorVelocity = time * this.mapValue(rightMotorVelocity,
+      this.minAngularVel, this.maxAngularVel, this.minNumericalVelocity, this.maxNumericalVelocity);
+
+    var deltaAngle = (this.wheelRadious/this.l) * (leftMotorVelocity - rightMotorVelocity);
+    this.pos.x += (this.wheelRadious/2)*(leftMotorVelocity + rightMotorVelocity)*Math.cos(this.renderable.angle);
+    this.pos.y += (this.wheelRadious/2)*(leftMotorVelocity + rightMotorVelocity)*Math.sin(this.renderable.angle);
     this.renderable.angle += deltaAngle;
 
     for(i=1; i<this.body.shapes.length; i++) {
@@ -169,7 +160,7 @@ game.PlayerEntity = me.Entity.extend({
               var leftWheel = instruction.leftWheel;
               var rightWheel = instruction.rightWheel;
 
-              this.moveRobot(leftWheel, rightWheel, (dt / 1000) * this.displacementConstant);
+              this.moveRobot(leftWheel, rightWheel, (dt / 1000));
 
               instruction.duration -= dt / 1000;
               if(instruction.duration <= 0) {

@@ -6,6 +6,10 @@ this.app.views = app.views || {};
 
 this.app.views.Blockly = Backbone.View.extend({
 
+  events: {
+    'change #hidden-file-input' : 'onHiddenFileInputChange',
+  },
+
   render : function() {
     var blocklyOptions = {
       media: 'assets/blockly/',
@@ -39,8 +43,6 @@ this.app.views.Blockly = Backbone.View.extend({
     /* Set math blocks color */
     Blockly.Blocks.math.HUE = 35;
 
-    /* hiddenFileInputElement.change(HomeBlockly.onHiddenFileInputChange); */
-    this.$hiddenFileInputElement.change(this.onHiddenFileInputChange);
   },
 
   initialize : function() {
@@ -69,13 +71,15 @@ this.app.views.Blockly = Backbone.View.extend({
     this.$hiddenFileInputElement.click();
   },
 
+  onTextLoad : function(event) {
+    this.model.importWorkspaceXml(event.target.result);
+  },
+
   onHiddenFileInputChange : function(event) {
     if (event.target.files.length > 0) {
       var fileToLoad = event.target.files[0];
       var reader = new FileReader();
-      reader.onload = function() {
-        this.model.importWorkspaceXml(reader.result);
-      }
+      reader.onload = $.proxy(this.onTextLoad, this);
       reader.readAsText(fileToLoad);
     }
   },

@@ -19,7 +19,7 @@ var game = {
       isPaused : function() { return this.state == 1; },
       hasFinished : function() { return this.state == 2; }
     };
-    console.log("Guat?");
+    
     me.game.changeMap = function(mapName) {
       me.game.map = mapName;
       me.state.pause();

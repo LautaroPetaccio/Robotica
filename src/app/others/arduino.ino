@@ -1,18 +1,21 @@
 #include <PID_v1.h>
-#define MOTOR_L_A 6
-#define MOTOR_L_B 5
-#define MOTOR_R_A 11
-#define MOTOR_R_B 10
+/* Left / Right mirando el robot de atrás (como en el simulador) */
+#define MOTOR_R_A 6
+#define MOTOR_R_B 5
+#define MOTOR_L_A 11
+#define MOTOR_L_B 10
 #define WHEEL_HOLES 20
-/* Left / Right mirando el robot de frente */
-#define SONAR_R_TRIG 9
-#define SONAR_R_ECHO 4
-#define SONAR_L_TRIG 12
-#define SONAR_L_ECHO 13
+#define RIGHT_WHEEL_ENCODER_INTERRUPT_PIN 3
+#define LEFT_WHEEL_ENCODER_INTERRUPT_PIN 2
+/* Left / Right mirando el robot de atrás */
+#define SONAR_L_TRIG 9
+#define SONAR_L_ECHO 4
+#define SONAR_R_TRIG 12
+#define SONAR_R_ECHO 13
 #define SONAR_F_TRIG 7
 #define SONAR_F_ECHO 8
 #define PWM_MAX 255
-#define PWM_MIN 38
+#define PWM_MIN 30
 #define VEL_MAX 100
 #define VEL_MIN -100
 #define ANGULAR_VEL_MIN (-16 * PI)
@@ -26,9 +29,6 @@ int sonars[3][2] = { {SONAR_L_TRIG, SONAR_L_ECHO}, {SONAR_R_TRIG, SONAR_R_ECHO},
 volatile unsigned long left_wheel_pulses = 0;
 volatile unsigned long right_wheel_pulses = 0;
 double left_wheel_angular_velocity = 0.0, right_wheel_angular_velocity = 0.0;
-
-/* Left mirando de atrás */
-const byte left_wheel_encoder_interrupt_pin = 3, right_wheel_encoder_interrupt_pin = 2;
 volatile unsigned long right_wheel_last_time = 0, right_wheel_actual_time = 0;
 volatile unsigned long left_wheel_last_time = 0, left_wheel_actual_time = 0;
 
@@ -49,12 +49,9 @@ void angular_velocity_measurement() {
     Gets the angular velocity for the two wheels.
     The 0.3 seconds is the update time.
   */
-  Serial.print("Left wheel pulses: ");
-  Serial.println(left_wheel_pulses);
-  Serial.print("Right wheel pulses: ");
-  Serial.println(left_wheel_pulses);
   left_wheel_angular_velocity = angular_velocity(left_wheel_pulses, 0.3);
   right_wheel_angular_velocity = angular_velocity(right_wheel_pulses, 0.3);
+  
   /* Reset the measurements */
   right_wheel_pulses = 0;
   left_wheel_pulses = 0;
@@ -109,6 +106,8 @@ double compute_angular_velocity_setpoint(int original_velocity) {
 
 /* Outputs power to the motors */
 void power_motor(int pin_a, int pin_b, int original_velocity, int PWM) {
+  if(original_velocity == 0)
+    return;
   analogWrite(pin_a, original_velocity > 0 ? PWM_MIN + PWM : 0);
   analogWrite(pin_b, original_velocity > 0 ? 0 : PWM_MIN + PWM);
 }
@@ -143,8 +142,8 @@ void motor(int motorL_vel, int motorR_vel, float duration){
   rightWheelPID.SetMode(AUTOMATIC);
   
   /* Initializes and configures interruptions */
-  attachInterrupt(digitalPinToInterrupt(left_wheel_encoder_interrupt_pin), left_wheel_encoder_pulse, RISING);
-  attachInterrupt(digitalPinToInterrupt(right_wheel_encoder_interrupt_pin), right_wheel_encoder_pulse, RISING);
+  attachInterrupt(digitalPinToInterrupt(LEFT_WHEEL_ENCODER_INTERRUPT_PIN), left_wheel_encoder_pulse, RISING);
+  attachInterrupt(digitalPinToInterrupt(RIGHT_WHEEL_ENCODER_INTERRUPT_PIN), right_wheel_encoder_pulse, RISING);
   /* Movement loop - moves until duration is archieved */
   unsigned long t0 = millis(); // Tiempo del comienzo del movimiento
   while(millis() < (t0 + motor_duration)) {
@@ -154,15 +153,15 @@ void motor(int motorL_vel, int motorR_vel, float duration){
     /* Write PWM values, taking into consideration if the original velocity was negative or positive */
     power_motor(MOTOR_L_A, MOTOR_L_B, motorL_vel, left_wheel_PWM);
     power_motor(MOTOR_R_A, MOTOR_R_B, motorR_vel, right_wheel_PWM);
-    
+
     /* Software delay to allow interruptions */
     software_delay(300);
   }
   
   /* Removes all interrupts and stops the motors */
   noInterrupts();
-  detachInterrupt(digitalPinToInterrupt(left_wheel_encoder_interrupt_pin));
-  detachInterrupt(digitalPinToInterrupt(right_wheel_encoder_interrupt_pin));
+  detachInterrupt(digitalPinToInterrupt(LEFT_WHEEL_ENCODER_INTERRUPT_PIN));
+  detachInterrupt(digitalPinToInterrupt(RIGHT_WHEEL_ENCODER_INTERRUPT_PIN));
   analogWrite(MOTOR_L_A, 0);
   analogWrite(MOTOR_L_B, 0);
   analogWrite(MOTOR_R_A, 0);

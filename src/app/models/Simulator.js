@@ -6,7 +6,7 @@ this.app.models = app.models || {};
 
 this.app.models.Simulator = Backbone.Model.extend({
   initialize : function() {
-
+    this.onWorkspaceChangeCallback = $.proxy(this.onWorkspaceChange, this);
   },
   enableSensorsHUD : function() {
     me.game.HUD.enableHUD();
@@ -23,8 +23,7 @@ this.app.models.Simulator = Backbone.Model.extend({
       /* If the code was modified, finish the execution */
       me.execution.finish();
       /* Remove the event listener */
-      // TODO: Funcion directa a blockly
-      app.blocklyModel.removeWorkspaceOnChangeListener($.proxy(this.onWorkspaceChange, this));
+      app.blocklyModel.removeWorkspaceOnChangeListener(this.onWorkspaceChangeCallback);
     }
   },
 
@@ -33,8 +32,7 @@ this.app.models.Simulator = Backbone.Model.extend({
       onPause();
       me.execution.pause();
       /* While being paused, check if the code was modified */
-      // TODO, chequear si puede borrar el listener o no, porque proxy va a crear dos objetos diferentes
-      app.blocklyModel.addWorkspaceOnChangeListener($.proxy(this.onWorkspaceChange, this));
+      app.blocklyModel.addWorkspaceOnChangeListener(this.onWorkspaceChangeCallback);
     }
   },
 
@@ -59,8 +57,13 @@ this.app.models.Simulator = Backbone.Model.extend({
       me.interpreter = this.get('interpreter').createInterpreter(code);
       me.state.resume();
     }
+    if(me.execution.isPaused()) {
+      /* Remove the event listener */
+      app.blocklyModel.removeWorkspaceOnChangeListener(this.onWorkspaceChangeCallback);
+    }
     if(!me.execution.isRunning()) {
       onRun();
+      console.log("Running from pause");
       me.execution.run();
     }
   },
