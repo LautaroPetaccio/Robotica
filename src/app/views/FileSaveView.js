@@ -7,7 +7,6 @@ this.app.views = app.views || {};
 this.app.views.FileSave = Backbone.View.extend({
   defaults: {},
 
-  // Delegated events for creating new items, and clearing completed ones.
   events: {
     'click .file-download-button' : 'onSaveButtonClick',
     'click .file-cancel-button' : 'onCancelButtonClick',
@@ -40,8 +39,6 @@ this.app.views.FileSave = Backbone.View.extend({
   },
 
   onCancelButtonClick : function() {
-    // this.$model.onCancelButtonClick(downloadFileNameInputElement.val());
-    // this.model.onCancel(this.$fileNameInput.val());
     this.hide();
   },
 
