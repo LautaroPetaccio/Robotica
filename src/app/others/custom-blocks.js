@@ -63,7 +63,7 @@
 
   Blockly.Arduino['robotica_sensor'] = function(block) {
     var dropdown_sensor = block.getFieldValue('Sensor');
-    var code = 'sensor(\'' + dropdown_sensor + '\')';
+    var code = 'sensor('+ dropdown_sensor + ')';
     return [code, Blockly.JavaScript.ORDER_ATOMIC];
   };
 

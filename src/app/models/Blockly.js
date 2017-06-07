@@ -28,11 +28,14 @@ this.app.models.Blockly = Backbone.Model.extend({
   exportWorkspaceArduino : function() {
     var code = Blockly.Arduino.workspaceToCode(this.get('workspace'));
     var setupRE = /void setup\(.*\) \{([\s\S]*?)\}/;
-    var loopRE = /void loop\(.*\) \{([\s\S]*?)\s\}/;
+    var loopRE = /void loop\(.*\) \{([\s\S]*?)\s\}$/;
     var allDefsRE = /([\s\S]*?)void setup()/;
     var allDefs = code.match(allDefsRE)[1];
+    console.log(code.match(allDefsRE));
     var setup = code.match(setupRE)[1];
+    console.log(code.match(setupRE));
     var loop = code.match(loopRE)[1];
+    console.log(code.match(loopRE));
     return arduinoCode.format(allDefs, setup, loop);
   },
 
