@@ -9,6 +9,7 @@ game.PlayerEntity = me.Entity.extend({
   ------ */ 
   init: function(x, y, settings) {
     // call the constructor
+    settings.name = "robot"
     this._super(me.Entity, 'init', [x, y, settings]);
 
 
@@ -76,15 +77,30 @@ game.PlayerEntity = me.Entity.extend({
     /* Distance between the center of the two wheels, 30 pixels */
     this.l = 30;
     this.wheelRadious = 5;
+
+    this.maxAngularVel = 16 * Math.PI;
+    this.minAngularVel = -16 * Math.PI;
+    this.maxNumericalVelocity = 100;
+    this.minNumericalVelocity = -100;
+
+    this.firstUpdate = true;
+  },
+
+  mapValue : function(value, out_min, out_max, in_min, in_max) {
+    return (value - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
   },
 
   /* http://planning.cs.uiuc.edu/node659.html */
-  moveRobot : function(leftMotor, rightMotor, time) {    
-    leftMotor *= time;
-    rightMotor *= time;
-    var deltaAngle = (this.wheelRadious/this.l) * (leftMotor - rightMotor);
-    this.pos.x = this.pos.x + (this.wheelRadious/2)*(leftMotor + rightMotor)*Math.cos(this.renderable.angle);
-    this.pos.y = this.pos.y + (this.wheelRadious/2)*(leftMotor + rightMotor)*Math.sin(this.renderable.angle);
+  moveRobot : function(leftMotorVelocity, rightMotorVelocity, time) {
+    /* Convert numerical velocity to angular velocity */
+    leftMotorVelocity = time * this.mapValue(leftMotorVelocity, 
+      this.minAngularVel, this.maxAngularVel, this.minNumericalVelocity, this.maxNumericalVelocity);
+    rightMotorVelocity = time * this.mapValue(rightMotorVelocity,
+      this.minAngularVel, this.maxAngularVel, this.minNumericalVelocity, this.maxNumericalVelocity);
+
+    var deltaAngle = (this.wheelRadious/this.l) * (leftMotorVelocity - rightMotorVelocity);
+    this.pos.x += (this.wheelRadious/2)*(leftMotorVelocity + rightMotorVelocity)*Math.cos(this.renderable.angle);
+    this.pos.y += (this.wheelRadious/2)*(leftMotorVelocity + rightMotorVelocity)*Math.sin(this.renderable.angle);
     this.renderable.angle += deltaAngle;
 
     for(i=1; i<this.body.shapes.length; i++) {
@@ -112,6 +128,12 @@ game.PlayerEntity = me.Entity.extend({
   ------ */
   update: function(dt) {
     this._super(me.Entity, 'update', [dt]);
+    /* Fixes incorrect sensors when loaded */
+    if(this.firstUpdate) {
+      me.collision.check(this);
+      this.firstUpdate = false;
+    }
+
     if(me.interpreter !== null && !me.execution.hasFinished()) {
       /* If the instructions waiting to be excecuted are lower than 1000 */
       if(me.interpreter.robotInstructions.length < 1000) {
@@ -138,7 +160,7 @@ game.PlayerEntity = me.Entity.extend({
               var leftWheel = instruction.leftWheel;
               var rightWheel = instruction.rightWheel;
 
-              this.moveRobot(leftWheel, rightWheel, dt / 1000);
+              this.moveRobot(leftWheel, rightWheel, (dt / 1000));
 
               instruction.duration -= dt / 1000;
               if(instruction.duration <= 0) {
@@ -156,7 +178,8 @@ game.PlayerEntity = me.Entity.extend({
               break;
             case 'sensor':
               instruction.sensorResultCallback(
-                me.interpreter.createPrimitive(this.sensors[instruction.sensorName.data]));
+                me.interpreter.createPrimitive(this.sensors[instruction.sensorName.data])
+              );
               me.interpreter.robotInstructions.shift();
               break;
           }
@@ -185,71 +208,71 @@ game.PlayerEntity = me.Entity.extend({
     }
 
     /* Adding collision */
-
     me.collision.check(this);
 
     return true;
+
   },
    /**
    * colision handler
    * (called when colliding with other objects)
    */
- onCollision : function (response) {
-     /* If the colliding shape belongs to the robot, do a normal collision */
-     if(response.indexShapeA === 0 || typeof response.indexShapeA === "undefined") {
-       this.pos.sub(response.overlapV);
-       return true;
-     }
+  onCollision : function (response) {
+    /* If the colliding shape belongs to the robot, do a normal collision */
+    if(response.indexShapeA === 0 || typeof response.indexShapeA === "undefined") {
+      this.pos.sub(response.overlapV);
+      return true;
+    }
 
-     /* Create a copy of the sensor's range line and positionate it into the level */
-     var myLine = me.pool.pull("line", 
-       response.a.body.shapes[response.indexShapeA].pos.x + response.a.pos.x, 
-       response.a.body.shapes[response.indexShapeA].pos.y + response.a.pos.y,
-        [response.a.body.shapes[response.indexShapeA].points[0], 
+    /* Create a copy of the sensor's range line and positionate it into the level */
+    var myLine = me.pool.pull("line", 
+      response.a.body.shapes[response.indexShapeA].pos.x + response.a.pos.x, 
+      response.a.body.shapes[response.indexShapeA].pos.y + response.a.pos.y,
+      [response.a.body.shapes[response.indexShapeA].points[0], 
         response.a.body.shapes[response.indexShapeA].points[1]]);
 
-     /* Get a copy of the line's starting point */
-     var startPoint = me.pool.pull("vector", myLine.pos.x, myLine.pos.y);
+    /* Get a copy of the line's starting point */
+    var startPoint = me.pool.pull("vector", myLine.pos.x, myLine.pos.y);
 
-     /* Get all edges of the entity beeing touched by the sensor line */
-     var edges = response.b.getBodyEdgesAsLines();
+    /* Get all edges of the entity beeing touched by the sensor line */
+    var edges = response.b.getBodyEdgesAsLines();
 
-     /* 
-       Calculate the minium distance between the starting point and 
-       the point of intersection between the sensor line and the entity
-       edges. 
-     */
-     var minDistance = Number.MAX_SAFE_INTEGER;
-     for (var i = 0; i < edges.length; i++) {
-       var intersect = myLine.intersection(edges[i]);
-       me.pool.push(edges[i]);
-       if(intersect !== null) {
-         var distance = Math.round(startPoint.distance(intersect));
-         if(distance < minDistance)
-           minDistance = distance;
-         me.pool.push(intersect);
-       }
-     }
+    /* 
+     Calculate the minium distance between the starting point and 
+     the point of intersection between the sensor line and the entity
+     edges. 
+    */
+    var minDistance = Number.MAX_SAFE_INTEGER;
+    for (var i = 0; i < edges.length; i++) {
+      var intersect = myLine.intersection(edges[i]);
+      me.pool.push(edges[i]);
+      if(intersect !== null) {
+        var distance = Math.round(startPoint.distance(intersect));
+        if(distance < minDistance)
+          minDistance = distance;
+        me.pool.push(intersect);
+      }
+    }
 
      /* Set the sensor's values */
-     switch(response.indexShapeA) {
-       case 1:
-          response.a.sensors.right = minDistance;
-          break;
-       case 2:
-          response.a.sensors.left = minDistance;
-          break;
-       case 3:
-          response.a.sensors.front = minDistance;
-          break;
+    switch(response.indexShapeA) {
+      case 1:
+        response.a.sensors.right = minDistance;
+        break;
+      case 2:
+        response.a.sensors.left = minDistance;
+        break;
+      case 3:
+        response.a.sensors.front = minDistance;
+        break;
      }
 
-     /* Return elements to the pool */
-     me.pool.push(myLine);
-     me.pool.push(startPoint);
+    /* Return elements to the pool */
+    me.pool.push(myLine);
+    me.pool.push(startPoint);
 
-     return false;
-   }
+    return false;
+  }
 });
 
 game.WorldFrameEntity = me.Entity.extend({

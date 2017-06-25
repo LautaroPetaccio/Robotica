@@ -1,18 +1,23 @@
 /* Imports */
 var gulp = require('gulp');
+var newer = require('gulp-newer');
 var plugins = require('gulp-load-plugins')(['gulp-*']);
 var mainBowerFiles = require('main-bower-files');
+const rename = require('gulp-rename');
 var path = require('path');
+var insert = require('gulp-insert');
+
 var bundleMelonJSResources = require(path.resolve(__dirname, './bundleMelonJSResources.js'));
 
 /* Scripts tasks */
 
 gulp.task('scripts', ['scripts-src', 'scripts-third-party']);
 
-gulp.task('scripts-src', ['scripts-app', 'scripts-game']);
+gulp.task('scripts-src', ['scripts-app', 'arduino-to-js', 'scripts-game']);
 
 gulp.task('scripts-app', [], function() {
-  return gulp.src('src/app/**/*.js')
+  return gulp.src(['src/app/others/*.js', 'src/app/models/*.js', 'src/app/views/*.js', 'src/app/index.js'])
+          .pipe(newer('dist/scripts/app.min.js'))
           .pipe(plugins.flatten())
           //.pipe(plugins.eslint())
           //.pipe(plugins.eslint.format())
@@ -24,8 +29,21 @@ gulp.task('scripts-app', [], function() {
           .on('error', plugins.util.log);
 });
 
+gulp.task('arduino-to-js', [], function() {
+  return gulp.src(['src/app/others/arduino.ino'])
+          .pipe(newer('dist/scripts/app.min.js'))
+          .pipe(insert.prepend('"use strict";\nthis.arduinoCode = `'))
+          .pipe(insert.append('`'))
+          .pipe(rename({
+            extname: '.js'
+          }))
+          .pipe(gulp.dest('dist/scripts/'))
+          .on('error', plugins.util.log);
+});
+
 gulp.task('scripts-game', [], function() {
   return gulp.src(['src/game/**/plugins/**/*.js', 'src/game/**/*.js'])
+          .pipe(newer('dist/scripts/game.min.js'))
           //.pipe(plugins.eslint())
           //.pipe(plugins.eslint.format())
           .pipe(plugins.concat('game.min.js'))
@@ -41,6 +59,7 @@ gulp.task('scripts-third-party', ['scripts-bower', 'scripts-blockly', 'scripts-m
 gulp.task('scripts-bower', [], function() {
   return gulp.src(mainBowerFiles())
           .pipe(plugins.filter("**/*.js"))
+          .pipe(newer('dist/scripts/bower.min.js'))
           .pipe(plugins.flatten())
           .pipe(plugins.concat('bower.min.js'))
           .pipe(plugins.sourcemaps.init())
@@ -52,11 +71,13 @@ gulp.task('scripts-bower', [], function() {
 
 gulp.task('scripts-blockly', [], function() {
   return gulp.src([
-            'third-party/google-blockly/blockly_compressed.js',
-            'third-party/google-blockly/blocks_compressed.js',
-            'third-party/google-blockly/javascript_compressed.js',
-            'third-party/google-blockly/msg/js/es.js'
+            'third-party/ardublockly/blockly/blockly_compressed.js',
+            'third-party/ardublockly/blockly/blocks_compressed.js',
+            'third-party/ardublockly/blockly/arduino_compressed.js',
+            'third-party/ardublockly/blockly/javascript_compressed.js',
+            'third-party/ardublockly/blockly/msg/js/es.js',
           ])
+          .pipe(newer('dist/scripts/blockly.min.js'))
           .pipe(plugins.flatten())
           .pipe(plugins.concat('blockly.min.js'))
           .pipe(plugins.sourcemaps.init())
@@ -71,6 +92,7 @@ gulp.task('scripts-melonjs', [], function() {
             'third-party/melonjs/melonJS.js',
             'third-party/melonjs/plugins/**/*.js'
           ])
+          .pipe(newer('dist/scripts/melonjs.min.js'))
           .pipe(plugins.flatten())
           .pipe(plugins.concat('melonjs.min.js'))
           .pipe(plugins.sourcemaps.init())
@@ -82,6 +104,7 @@ gulp.task('scripts-melonjs', [], function() {
 
 gulp.task('bundle-melonjs-resources', [], function() {
   return gulp.src('src/game/data/**/*')
+          // .pipe(newer('dist/scripts/resources.min.js'))
           .pipe(plugins.flatten())
           .pipe(bundleMelonJSResources('resources.min.js', 'assets/game/'))
           .pipe(plugins.sourcemaps.init())
@@ -96,6 +119,7 @@ gulp.task('scripts-acorn', [], function() {
             'third-party/acorn/acorn.js',
             'third-party/acorn/interpreter.js'
           ])
+          .pipe(newer('dist/scripts/acorn.min.js'))
           .pipe(plugins.flatten())
           .pipe(plugins.concat('acorn.min.js'))
           .pipe(plugins.sourcemaps.init())

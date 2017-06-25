@@ -4,7 +4,7 @@ var game = {
 
   // Run on page load.
 
-  "onload" : function (canvasWrapper) {
+  onload : function (canvasWrapper) {
     /* 
       0 => running
       1 => paused
@@ -19,7 +19,7 @@ var game = {
       isPaused : function() { return this.state == 1; },
       hasFinished : function() { return this.state == 2; }
     };
-
+    
     me.game.changeMap = function(mapName) {
       me.game.map = mapName;
       me.state.pause();
@@ -39,8 +39,20 @@ var game = {
         });
     }
 
-    // Initialize the audio.
-    // me.audio.init("mp3,ogg");
+    me.game.HUD = {
+      HUDContainer : null,
+      enabled : false,
+      enableHUD : function() {
+        this.enabled = true;
+        var robotEntity = me.game.world.getChildByProp("name", "robot")[0];
+        this.HUDContainer = me.pool.pull("HUDContainer", robotEntity);
+        me.game.world.addChild(this.HUDContainer);
+      },
+      disableHUD : function() {
+        this.enabled = false;
+        me.game.world.removeChild(this.HUDContainer);
+      }
+    };
 
     // Set a callback to run when loading is complete.
     me.loader.onload = this.loaded.bind(this);
@@ -54,14 +66,22 @@ var game = {
   },
 
   // Run on game resources loaded.
-  "loaded" : function () {
+  loaded : function () {
     /* Set the map to be loaded */
     me.game.map = "area03";
 
     me.state.set(me.state.PLAY, new game.PlayScreen());
 
-    // add our player entity in the entity pool
+    /* Add our player entity in the entity pool */
     me.pool.register("mainPlayer", game.PlayerEntity);
+
+    /* HUD Container */
+    me.pool.register("HUDContainer", game.HUD.Container, true);
+    me.pool.register("HUDBackground", game.HUD.Background, true);
+    me.pool.register("HUDRobotPosition", game.HUD.RobotPosition, true);
+    me.pool.register("HUDRobotSensors", game.HUD.RobotSensors, true);
+    me.pool.register("HUDRobotShapes", game.HUD.RobotShapes, true);
+
 
     me.pool.register("worldEntity", game.WorldFrameEntity);
     me.pool.register("line", me.Line, true);

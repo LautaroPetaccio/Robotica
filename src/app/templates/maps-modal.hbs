@@ -1,0 +1,19 @@
+{{#extend "modal-layout"}}
+    {{#content "title"}} Lista de mapas {{/content}}
+    {{#content "body"}}
+      <ul class="media-list">
+      {{#each maps}}
+
+        <li class="media" id="{{ this.name }}">
+          <div class="media-left">
+              <img class="media-object" width="64px" height="64px" src="assets/game/{{ this.name }}.png" alt="{{ this.name }}">
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">{{ this.title }}</h4>
+              {{ this.description }}
+            </div>
+        </li>
+      {{/each}}
+      </ul>
+    {{/content}}
+{{/extend}}
