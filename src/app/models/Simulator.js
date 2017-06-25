@@ -63,7 +63,6 @@ this.app.models.Simulator = Backbone.Model.extend({
     }
     if(!me.execution.isRunning()) {
       onRun();
-      console.log("Running from pause");
       me.execution.run();
     }
   },
